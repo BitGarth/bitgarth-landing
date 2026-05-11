@@ -1,0 +1,1364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BitGarth — a quiet garden for your wallets</title>
+  <meta name="description" content="BitGarth downloads your Bitcoin and Ethereum self-custody transactions into an encrypted user database, then exports plain-text accounting files your tools and AI can read." />
+  <meta name="theme-color" content="#F4EFE3" />
+
+  <link rel="canonical" href="https://bitgarth.app/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BitGarth" />
+  <meta property="og:url" content="https://bitgarth.app/" />
+  <meta property="og:title" content="BitGarth — a quiet garden for your wallets" />
+  <meta property="og:description" content="Local-first self-custody accounting for Bitcoin &amp; Ethereum. Exports to plaintext files — readable by hledger, ledger-cli, and any LLM." />
+  <meta property="og:image" content="https://bitgarth.app/assets/og-card.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="BitGarth — a quiet garden for your wallets" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@BitGarth" />
+  <meta name="twitter:title" content="BitGarth — a quiet garden for your wallets" />
+  <meta name="twitter:description" content="Local-first self-custody accounting for Bitcoin &amp; Ethereum. Exports to plaintext files — readable by hledger, ledger-cli, and any LLM." />
+  <meta name="twitter:image" content="https://bitgarth.app/assets/og-card.jpg" />
+  <meta name="twitter:image:alt" content="BitGarth — a quiet garden for your wallets" />
+
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
+
+  <!-- Self-hosted fonts: no external connections. -->
+  <link rel="preload" href="assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/instrument-sans-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+  <style>
+    @font-face {
+      font-family: 'Fraunces';
+      src: url('assets/fonts/fraunces-normal.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Fraunces';
+      src: url('assets/fonts/fraunces-italic.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Instrument Sans';
+      src: url('assets/fonts/instrument-sans-normal.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Instrument Sans';
+      src: url('assets/fonts/instrument-sans-italic.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('assets/fonts/jetbrains-mono-normal.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('assets/fonts/jetbrains-mono-italic.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    :root {
+      --paper: #f4efe3;
+      --paper-deep: #ebe3d2;
+      --paper-edge: #ddd2b9;
+      --ink: #1a1f1a;
+      --ink-soft: #2e352e;
+      --moss: #2f4a30;
+      --moss-bright: #4a7a4d;
+      --copper: #a8693a;
+      --copper-soft: #c08856;
+      --sage: #8a9783;
+
+      --display: "Fraunces", "Times New Roman", serif;
+      --body: "Instrument Sans", system-ui, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+      --measure: 36rem;
+      --gutter: clamp(1.25rem, 4vw, 2.5rem);
+      --section-y: clamp(4rem, 10vw, 7.5rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    html, body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 17px;
+      line-height: 1.55;
+      font-feature-settings: "ss01", "kern";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* parchment grain — subtle SVG noise overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.35;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* gentle vignette to make paper feel warmer at edges */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(120% 80% at 50% -10%, rgba(168,105,58,0.05), transparent 60%),
+        radial-gradient(120% 80% at 50% 110%, rgba(47,74,48,0.06), transparent 60%);
+    }
+
+    main, header, footer { position: relative; z-index: 2; }
+
+    a {
+      color: var(--moss);
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      background-size: 0% 1px;
+      transition: background-size 220ms ease, color 180ms ease;
+      padding-bottom: 1px;
+    }
+    a:hover, a:focus-visible { background-size: 100% 1px; color: var(--moss-bright); }
+    a:focus-visible { outline: 2px solid var(--moss); outline-offset: 4px; border-radius: 2px; }
+
+    h1, h2, h3, h4 {
+      font-family: var(--display);
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    p { margin: 0 0 1em; }
+    p:last-child { margin-bottom: 0; }
+
+    .wrap {
+      width: 100%;
+      max-width: 76rem;
+      margin: 0 auto;
+      padding-inline: var(--gutter);
+    }
+
+    /* ─────────────────────────── header ─────────────────────────── */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--paper) 86%, transparent);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      backdrop-filter: blur(10px) saturate(120%);
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    }
+    .site-header .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding-block: 0.95rem;
+    }
+    .wordmark {
+      display: inline-block;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.35rem;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      background: none !important;
+    }
+
+    nav.primary {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    nav.primary .links {
+      display: flex;
+      gap: 1.4rem;
+      font-size: 0.95rem;
+    }
+    nav.primary .links a {
+      color: var(--ink-soft);
+      letter-spacing: 0.01em;
+    }
+
+    .btn {
+      --bg: var(--moss);
+      --fg: var(--paper);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--body);
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      padding: 0.68rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--bg);
+      background: var(--bg);
+      color: var(--fg);
+      cursor: pointer;
+      transition: transform 140ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 220ms ease;
+      box-shadow: 0 1px 0 rgba(26,31,26,0.04), 0 6px 18px -10px rgba(47,74,48,0.45);
+    }
+    .btn:hover, .btn:focus-visible {
+      background: var(--moss-bright);
+      border-color: var(--moss-bright);
+      transform: translateY(-1px);
+    }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible { outline: 2px solid var(--moss); outline-offset: 3px; }
+
+    .btn.ghost {
+      --bg: transparent;
+      --fg: var(--ink);
+      border-color: color-mix(in srgb, var(--ink) 30%, transparent);
+      box-shadow: none;
+    }
+    .btn.ghost:hover, .btn.ghost:focus-visible {
+      background: color-mix(in srgb, var(--ink) 5%, transparent);
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+    .btn .arrow { transition: transform 220ms ease; }
+    .btn:hover .arrow { transform: translateX(3px); }
+
+    @media (max-width: 760px) {
+      nav.primary .links { display: none; }
+    }
+
+    /* ─────────────────────────── hero ─────────────────────────── */
+
+    .hero {
+      padding-block: clamp(4rem, 10vw, 8rem) clamp(2rem, 6vw, 4rem);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .hero .wrap { position: relative; z-index: 1; }
+    .hero-mark {
+      position: absolute;
+      top: 50%;
+      right: clamp(-160px, -5vw, -40px);
+      transform: translateY(-50%) rotate(-3deg);
+      width: clamp(440px, 56vw, 720px);
+      margin: 0;
+      z-index: 0;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      opacity: 0.6;
+    }
+    .hero-mark img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    @media (max-width: 720px) {
+      .hero-mark { display: none; }
+    }
+    .hero .eyebrow {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--moss);
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero .eyebrow::before,
+    .hero .eyebrow::after {
+      content: "";
+      display: inline-block;
+      width: 1.5rem;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.55;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 7.2vw, 5.6rem);
+      line-height: 1.02;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      max-width: 18ch;
+      margin-bottom: 1.6rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--moss);
+    }
+    .hero .lede {
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      line-height: 1.55;
+      max-width: 38rem;
+      color: var(--ink-soft);
+      margin-bottom: 2.2rem;
+    }
+    .hero .ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      align-items: center;
+    }
+    .hero .ctas .footnote {
+      font-size: 0.85rem;
+      color: var(--sage);
+      margin-left: 0.5rem;
+    }
+    .hero .ornament {
+      margin-top: clamp(3.5rem, 7vw, 5.5rem);
+      display: flex;
+      justify-content: center;
+      color: color-mix(in srgb, var(--moss) 55%, transparent);
+    }
+
+    /* hero reveal animation */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal > * {
+        opacity: 0;
+        transform: translateY(0.6rem);
+        animation: reveal 700ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+      }
+      .reveal > *:nth-child(1) { animation-delay: 60ms; }
+      .reveal > *:nth-child(2) { animation-delay: 180ms; }
+      .reveal > *:nth-child(3) { animation-delay: 320ms; }
+      .reveal > *:nth-child(4) { animation-delay: 460ms; }
+      .reveal > *:nth-child(5) { animation-delay: 600ms; }
+    }
+    @keyframes reveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─────────────────────────── section heads ─────────────────────────── */
+
+    section { padding-block: var(--section-y); position: relative; }
+    section + section { padding-top: 0; }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+    .section-head .num {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: var(--copper);
+      letter-spacing: 0.04em;
+      flex: 0 0 auto;
+      padding-top: 0.4rem;
+    }
+    .section-head h2 {
+      font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+      line-height: 1.1;
+      max-width: 22ch;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .section-head h2 em { font-style: italic; color: var(--moss); font-weight: 400; }
+
+    /* ─────────────────────────── why grid ─────────────────────────── */
+
+    .why .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    @media (max-width: 860px) {
+      .why .cards { grid-template-columns: 1fr; }
+    }
+    .why .card {
+      position: relative;
+      padding-top: 2.5rem;
+      border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+    }
+    .why .card .label {
+      position: absolute;
+      top: -0.85rem;
+      left: 0;
+      background: var(--paper);
+      padding-right: 0.6rem;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--moss);
+      letter-spacing: 0.03em;
+    }
+    .why .card h3 {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      line-height: 1.2;
+      font-weight: 500;
+      margin-bottom: 0.7rem;
+      font-style: italic;
+    }
+    .why .card p {
+      color: var(--ink-soft);
+      font-size: 1.02rem;
+    }
+    .why .card .icon {
+      width: 1.6rem;
+      height: 1.6rem;
+      color: var(--moss);
+      margin-bottom: 1.1rem;
+      display: block;
+    }
+
+    /* ─────────────────────────── privacy panel ─────────────────────────── */
+
+    .privacy {
+      background: var(--paper-deep);
+      border-block: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    }
+    .privacy .section-head { margin-bottom: 2.5rem; }
+    .privacy .rows {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.25rem, 2.5vw, 2rem);
+    }
+    @media (max-width: 860px) {
+      .privacy .rows { grid-template-columns: 1fr; }
+    }
+    .privacy .row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.2rem 1.3rem;
+      background: color-mix(in srgb, var(--paper) 70%, transparent);
+      border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+      border-radius: 6px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset;
+    }
+    .privacy .row .icon {
+      width: 1.4rem; height: 1.4rem; flex: 0 0 auto; color: var(--moss);
+    }
+    .privacy .row strong {
+      display: block;
+      font-family: var(--display);
+      font-weight: 500;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+    .privacy .row span {
+      color: var(--ink-soft);
+      font-size: 0.97rem;
+      line-height: 1.5;
+    }
+    .privacy .more {
+      margin-top: clamp(2rem, 4vw, 3rem);
+      max-width: var(--measure);
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+    .privacy .more a {
+      font-style: italic;
+      color: var(--moss);
+    }
+    .privacy .more .arrow { transition: transform 220ms ease; display: inline-block; }
+    .privacy .more a:hover .arrow { transform: translateX(3px); }
+
+    /* ─────────────────────────── install ─────────────────────────── */
+
+    .install .section-head h2 { max-width: 26ch; }
+    .install .lede {
+      max-width: var(--measure);
+      color: var(--ink-soft);
+      margin-bottom: 2rem;
+    }
+
+    .code-card {
+      position: relative;
+      background: var(--ink);
+      color: #ece5d2;
+      border-radius: 10px;
+      padding: 1.5rem 1.5rem 1.5rem 1.7rem;
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      overflow-x: auto;
+      border: 1px solid color-mix(in srgb, var(--ink) 88%, var(--moss) 12%);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.04) inset,
+        0 18px 40px -28px rgba(26,31,26,0.55),
+        0 4px 12px -6px rgba(26,31,26,0.35);
+    }
+    .code-card::before {
+      content: "shell";
+      position: absolute;
+      top: 0.9rem;
+      left: 1.5rem;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: color-mix(in srgb, var(--copper-soft) 80%, transparent);
+      text-transform: lowercase;
+    }
+    .code-card pre {
+      margin: 1.6rem 0 0;
+      white-space: pre;
+      tab-size: 2;
+    }
+    .code-card .tok-flag { color: #c9b27e; }
+    .code-card .tok-str  { color: #b8c8a8; }
+    .code-card .tok-cmd  { color: #ece5d2; }
+    .code-card .tok-img  { color: #d8a877; font-weight: 500; }
+    .code-card .tok-dim  { color: #6b7568; }
+    /* purely-decorative line-continuations — stripped on copy so the command
+       pastes as one line and works in any shell, including Windows cmd.exe */
+    .code-card .tok-cont {
+      color: color-mix(in srgb, #6b7568 65%, transparent);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .copy-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin: 0.9rem 0 0;
+      font-family: var(--body);
+      font-size: 0.82rem;
+      color: var(--sage);
+      letter-spacing: 0.005em;
+    }
+    .copy-note em {
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: 0.92em;
+      color: color-mix(in srgb, var(--ink) 70%, var(--sage));
+      background: color-mix(in srgb, var(--ink) 6%, transparent);
+      padding: 0.05em 0.38em;
+      border-radius: 3px;
+      margin: 0 0.08rem;
+    }
+    .copy-note svg { flex: none; opacity: 0.7; }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: color-mix(in srgb, var(--paper) 14%, transparent);
+      color: var(--paper);
+      border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+      border-radius: 6px;
+      padding: 0.38rem 0.7rem;
+      font-family: var(--body);
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+    .copy-btn:hover, .copy-btn:focus-visible {
+      background: color-mix(in srgb, var(--paper) 22%, transparent);
+      border-color: var(--paper);
+      outline: none;
+    }
+    .copy-btn[data-state="copied"] {
+      color: #cfe1bf;
+      border-color: #6f9560;
+    }
+    .copy-btn .icon-copy, .copy-btn .icon-check { width: 0.95rem; height: 0.95rem; }
+    .copy-btn[data-state="idle"] .icon-check { display: none; }
+    .copy-btn[data-state="copied"] .icon-copy { display: none; }
+
+    .install .after {
+      margin-top: 1.5rem;
+      color: var(--ink-soft);
+      max-width: var(--measure);
+    }
+    .install .after code {
+      font-family: var(--mono);
+      font-size: 0.92em;
+      background: color-mix(in srgb, var(--ink) 8%, transparent);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+    }
+    .install .fine-print {
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: var(--sage);
+    }
+
+    /* ─────────────────────────── pricing ─────────────────────────── */
+
+    .pricing .note {
+      max-width: var(--measure);
+      color: var(--ink-soft);
+      margin-bottom: 2.5rem;
+    }
+    .pricing .note .chip {
+      display: inline-block;
+      font-family: var(--body);
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.08rem 0.5rem;
+      border-radius: 3px;
+      border: 1px solid currentColor;
+      vertical-align: 0.06em;
+    }
+    .pricing .note .chip.free { color: var(--moss); }
+    .pricing .note .chip.paid { color: var(--copper); }
+
+    .pricing .commitments {
+      display: grid;
+      gap: 0.85rem;
+      max-width: var(--measure);
+      margin-top: 2.5rem;
+      padding-top: 1.6rem;
+      border-top: 1px dashed color-mix(in srgb, var(--ink) 22%, transparent);
+      font-size: 0.97rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .pricing .commitments p { margin: 0; }
+    .pricing .commitments em {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 500;
+      color: var(--ink);
+      margin-right: 0.35em;
+    }
+    .pricing .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.25rem, 2.5vw, 1.75rem);
+      align-items: stretch;
+    }
+    @media (max-width: 860px) {
+      .pricing .grid { grid-template-columns: 1fr; }
+    }
+
+    .tier {
+      position: relative;
+      background: var(--paper-deep);
+      border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+      border-radius: 8px;
+      padding: 2rem 1.8rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset;
+      transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+    }
+    .tier:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 16px 32px -22px rgba(26,31,26,0.35);
+    }
+    .tier .corner {
+      position: absolute;
+      width: 18px; height: 18px;
+      color: color-mix(in srgb, var(--ink) 40%, transparent);
+      pointer-events: none;
+    }
+    .tier .corner.tl { top: 8px; left: 8px; }
+    .tier .corner.tr { top: 8px; right: 8px; transform: scaleX(-1); }
+    .tier .corner.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+    .tier .corner.br { bottom: 8px; right: 8px; transform: scale(-1, -1); }
+
+    .tier .name {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.4rem;
+      letter-spacing: 0.005em;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .tier .price {
+      font-family: var(--display);
+      font-size: 2.7rem;
+      line-height: 1;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin: 0.6rem 0 0.2rem;
+    }
+    .tier .price small {
+      display: inline-block;
+      font-family: var(--body);
+      font-style: normal;
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: var(--sage);
+      margin-left: 0.4rem;
+      letter-spacing: 0.01em;
+    }
+    .tier .yearly {
+      font-family: var(--body);
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+      margin-bottom: 1.2rem;
+    }
+    .tier .summary {
+      font-style: italic;
+      font-family: var(--display);
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      margin-bottom: 1.4rem;
+      line-height: 1.4;
+    }
+    .tier ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.6rem;
+      font-size: 0.97rem;
+      color: var(--ink-soft);
+    }
+    .tier ul li {
+      padding: 0.5rem 0;
+      border-top: 1px dashed color-mix(in srgb, var(--ink) 22%, transparent);
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    .tier ul li:first-child { border-top: none; padding-top: 0; }
+    .tier ul li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--moss);
+      border-radius: 50%;
+      flex: 0 0 auto;
+      margin-top: 0.55rem;
+    }
+    .tier .cta {
+      margin-top: auto;
+      align-self: flex-start;
+    }
+
+    .tier.featured {
+      border-color: color-mix(in srgb, var(--copper) 65%, var(--ink) 10%);
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--copper) 7%, var(--paper-deep)), var(--paper-deep) 35%);
+    }
+    .tier.featured .ribbon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: var(--paper);
+      background: var(--copper);
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .tier.featured .price { color: var(--copper); }
+    .tier.featured ul li::before { background: var(--copper); }
+
+    /* ─────────────────────────── footer ─────────────────────────── */
+
+    .site-footer {
+      background: var(--ink);
+      color: color-mix(in srgb, var(--paper) 80%, transparent);
+      padding-block: 3.5rem 2.5rem;
+      margin-top: var(--section-y);
+    }
+    .site-footer a { color: color-mix(in srgb, var(--paper) 86%, transparent); }
+    .site-footer a:hover { color: var(--paper); }
+    .site-footer .wrap {
+      display: grid;
+      grid-template-columns: 1.5fr 0.9fr 0.9fr 1fr 1.2fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .site-footer .wrap { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .site-footer .wrap { grid-template-columns: 1fr; }
+    }
+    .site-footer .colophon p {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: color-mix(in srgb, var(--paper) 70%, transparent);
+      margin-top: 0.6rem;
+      max-width: 24ch;
+    }
+    .site-footer h4 {
+      font-family: var(--body);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--paper) 55%, transparent);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+    .site-footer .meta {
+      grid-column: 1 / -1;
+      padding-top: 2rem;
+      margin-top: 1.5rem;
+      border-top: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
+      font-size: 0.82rem;
+      color: color-mix(in srgb, var(--paper) 45%, transparent);
+      letter-spacing: 0.02em;
+    }
+
+    /* sr-only */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    .skip-link {
+      position: absolute; left: 1rem; top: -3rem;
+      background: var(--moss); color: var(--paper);
+      padding: 0.5rem 0.85rem; border-radius: 6px;
+      transition: top 180ms ease;
+    }
+    .skip-link:focus { top: 0.6rem; outline: 2px solid var(--paper); }
+
+    ::selection { background: color-mix(in srgb, var(--moss) 70%, transparent); color: var(--paper); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://bitgarth.app/#org",
+        "name": "BitGarth",
+        "url": "https://bitgarth.app/",
+        "logo": "https://bitgarth.app/assets/favicon/apple-touch-icon.png",
+        "sameAs": [
+          "https://x.com/BitGarth",
+          "https://hub.docker.com/r/bitgarth/bitgarth"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://bitgarth.app/#website",
+        "url": "https://bitgarth.app/",
+        "name": "BitGarth",
+        "publisher": { "@id": "https://bitgarth.app/#org" },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://bitgarth.app/#app",
+        "name": "BitGarth",
+        "description": "Local-first self-custody accounting for Bitcoin and Ethereum. Downloads your transactions into an encrypted user database and exports plain-text accounting files for hledger and ledger-cli.",
+        "applicationCategory": "FinanceApplication",
+        "applicationSubCategory": "Accounting",
+        "operatingSystem": "Linux, macOS, Windows (via Docker)",
+        "url": "https://bitgarth.app/",
+        "image": "https://bitgarth.app/assets/og-card.jpg",
+        "downloadUrl": "https://hub.docker.com/r/bitgarth/bitgarth",
+        "publisher": { "@id": "https://bitgarth.app/#org" },
+        "featureList": [
+          "Bitcoin xpub and Ethereum address sync",
+          "Encrypted user database",
+          "Export to hledger and ledger-cli",
+          "No seed phrases, no email required"
+        ],
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Free",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "5 balance-synced accounts, unlimited unsynced accounts and custom assets, full hledger and ledger-cli export."
+          },
+          {
+            "@type": "Offer",
+            "name": "Basic",
+            "price": "5",
+            "priceCurrency": "USD",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "5",
+              "priceCurrency": "USD",
+              "unitCode": "MON",
+              "billingDuration": "P1M"
+            },
+            "description": "10 synced accounts with full transaction history up to 10,000 transactions per account."
+          },
+          {
+            "@type": "Offer",
+            "name": "Premium",
+            "price": "50",
+            "priceCurrency": "USD",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "50",
+              "priceCurrency": "USD",
+              "unitCode": "MON",
+              "billingDuration": "P1M"
+            },
+            "description": "50 synced accounts with full transaction history up to 100,000 transactions per account."
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="wrap">
+      <a class="wordmark" href="#top" aria-label="BitGarth — home">
+        BitGarth
+      </a>
+      <nav class="primary" aria-label="Primary">
+        <div class="links">
+          <a href="#why">Why</a>
+          <a href="security.html">Security</a>
+          <a href="#install">Install</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
+          Try the demo
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <a id="top" tabindex="-1"></a>
+
+    <!-- ─────────────────── hero ─────────────────── -->
+    <section class="hero" aria-labelledby="hero-title">
+      <picture class="hero-mark" aria-hidden="true">
+        <source srcset="assets/bitgarth-hero.webp" type="image/webp" />
+        <img src="assets/bitgarth-hero.jpg"
+             alt=""
+             width="800" height="800"
+             decoding="async" />
+      </picture>
+      <div class="wrap">
+        <div class="reveal">
+          <p class="eyebrow"><em>garth, noun:&nbsp; a clearing in the woods. A garden.</em></p>
+          <h1 id="hero-title">
+            Your wallets,<br />
+            <em>in a quiet garden<br />of your own.</em>
+          </h1>
+          <p class="lede">
+            BitGarth downloads your Bitcoin and Ethereum self-custody transactions into a
+            private encrypted user database, then exports them as plain-text
+            accounting files which your tools, your accountant, and your AI can actually read.
+          </p>
+          <div class="ctas">
+            <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
+              Try the demo
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="btn ghost" href="#install">
+              Install with Docker
+            </a>
+            <span class="footnote">No email required for the app.</span>
+          </div>
+          <div class="ornament" aria-hidden="true">
+            <!-- hairline vine flourish -->
+            <svg width="260" height="22" viewBox="0 0 260 22" fill="none">
+              <path d="M0 11 H100" stroke="currentColor" stroke-width="0.8"/>
+              <path d="M160 11 H260" stroke="currentColor" stroke-width="0.8"/>
+              <path d="M115 11c2-4 6-6 10-3 3 2.5 3 7 0 9-3 2-7 1-10-1z M145 11c-2-4-6-6-10-3-3 2.5-3 7 0 9 3 2 7 1 10-1z" fill="currentColor" opacity="0.85"/>
+              <circle cx="130" cy="11" r="1.7" fill="currentColor"/>
+              <path d="M122 6 c2-3 6-2 8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+              <path d="M138 16 c-2 3-6 2-8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────── why ─────────────────── -->
+    <section class="why" id="why" aria-labelledby="why-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="num">§ 01</span>
+          <h2 id="why-title">Why BitGarth, <em>in three sentences.</em></h2>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="label">i.</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6l-9-4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3>Self-custody, synced.</h3>
+            <p>Point BitGarth at your Bitcoin xpubs and Ethereum addresses. It pulls the transactions, classifies them, and keeps your balances in sync — without ever touching a seed phrase or private key.</p>
+          </article>
+          <article class="card">
+            <span class="label">ii.</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="12" cy="15.5" r="1.2" fill="currentColor"/>
+            </svg>
+            <h3>Encrypted where it matters.</h3>
+            <p>Your wallet data, labels, settings, and saved API keys live in your encrypted user database. It opens with your password and only your password.</p>
+          </article>
+          <article class="card">
+            <span class="label">iii.</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M14 3v6h6" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M8 14h8M8 17h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <h3>Plain text out.</h3>
+            <p>One-click export to <a href="https://hledger.org" target="_blank" rel="noopener noreferrer">hledger</a> and <a href="https://ledger-cli.org" target="_blank" rel="noopener noreferrer">ledger-cli</a> — readable by humans, by spreadsheets, by Git, and by every LLM you'll ever throw at it. Your data, future-proofed.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────── privacy ─────────────────── -->
+    <section class="privacy" id="privacy" aria-labelledby="privacy-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="num">§ 02</span>
+          <h2 id="privacy-title">Built to ask you <em>for almost nothing.</em></h2>
+        </div>
+        <div class="rows">
+          <div class="row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 12s3-7 8-7 8 7 8 7-3 7-8 7-8-7-8-7z" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M5 5l14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <strong>No seed phrases. Ever.</strong>
+              <span>BitGarth only ever asks for public addresses and xpubs. There is nothing in the database that could move a single satoshi.</span>
+            </div>
+          </div>
+          <div class="row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M8 11h8M8 14h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <strong>No email required for the app.</strong>
+              <span>You do not need to tell us who you are to use BitGarth. If a feature needs extra details later, the app should ask only for that feature.</span>
+            </div>
+          </div>
+          <div class="row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2l3 5 5 1-4 4 1 5-5-3-5 3 1-5-4-4 5-1 3-5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <strong>Your password unlocks the database.</strong>
+              <span>We cannot unlock it for you. If you forget the password and have no backup or export, you will need to re-add and re-sync your wallets.</span>
+            </div>
+          </div>
+        </div>
+        <p class="more">
+          The longer story — what we store, what we don't, and where the limits are — lives in the <a href="security.html">security &amp; privacy notes <span class="arrow" aria-hidden="true">→</span></a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────── install ─────────────────── -->
+    <section class="install" id="install" aria-labelledby="install-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="num">§ 03</span>
+          <h2 id="install-title">Install in <em>one command.</em></h2>
+        </div>
+        <p class="lede">
+          If you have <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener noreferrer">Docker</a> installed, you're a single command away from running BitGarth locally. The image is published to Docker Hub as <code style="font-family:var(--mono);">bitgarth/bitgarth</code> for both <code style="font-family:var(--mono);">amd64</code> and <code style="font-family:var(--mono);">arm64</code>.
+        </p>
+
+        <div class="code-card" role="group" aria-label="Docker install command">
+          <button class="copy-btn" type="button" data-state="idle" data-copy-target="install-cmd" aria-live="polite">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="label">Copy</span>
+          </button>
+<pre id="install-cmd" data-oneline="docker run -d -p 8080:8080 -v bitgarth-data:/data --name bitgarth bitgarth/bitgarth:latest"><span class="tok-cmd">docker</span> <span class="tok-cmd">run</span> <span class="tok-flag">-d</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">-p</span> <span class="tok-str">8080:8080</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">-v</span> <span class="tok-str">bitgarth-data:/data</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">--name</span> <span class="tok-str">bitgarth</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-img">bitgarth/bitgarth:latest</span></pre>
+          <p class="copy-note">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="13" height="13">
+              <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            Pastes cleanly into <em>bash</em>, <em>zsh</em>, <em>PowerShell</em>, or <em>cmd.exe</em>.
+          </p>
+        </div>
+
+        <p class="after">
+          Then open <a href="http://localhost:8080" target="_blank" rel="noopener noreferrer">http://localhost:8080</a> in your browser. Pick a password, add a wallet, and watch your transactions land in your own little clearing.
+        </p>
+        <p class="fine-print">
+          Docker image source: <a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">hub.docker.com/r/bitgarth/bitgarth</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────── pricing ─────────────────── -->
+    <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="num">§ 04</span>
+          <h2 id="pricing-title">Pricing, <em>honestly drawn.</em></h2>
+        </div>
+        <p class="note">
+          <span class="chip free">Free</span> syncs your balances — with unlimited manual custom asset accounts. <span class="chip paid">Paid</span> tiers add transaction-history sync and more synced accounts.
+        </p>
+
+        <div class="grid">
+          <!-- ───── Free ───── -->
+          <article class="tier" aria-labelledby="tier-free">
+            <svg class="corner tl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner tr" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner bl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner br" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+
+            <div class="name" id="tier-free">Free</div>
+            <div class="price">$0<small>forever</small></div>
+            <div class="yearly">&nbsp;</div>
+            <p class="summary">Local ownership, five balance-only synced accounts, and every export feature in the box.</p>
+            <ul>
+              <li><span><strong>5</strong> balance-synced accounts</span></li>
+              <li>Balance-only sync — no transaction history</li>
+              <li>Unlimited unsynced accounts &amp; custom assets</li>
+              <li>hledger &amp; ledger-cli export, fully unlocked</li>
+            </ul>
+            <a class="btn ghost cta" href="#install">Install &amp; start <span class="arrow" aria-hidden="true">→</span></a>
+          </article>
+
+          <!-- ───── Basic ───── -->
+          <article class="tier featured" aria-labelledby="tier-basic">
+            <div class="ribbon">Early adopter discount</div>
+            <svg class="corner tl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner tr" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner bl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner br" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+
+            <div class="name" id="tier-basic">Basic</div>
+            <div class="price">$5<small>/month</small></div>
+            <div class="yearly">or $50 / year &nbsp;·&nbsp; <em>rises as new features ship</em></div>
+            <p class="summary">Ten synced accounts with full transaction history up to 10,000 transactions each.</p>
+            <ul>
+              <li><span><strong>10</strong> synced accounts</span></li>
+              <li>Full transaction history up to 10,000 / account</li>
+              <li>Unlimited unsynced accounts &amp; custom assets</li>
+              <li>hledger &amp; ledger-cli export, fully unlocked</li>
+            </ul>
+            <a class="btn cta" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Try it in the demo <span class="arrow" aria-hidden="true">→</span></a>
+          </article>
+
+          <!-- ───── Premium ───── -->
+          <article class="tier" aria-labelledby="tier-premium">
+            <svg class="corner tl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner tr" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner bl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+            <svg class="corner br" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+
+            <div class="name" id="tier-premium">Premium</div>
+            <div class="price">$50<small>/month</small></div>
+            <div class="yearly">or $500 / year</div>
+            <p class="summary">Fifty synced accounts, deep histories up to 100,000 transactions each, plus future advanced automation.</p>
+            <ul>
+              <li><span><strong>50</strong> synced accounts</span></li>
+              <li>Full transaction history up to 100,000 / account</li>
+              <li>Unlimited unsynced accounts &amp; custom assets</li>
+              <li>hledger &amp; ledger-cli export, fully unlocked</li>
+            </ul>
+            <a class="btn ghost cta" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Try it in the demo <span class="arrow" aria-hidden="true">→</span></a>
+          </article>
+        </div>
+
+        <div class="commitments">
+          <p>
+            <em>Your data is always yours.</em>
+            If a paid plan expires, your app data stays with your app instance and remains exportable to hledger or ledger-cli. Only new transaction syncs pause.
+          </p>
+          <p>
+            <em>Pay in your own coin.</em>
+            Bitcoin, Ethereum, stablecoins (USDC, USDT), or Monero. Monero is the strongest payment privacy option among supported assets.
+          </p>
+          <p>
+            <em>Clear limits.</em>
+            BitGarth helps organize records. It is not tax, legal, financial, accounting, or investment advice.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="wrap">
+      <div class="colophon">
+        <span class="wordmark" style="color: color-mix(in srgb, var(--paper) 90%, transparent);">
+          BitGarth
+        </span>
+        <p>A clearing in the woods. A garden. A quiet place for your numbers to live.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Live demo</a></li>
+          <li><a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="https://hledger.org" target="_blank" rel="noopener noreferrer">hledger</a></li>
+          <li><a href="https://ledger-cli.org" target="_blank" rel="noopener noreferrer">ledger-cli</a></li>
+          <li><a href="https://plaintextaccounting.org" target="_blank" rel="noopener noreferrer">Plain Text Accounting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="https://x.com/BitGarth" target="_blank" rel="noopener noreferrer">@BitGarth on X</a></li>
+          <li><a href="mailto:hello&#64;bitgarth&#46;app">hello&#64;bitgarth&#46;app</a></li>
+        </ul>
+      </div>
+      <div class="meta">
+        © <span id="year">2026</span> BitGarth. Made with care, in plain text.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // year stamp
+      var y = document.getElementById("year");
+      if (y) y.textContent = String(new Date().getFullYear());
+
+      // copy-to-clipboard handlers
+      // Always copy a single-line version of the command so it pastes cleanly
+      // in bash, zsh, PowerShell, and Windows cmd.exe — none of which agree on
+      // how to do line continuations.
+      function getCommandText(target) {
+        var el = document.getElementById(target);
+        if (!el) return "";
+        if (el.dataset && el.dataset.oneline) return el.dataset.oneline;
+        // Fallback: strip " \" continuations and collapse whitespace.
+        return el.innerText
+          .replace(/\s*\\\s*\n\s*/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function flash(btn) {
+        btn.dataset.state = "copied";
+        var label = btn.querySelector(".label");
+        var prev = label ? label.textContent : "";
+        if (label) label.textContent = "Copied";
+        setTimeout(function () {
+          btn.dataset.state = "idle";
+          if (label) label.textContent = prev || "Copy";
+        }, 1600);
+      }
+
+      function fallbackCopy(text) {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "absolute";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        return ok;
+      }
+
+      document.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var text = getCommandText(btn.dataset.copyTarget);
+          if (!text) return;
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(
+              function () { flash(btn); },
+              function () {
+                if (fallbackCopy(text)) flash(btn);
+              }
+            );
+          } else {
+            if (fallbackCopy(text)) flash(btn);
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

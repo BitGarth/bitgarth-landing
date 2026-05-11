@@ -1,0 +1,1412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>BitGarth — social assets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    @font-face {
+      font-family: 'Fraunces';
+      src: url('assets/fonts/fraunces-normal.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'Fraunces';
+      src: url('assets/fonts/fraunces-italic.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: italic;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'Instrument Sans';
+      src: url('assets/fonts/instrument-sans-normal.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('assets/fonts/jetbrains-mono-normal.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+
+    :root {
+      --paper: #f4efe3;
+      --paper-deep: #ebe3d2;
+      --paper-edge: #ddd2b9;
+      --ink: #1a1f1a;
+      --ink-soft: #2e352e;
+      --moss: #2f4a30;
+      --moss-bright: #4a7a4d;
+      --copper: #a8693a;
+      --copper-soft: #c08856;
+      --sage: #8a9783;
+
+      --display: "Fraunces", "Times New Roman", serif;
+      --body: "Instrument Sans", system-ui, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 48px;
+      background: #efe9da;
+      font-family: var(--body);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .page-intro {
+      max-width: 56rem;
+      margin: 0 auto 40px;
+      padding: 1.5rem 1.75rem;
+      background: var(--paper);
+      border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .page-intro h1 {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.5rem;
+      margin: 0 0 0.6rem;
+      color: var(--ink);
+    }
+    .page-intro ol { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+    .page-intro li { margin-bottom: 0.35rem; }
+    .page-intro code {
+      font-family: var(--mono);
+      font-size: 0.9em;
+      background: color-mix(in srgb, var(--ink) 8%, transparent);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+    }
+    .page-intro .controls {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .page-intro .controls button {
+      font-family: var(--body);
+      font-size: 13px;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+      background: var(--paper);
+      cursor: pointer;
+      color: var(--ink-soft);
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+    .page-intro .controls button:hover {
+      background: var(--paper-deep);
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+    .page-intro .controls button.active {
+      background: var(--moss);
+      color: var(--paper);
+      border-color: var(--moss);
+    }
+
+    .frame-label {
+      max-width: 1500px;
+      margin: 56px auto 12px;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: baseline;
+      gap: 0.9rem;
+    }
+    .frame-label .num {
+      color: var(--copper);
+    }
+    .frame-label .dim {
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: 0.85rem;
+      color: var(--sage);
+      letter-spacing: 0.02em;
+    }
+
+    /* the actual capture targets — exact px dims, no transforms */
+    .card-frame {
+      position: relative;
+      overflow: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--body);
+      isolation: isolate;
+      margin: 0 auto;
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.5) inset,
+        0 30px 60px -40px rgba(26,31,26,0.45),
+        0 8px 22px -16px rgba(26,31,26,0.3);
+    }
+
+    /* shared parchment treatments */
+    .card-frame .grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.35;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+    .card-frame .vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(120% 80% at 50% -10%, rgba(168,105,58,0.05), transparent 60%),
+        radial-gradient(120% 80% at 50% 110%, rgba(47,74,48,0.06), transparent 60%);
+    }
+    .card-frame .content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ───────────────────────── OG card · 1200×630 ───────────────────────── */
+
+    .og {
+      width: 1200px;
+      height: 630px;
+    }
+    .og .content {
+      padding: 64px 72px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .og .mast {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      color: var(--ink);
+    }
+    .og .mast .wordmark {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 38px;
+      letter-spacing: -0.005em;
+      line-height: 1;
+    }
+    .og .mast .eyebrow {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--moss);
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .og .mast .eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.55;
+    }
+
+    .og .headline {
+      align-self: center;
+      max-width: 740px;
+    }
+    .og .headline h2 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 112px;
+      line-height: 0.98;
+      letter-spacing: -0.028em;
+      margin: 0;
+      color: var(--ink);
+    }
+    .og .headline h2 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--moss);
+    }
+    .og .headline .ornament {
+      margin: 28px 0 22px;
+      color: color-mix(in srgb, var(--moss) 55%, transparent);
+    }
+    .og .headline .tagline {
+      font-family: var(--body);
+      font-size: 26px;
+      line-height: 1.4;
+      color: var(--ink-soft);
+      max-width: 640px;
+      margin: 0;
+      letter-spacing: 0.002em;
+    }
+
+    .og .foot {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .og .foot .url {
+      font-family: var(--mono);
+      font-size: 22px;
+      color: var(--moss);
+      letter-spacing: 0.01em;
+    }
+    .og .foot .url .arrow {
+      color: var(--copper);
+      margin-right: 0.35em;
+    }
+    .og .foot .meta {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--sage);
+      letter-spacing: 0.02em;
+      text-align: right;
+    }
+
+    /* hero mark, bottom-right, atmospheric */
+    .og .mark {
+      position: absolute;
+      right: -120px;
+      bottom: -130px;
+      width: 620px;
+      height: 620px;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      opacity: 0.42;
+      transform: rotate(-4deg);
+    }
+    .og .mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ───────────────────────── X banner · 1500×500 ───────────────────────── */
+    /* Illuminated-manuscript frieze: dense botanical borders top & bottom,
+       side endpieces, central cartouche with drop-cap initial.
+       William Morris × Très Riches Heures. */
+
+    .x {
+      width: 1500px;
+      height: 500px;
+      background:
+        radial-gradient(120% 80% at 50% -10%, rgba(168,105,58,0.06), transparent 60%),
+        radial-gradient(120% 80% at 50% 110%, rgba(47,74,48,0.08), transparent 60%),
+        var(--paper);
+    }
+
+    .x .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ── horizontal friezes (top & bottom borders) ── */
+    .x .frieze {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 95px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .x .frieze.top    { top: 0; }
+    .x .frieze.bottom { bottom: 0; }
+    .x .frieze svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* shared SVG palette (literal colors so they paint everywhere) */
+    .x .frieze .stem         { fill: none; stroke: #2f4a30; stroke-width: 1.4; stroke-linecap: round; }
+    .x .frieze .stem-fine    { fill: none; stroke: #2f4a30; stroke-width: 0.8; stroke-linecap: round; opacity: 0.9; }
+    .x .frieze .leaf         { fill: #2f4a30; }
+    .x .frieze .leaf-bright  { fill: #4a7a4d; }
+    .x .frieze .leaf-sage    { fill: #8a9783; opacity: 0.85; }
+    .x .frieze .berry-copper { fill: #a8693a; }
+    .x .frieze .berry-moss   { fill: #2f4a30; }
+    .x .frieze .petal        { fill: #2f4a30; }
+    .x .frieze .petal-bright { fill: #4a7a4d; }
+    .x .frieze .center       { fill: #a8693a; }
+    .x .frieze .center-light { fill: #f4efe3; }
+    .x .frieze .ink-stroke   { fill: none; stroke: #1a1f1a; stroke-width: 0.4; opacity: 0.4; }
+    .x .frieze .copper-stroke{ fill: none; stroke: #a8693a; stroke-width: 0.7; opacity: 0.85; }
+
+    /* ── side endpieces tie top↔bottom friezes ── */
+    .x .endpiece {
+      position: absolute;
+      top: 95px;
+      bottom: 95px;
+      width: 86px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .x .endpiece.left  { left: 0;  opacity: 0.55; } /* sparser — avatar overlaps */
+    .x .endpiece.right { right: 0; }
+    .x .endpiece svg { display: block; width: 100%; height: 100%; }
+    .x .endpiece .stem      { fill: none; stroke: #2f4a30; stroke-width: 1.2; stroke-linecap: round; }
+    .x .endpiece .stem-fine { fill: none; stroke: #2f4a30; stroke-width: 0.8; opacity: 0.9; }
+    .x .endpiece .leaf        { fill: #2f4a30; }
+    .x .endpiece .leaf-bright { fill: #4a7a4d; }
+    .x .endpiece .leaf-sage   { fill: #8a9783; opacity: 0.85; }
+    .x .endpiece .berry-copper{ fill: #a8693a; }
+    .x .endpiece .berry-moss  { fill: #2f4a30; }
+
+    /* ── central cartouche ── */
+    .x .cartouche {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 880px;
+      height: 280px;
+      z-index: 4;
+    }
+    .x .cartouche-frame {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .x .cartouche-frame svg { display: block; width: 100%; height: 100%; }
+    .x .cartouche-body {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      padding: 28px 60px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .x .drop-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      flex: 1;
+    }
+    .x .drop-cap {
+      position: relative;
+      flex: 0 0 auto;
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 150px;
+      line-height: 0.82;
+      color: var(--copper);
+      letter-spacing: -0.05em;
+      margin: -2px 6px 0 -6px;
+      padding: 0;
+    }
+    .x .drop-cap .filigree {
+      position: absolute;
+      top: -8px;
+      left: -26px;
+      width: 58px;
+      height: 38px;
+      color: var(--copper);
+      opacity: 0.9;
+    }
+    .x .drop-cap .filigree-br {
+      position: absolute;
+      right: -14px;
+      bottom: 16px;
+      width: 44px;
+      height: 28px;
+      color: var(--copper);
+      opacity: 0.7;
+    }
+
+    .x .lines {
+      flex: 1;
+      min-width: 0;
+      padding: 14px 0 0 0;
+    }
+    .x .tagline {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 40px;
+      line-height: 1.14;
+      letter-spacing: -0.01em;
+      color: var(--moss);
+      margin: 0;
+    }
+    .x .tagline em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--copper);
+    }
+
+    .x .url-rule {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-top: 4px;
+    }
+    .x .url-rule .rule {
+      flex: 1;
+      height: 0;
+      border-top: 1px solid color-mix(in srgb, var(--moss) 40%, transparent);
+    }
+    .x .url-rule .center-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 14px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .x .url-rule .center-mark .pip {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--copper);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--copper) 28%, transparent);
+    }
+
+    /* X safe-zone overlay (toggleable) */
+    .x .safe-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9;
+      display: none;
+    }
+    body.show-safe .x .safe-overlay { display: block; }
+    .x .safe-overlay .avatar-circle {
+      position: absolute;
+      left: 28px;
+      bottom: -76px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 2px dashed rgba(168,105,58,0.85);
+      background: rgba(168,105,58,0.10);
+    }
+    .x .safe-overlay .avatar-circle::after {
+      content: "avatar (~280px on profile)";
+      position: absolute;
+      left: 50%;
+      top: 38%;
+      transform: translateX(-50%);
+      font-family: var(--mono);
+      font-size: 13px;
+      color: rgba(168,105,58,0.95);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .x .safe-overlay .crop-band-top,
+    .x .safe-overlay .crop-band-bottom {
+      position: absolute;
+      left: 0; right: 0;
+      height: 60px;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(47,74,48,0.18) 0 8px,
+        transparent 8px 16px
+      );
+      border-top: 1px solid rgba(47,74,48,0.35);
+      border-bottom: 1px solid rgba(47,74,48,0.35);
+    }
+    .x .safe-overlay .crop-band-top { top: 0; }
+    .x .safe-overlay .crop-band-bottom { bottom: 0; }
+    .x .safe-overlay .label {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: rgba(47,74,48,0.85);
+      background: rgba(244,239,227,0.9);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .x .safe-overlay .label.top { top: 22px; left: 50%; transform: translateX(-50%); }
+    .x .safe-overlay .label.bottom { bottom: 22px; left: 50%; transform: translateX(-50%); }
+
+    /* OG safe-zone overlay (toggleable) — Facebook crops ~10% on each side */
+    .og .safe-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9;
+      display: none;
+    }
+    body.show-safe .og .safe-overlay { display: block; }
+    .og .safe-overlay .inner {
+      position: absolute;
+      inset: 32px 64px;
+      border: 2px dashed rgba(168,105,58,0.65);
+      border-radius: 4px;
+    }
+    .og .safe-overlay .inner::after {
+      content: "safe area (avoid cropping)";
+      position: absolute;
+      top: -22px;
+      left: 0;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(168,105,58,0.95);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─────────────────── X image-candidate preview ─────────────────── */
+
+    .x-image {
+      width: 1500px;
+      height: 500px;
+      background-color: var(--paper-deep);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+    .x-image.has-image { cursor: default; }
+
+    .x-image .dropzone {
+      position: absolute;
+      inset: 18px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          color-mix(in srgb, var(--ink) 5%, var(--paper-deep)) 0 24px,
+          var(--paper-deep) 24px 48px
+        );
+      border: 2px dashed color-mix(in srgb, var(--ink) 32%, transparent);
+      border-radius: 4px;
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+    .x-image:hover .dropzone,
+    .x-image .dropzone.drag-over {
+      border-color: var(--moss);
+      background:
+        repeating-linear-gradient(
+          45deg,
+          color-mix(in srgb, var(--moss) 8%, var(--paper-deep)) 0 24px,
+          var(--paper-deep) 24px 48px
+        );
+    }
+    .x-image.has-image .dropzone { display: none; }
+    .x-image .dropzone-inner {
+      max-width: 540px;
+      padding: 24px;
+    }
+    .x-image .dropzone-inner svg.upload {
+      width: 44px;
+      height: 44px;
+      color: color-mix(in srgb, var(--ink) 45%, transparent);
+      display: block;
+      margin: 0 auto 14px;
+    }
+    .x-image .dropzone-inner p {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 26px;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.3;
+    }
+    .x-image .dropzone-inner .hint {
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: 13px;
+      color: var(--sage);
+      margin-top: 10px;
+      letter-spacing: 0.04em;
+      line-height: 1.5;
+    }
+
+    /* avatar overlay — circular hero image, half overlapping bottom-left */
+    .x-image .avatar-overlay {
+      position: absolute;
+      left: 36px;
+      bottom: -160px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 7;
+      background: var(--paper);
+      box-shadow:
+        0 0 0 4px var(--paper),
+        0 6px 18px -6px rgba(0,0,0,0.45);
+      transition: opacity 200ms ease;
+    }
+    .x-image .avatar-overlay picture,
+    .x-image .avatar-overlay img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    body.hide-avatar .x-image .avatar-overlay { display: none; }
+
+    /* mobile crop bands — diagonal hatch overlay */
+    .x-image .crop-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 8;
+      display: none;
+    }
+    body.show-crop .x-image .crop-overlay { display: block; }
+    .x-image .crop-overlay .band {
+      position: absolute;
+      left: 0; right: 0;
+      height: 60px;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(168,105,58,0.22) 0 8px,
+        transparent 8px 16px
+      );
+      border-top: 1px solid rgba(168,105,58,0.45);
+      border-bottom: 1px solid rgba(168,105,58,0.45);
+    }
+    .x-image .crop-overlay .band.top { top: 0; }
+    .x-image .crop-overlay .band.bottom { bottom: 0; }
+    .x-image .crop-overlay .label {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: rgba(168,105,58,0.95);
+      background: rgba(244,239,227,0.92);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .x-image .crop-overlay .label.top { top: 22px; left: 50%; transform: translateX(-50%); }
+    .x-image .crop-overlay .label.bottom { bottom: 22px; left: 50%; transform: translateX(-50%); }
+
+    /* controls bar for the preview */
+    .preview-controls {
+      max-width: 1500px;
+      margin: 16px auto 0;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .preview-controls button {
+      font-family: var(--body);
+      font-size: 13px;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+      background: var(--paper);
+      cursor: pointer;
+      color: var(--ink-soft);
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+    .preview-controls button:hover {
+      background: var(--paper-deep);
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+    .preview-controls button.active {
+      background: var(--moss);
+      color: var(--paper);
+      border-color: var(--moss);
+    }
+    .preview-controls .filename {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--sage);
+      letter-spacing: 0.04em;
+      margin-left: auto;
+    }
+
+    @media print {
+      body { padding: 0; background: white; }
+      .page-intro, .frame-label, .preview-controls { display: none; }
+      .card-frame { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-intro">
+    <h1>BitGarth — social assets</h1>
+    <p>Two cards rendered at exact pixel dimensions. To export each as a PNG:</p>
+    <ol>
+      <li>Open this file in Chrome (or any Chromium-based browser).</li>
+      <li>Open DevTools (<code>⌥⌘I</code> on macOS, <code>F12</code> on Windows/Linux).</li>
+      <li>In the <strong>Elements</strong> panel, right-click the <code>&lt;section class="card-frame og"&gt;</code> node → <strong>Capture node screenshot</strong>. Saves a pixel-perfect <code>1200×630</code> PNG.</li>
+      <li>Repeat for <code>&lt;section class="card-frame x"&gt;</code> to get <code>1500×500</code>.</li>
+      <li>Rename the files <code>og-card.png</code> and <code>x-banner.png</code>, drop them into <code>assets/</code>.</li>
+    </ol>
+    <p style="margin-top:0.8rem;"><strong>Tip:</strong> turn the safe-zone overlays on while composing, off before capturing.</p>
+    <p style="margin-top:0.6rem;"><strong>Section iii</strong> is a live preview: drop, click, or paste any candidate banner image onto it to see how it sits with the real avatar and the mobile crop bands. No upload — the image stays in your browser.</p>
+    <div class="controls">
+      <button id="toggle-safe" type="button">Toggle safe zones</button>
+      <button id="toggle-mark" type="button" class="active">Show hero mark on OG</button>
+    </div>
+  </div>
+
+  <!-- ───────────────────── OG CARD · 1200 × 630 ───────────────────── -->
+  <div class="frame-label">
+    <span><span class="num">§ i.</span> &nbsp; Open Graph card</span>
+    <span class="dim">1200 × 630 · og-card.png</span>
+  </div>
+
+  <section class="card-frame og" aria-label="Open Graph card preview">
+    <div class="vignette"></div>
+
+    <!-- hero mark, decorative, atmospheric -->
+    <div class="mark" id="og-mark" aria-hidden="true">
+      <picture>
+        <source srcset="assets/bitgarth-hero.webp" type="image/webp" />
+        <img src="assets/bitgarth-hero.jpg" alt="" />
+      </picture>
+    </div>
+
+    <div class="grain"></div>
+
+    <div class="content">
+      <div class="mast">
+        <span class="wordmark">BitGarth</span>
+        <span class="eyebrow"><em>a clearing in the woods. a garden.</em></span>
+      </div>
+
+      <div class="headline">
+        <h2>
+          A quiet garden<br />
+          <em>for your wallets.</em>
+        </h2>
+        <div class="ornament" aria-hidden="true">
+          <svg width="320" height="22" viewBox="0 0 320 22" fill="none">
+            <path d="M0 11 H128" stroke="currentColor" stroke-width="0.9"/>
+            <path d="M192 11 H320" stroke="currentColor" stroke-width="0.9"/>
+            <path d="M143 11c2-4 6-6 10-3 3 2.5 3 7 0 9-3 2-7 1-10-1z M177 11c-2-4-6-6-10-3-3 2.5-3 7 0 9 3 2 7 1 10-1z" fill="currentColor" opacity="0.85"/>
+            <circle cx="160" cy="11" r="1.9" fill="currentColor"/>
+            <path d="M150 6 c2-3 6-2 8 0" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <path d="M170 16 c-2 3-6 2-8 0" stroke="currentColor" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <p class="tagline">
+          Local-first self-custody accounting for Bitcoin &amp; Ethereum.
+          Exports to plaintext files — readable by hledger, ledger-cli, and any LLM.
+        </p>
+      </div>
+
+      <div class="foot">
+        <span class="url"><span class="arrow">→</span>bitgarth.app</span>
+        <span class="meta">Plain text out. <br />Encrypted in.</span>
+      </div>
+    </div>
+
+    <!-- safe-area overlay -->
+    <div class="safe-overlay"><div class="inner"></div></div>
+  </section>
+
+  <!-- ───────────────────── X BANNER · 1500 × 500 ───────────────────── -->
+  <div class="frame-label">
+    <span><span class="num">§ ii.</span> &nbsp; X / Twitter profile banner</span>
+    <span class="dim">1500 × 500 · x-banner.png</span>
+  </div>
+
+  <section class="card-frame x" aria-label="X banner preview">
+    <div class="vignette"></div>
+
+    <!-- ═══ TOP FRIEZE ═══ -->
+    <div class="frieze top" aria-hidden="true">
+      <svg viewBox="0 0 1500 95" preserveAspectRatio="none">
+        <!-- main undulating horizontal stem (broken for central rosette) -->
+        <path class="stem" d="M -10,55 C 60,42 130,68 200,55 S 350,42 420,55 S 570,68 640,55 L 720,55 M 780,55 L 860,55 C 930,42 1000,68 1070,55 S 1220,42 1290,55 S 1440,68 1510,55"/>
+        <!-- secondary hairline arc above for richness -->
+        <path class="ink-stroke" d="M 50,14 C 200,20 400,10 600,16 S 1000,20 1200,16 S 1400,10 1450,14"/>
+
+        <!-- pos 80: small tendril curl (near avatar zone — sparse) -->
+        <g transform="translate(80,55)">
+          <path class="stem-fine" d="M 0,0 c -6,-6 -8,-18 2,-22 c 6,-2 12,4 8,12"/>
+          <circle class="berry-moss" cx="-4" cy="-22" r="1.8"/>
+          <path class="stem-fine" d="M 0,0 c 0,6 -4,12 -10,14"/>
+          <path class="leaf-sage" d="M -10,14 c -4,4 -4,12 -2,16 c 4,-2 6,-10 2,-16z"/>
+        </g>
+
+        <!-- pos 195: leaf cluster above + berries -->
+        <g transform="translate(195,55)">
+          <path class="leaf" d="M 0,0 c 4,-12 16,-22 26,-14 c 6,5 4,16 -4,20 c -8,4 -22,2 -22,-6z"/>
+          <path class="leaf-bright" d="M 14,-22 c -4,4 -6,10 -4,16"/>
+          <path class="stem-fine" d="M 0,0 c -4,-6 -2,-14 4,-18"/>
+          <circle class="berry-copper" cx="-6" cy="-18" r="2.4"/>
+          <circle class="berry-copper" cx="-2" cy="-24" r="1.6"/>
+        </g>
+
+        <!-- pos 300: berry cluster below -->
+        <g transform="translate(300,55)">
+          <circle class="berry-copper" cx="0" cy="16" r="3"/>
+          <circle class="berry-copper" cx="-7" cy="22" r="2.6"/>
+          <circle class="berry-copper" cx="6" cy="22" r="2.6"/>
+          <circle class="berry-moss" cx="-2" cy="28" r="1.8"/>
+          <path class="stem-fine" d="M 0,0 c -1,5 -2,9 -3,14"/>
+          <path class="stem-fine" d="M 0,0 c 1,5 3,9 5,14"/>
+        </g>
+
+        <!-- pos 410: trefoil leaf above -->
+        <g transform="translate(410,55)">
+          <path class="leaf-sage" d="M 0,0 c -8,-4 -14,-12 -10,-22 c 4,-8 14,-6 18,2 c 4,8 0,18 -8,20z"/>
+          <path class="leaf-bright" d="M 0,0 c 4,-6 10,-8 16,-4 c 6,4 4,14 -4,16 c -8,2 -16,-4 -12,-12z"/>
+          <path class="stem-fine" d="M -4,-12 c -4,-2 -6,-8 -4,-14"/>
+        </g>
+
+        <!-- pos 510: bud + hanging leaf -->
+        <g transform="translate(510,55)">
+          <circle class="berry-copper" cx="0" cy="-12" r="3"/>
+          <path class="stem-fine" d="M 0,-12 c -4,-2 -4,-8 0,-12"/>
+          <path class="leaf" d="M -2,2 c -8,2 -14,10 -14,18 c 6,2 14,-2 18,-12z"/>
+        </g>
+
+        <!-- pos 600: leaf + curl -->
+        <g transform="translate(600,55)">
+          <path class="leaf" d="M 0,0 c -6,-12 4,-22 14,-18 c 8,3 8,16 0,20 c -8,4 -16,4 -14,-2z"/>
+          <path class="stem-fine" d="M 14,-18 c 4,-2 10,0 12,6"/>
+          <circle class="berry-moss" cx="28" cy="-12" r="1.8"/>
+        </g>
+
+        <!-- pos 680: tiny leaf approaching center -->
+        <g transform="translate(680,55)">
+          <path class="leaf-bright" d="M 0,0 c -4,6 -12,8 -16,4 c -2,-6 4,-12 10,-12 c 6,0 8,4 6,8z"/>
+          <path class="stem-fine" d="M 0,0 c 4,2 8,8 6,16"/>
+        </g>
+
+        <!-- ═══ CENTER: rosette ═══ -->
+        <g transform="translate(750,55)">
+          <circle class="leaf" cx="0" cy="0" r="24"/>
+          <g>
+            <ellipse class="petal-bright" cx="0" cy="-22" rx="6" ry="10"/>
+            <ellipse class="petal-bright" cx="0" cy="-22" rx="6" ry="10" transform="rotate(60)"/>
+            <ellipse class="petal-bright" cx="0" cy="-22" rx="6" ry="10" transform="rotate(120)"/>
+            <ellipse class="petal-bright" cx="0" cy="-22" rx="6" ry="10" transform="rotate(180)"/>
+            <ellipse class="petal-bright" cx="0" cy="-22" rx="6" ry="10" transform="rotate(240)"/>
+            <ellipse class="petal-bright" cx="0" cy="-22" rx="6" ry="10" transform="rotate(300)"/>
+          </g>
+          <circle class="leaf" cx="0" cy="0" r="11"/>
+          <circle class="center" cx="0" cy="0" r="7"/>
+          <circle class="center-light" cx="0" cy="0" r="3"/>
+          <circle class="center" cx="0" cy="0" r="1.2"/>
+          <circle class="copper-stroke" cx="0" cy="0" r="32" stroke-dasharray="2 4"/>
+        </g>
+
+        <!-- pos 820: tiny leaf (mirror) -->
+        <g transform="translate(820,55)">
+          <path class="leaf-bright" d="M 0,0 c 4,6 12,8 16,4 c 2,-6 -4,-12 -10,-12 c -6,0 -8,4 -6,8z"/>
+          <path class="stem-fine" d="M 0,0 c -4,2 -8,8 -6,16"/>
+        </g>
+
+        <!-- pos 900: leaf + curl (mirror) -->
+        <g transform="translate(900,55)">
+          <path class="leaf" d="M 0,0 c 6,-12 -4,-22 -14,-18 c -8,3 -8,16 0,20 c 8,4 16,4 14,-2z"/>
+          <path class="stem-fine" d="M -14,-18 c -4,-2 -10,0 -12,6"/>
+          <circle class="berry-moss" cx="-28" cy="-12" r="1.8"/>
+        </g>
+
+        <!-- pos 990: bud + leaf below (mirror) -->
+        <g transform="translate(990,55)">
+          <circle class="berry-copper" cx="0" cy="-12" r="3"/>
+          <path class="stem-fine" d="M 0,-12 c 4,-2 4,-8 0,-12"/>
+          <path class="leaf" d="M 2,2 c 8,2 14,10 14,18 c -6,2 -14,-2 -18,-12z"/>
+        </g>
+
+        <!-- pos 1090: trefoil leaf above (mirror) -->
+        <g transform="translate(1090,55)">
+          <path class="leaf-sage" d="M 0,0 c 8,-4 14,-12 10,-22 c -4,-8 -14,-6 -18,2 c -4,8 0,18 8,20z"/>
+          <path class="leaf-bright" d="M 0,0 c -4,-6 -10,-8 -16,-4 c -6,4 -4,14 4,16 c 8,2 16,-4 12,-12z"/>
+          <path class="stem-fine" d="M 4,-12 c 4,-2 6,-8 4,-14"/>
+        </g>
+
+        <!-- pos 1200: berry cluster below (mirror) -->
+        <g transform="translate(1200,55)">
+          <circle class="berry-copper" cx="0" cy="16" r="3"/>
+          <circle class="berry-copper" cx="-7" cy="22" r="2.6"/>
+          <circle class="berry-copper" cx="6" cy="22" r="2.6"/>
+          <circle class="berry-moss" cx="2" cy="28" r="1.8"/>
+          <path class="stem-fine" d="M 0,0 c -1,5 -2,9 -3,14"/>
+          <path class="stem-fine" d="M 0,0 c 1,5 3,9 5,14"/>
+        </g>
+
+        <!-- pos 1305: leaf cluster above (mirror) -->
+        <g transform="translate(1305,55)">
+          <path class="leaf" d="M 0,0 c -4,-12 -16,-22 -26,-14 c -6,5 -4,16 4,20 c 8,4 22,2 22,-6z"/>
+          <path class="leaf-bright" d="M -14,-22 c 4,4 6,10 4,16"/>
+          <path class="stem-fine" d="M 0,0 c 4,-6 2,-14 -4,-18"/>
+          <circle class="berry-copper" cx="6" cy="-18" r="2.4"/>
+          <circle class="berry-copper" cx="2" cy="-24" r="1.6"/>
+        </g>
+
+        <!-- pos 1430: terminal flourish -->
+        <g transform="translate(1430,55)">
+          <path class="stem-fine" d="M 0,0 c 14,-2 22,-12 22,-26"/>
+          <path class="stem-fine" d="M 22,-26 c 4,-6 12,-4 16,2"/>
+          <circle class="berry-copper" cx="38" cy="-22" r="2"/>
+          <path class="leaf-bright" d="M 22,-26 c -4,4 -4,14 4,16"/>
+          <path class="leaf" d="M 0,0 c 6,4 8,12 4,18 c -6,-2 -8,-10 -4,-18z"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ═══ BOTTOM FRIEZE ═══ -->
+    <div class="frieze bottom" aria-hidden="true">
+      <svg viewBox="0 0 1500 95" preserveAspectRatio="none">
+        <!-- main horizontal stem at y=40 (leaves hang below) -->
+        <path class="stem" d="M -10,40 C 60,55 130,28 200,40 S 350,55 420,40 S 570,28 640,40 L 720,40 M 780,40 L 860,40 C 930,55 1000,28 1070,40 S 1220,55 1290,40 S 1440,28 1510,40"/>
+        <!-- hairline arc below -->
+        <path class="ink-stroke" d="M 50,82 C 200,78 400,84 600,78 S 1000,78 1200,78 S 1400,84 1450,82"/>
+
+        <!-- pos 80: small hanging leaf -->
+        <g transform="translate(80,40)">
+          <path class="leaf-sage" d="M 0,0 c -4,8 -4,18 2,24 c 6,-2 10,-12 6,-22z"/>
+          <path class="stem-fine" d="M 0,0 c 4,4 8,12 6,18"/>
+        </g>
+
+        <!-- pos 195: pendant berry cluster -->
+        <g transform="translate(195,40)">
+          <path class="stem-fine" d="M 0,0 c -2,4 -4,8 -4,16"/>
+          <circle class="berry-copper" cx="-4" cy="20" r="3"/>
+          <circle class="berry-copper" cx="2" cy="26" r="2.6"/>
+          <circle class="berry-copper" cx="-8" cy="28" r="2.4"/>
+          <circle class="berry-moss" cx="-2" cy="34" r="1.8"/>
+        </g>
+
+        <!-- pos 300: leaf cluster hanging -->
+        <g transform="translate(300,40)">
+          <path class="leaf" d="M 0,0 c -8,4 -14,16 -10,28 c 8,2 18,-8 16,-22z"/>
+          <path class="leaf-bright" d="M 4,8 c 8,2 14,12 12,22 c -8,2 -16,-6 -16,-18z"/>
+          <path class="stem-fine" d="M 0,0 c 0,6 2,14 6,18"/>
+        </g>
+
+        <!-- pos 410: leaf above -->
+        <g transform="translate(410,40)">
+          <path class="leaf-bright" d="M 0,0 c 4,-8 14,-12 22,-6 c 4,4 0,14 -8,16 c -8,2 -16,-2 -14,-10z"/>
+          <path class="stem-fine" d="M 0,0 c -4,-4 -4,-10 0,-14"/>
+          <circle class="berry-moss" cx="-2" cy="-16" r="1.8"/>
+        </g>
+
+        <!-- pos 510: curl + bud below -->
+        <g transform="translate(510,40)">
+          <path class="stem-fine" d="M 0,0 c -4,6 -4,14 2,20"/>
+          <circle class="berry-copper" cx="2" cy="22" r="3"/>
+          <path class="leaf-sage" d="M 2,22 c 6,2 12,8 12,16 c -6,2 -14,-4 -16,-14z"/>
+        </g>
+
+        <!-- pos 600: long leaf below -->
+        <g transform="translate(600,40)">
+          <path class="leaf" d="M 0,0 c 8,4 14,16 10,28 c -8,2 -18,-8 -16,-22z"/>
+          <path class="stem-fine" d="M 6,12 c -2,4 -4,10 -2,14"/>
+        </g>
+
+        <!-- pos 680: small leaf approaching center -->
+        <g transform="translate(680,40)">
+          <path class="leaf-sage" d="M 0,0 c 2,8 8,14 14,12 c 2,-6 -4,-14 -10,-14z"/>
+          <path class="stem-fine" d="M 0,0 c -2,4 -2,10 0,14"/>
+        </g>
+
+        <!-- ═══ CENTER: quatrefoil medallion ═══ -->
+        <g transform="translate(750,40)">
+          <g class="petal">
+            <circle cx="0" cy="-12" r="14"/>
+            <circle cx="12" cy="0" r="14"/>
+            <circle cx="0" cy="12" r="14"/>
+            <circle cx="-12" cy="0" r="14"/>
+          </g>
+          <g class="petal-bright">
+            <circle cx="0" cy="-10" r="8"/>
+            <circle cx="10" cy="0" r="8"/>
+            <circle cx="0" cy="10" r="8"/>
+            <circle cx="-10" cy="0" r="8"/>
+          </g>
+          <circle class="center" cx="0" cy="0" r="9"/>
+          <circle class="center-light" cx="0" cy="0" r="4"/>
+          <circle class="center" cx="0" cy="0" r="1.6"/>
+          <!-- four tiny accent dots between lobes -->
+          <circle class="berry-copper" cx="10" cy="-10" r="1.6"/>
+          <circle class="berry-copper" cx="-10" cy="-10" r="1.6"/>
+          <circle class="berry-copper" cx="10" cy="10" r="1.6"/>
+          <circle class="berry-copper" cx="-10" cy="10" r="1.6"/>
+          <circle class="copper-stroke" cx="0" cy="0" r="34" stroke-dasharray="2 4"/>
+        </g>
+
+        <!-- pos 820: small leaf (mirror) -->
+        <g transform="translate(820,40)">
+          <path class="leaf-sage" d="M 0,0 c -2,8 -8,14 -14,12 c -2,-6 4,-14 10,-14z"/>
+          <path class="stem-fine" d="M 0,0 c 2,4 2,10 0,14"/>
+        </g>
+
+        <!-- pos 900: long leaf below (mirror) -->
+        <g transform="translate(900,40)">
+          <path class="leaf" d="M 0,0 c -8,4 -14,16 -10,28 c 8,2 18,-8 16,-22z"/>
+          <path class="stem-fine" d="M -6,12 c 2,4 4,10 2,14"/>
+        </g>
+
+        <!-- pos 990: curl + bud below (mirror) -->
+        <g transform="translate(990,40)">
+          <path class="stem-fine" d="M 0,0 c 4,6 4,14 -2,20"/>
+          <circle class="berry-copper" cx="-2" cy="22" r="3"/>
+          <path class="leaf-sage" d="M -2,22 c -6,2 -12,8 -12,16 c 6,2 14,-4 16,-14z"/>
+        </g>
+
+        <!-- pos 1090: leaf above (mirror) -->
+        <g transform="translate(1090,40)">
+          <path class="leaf-bright" d="M 0,0 c -4,-8 -14,-12 -22,-6 c -4,4 0,14 8,16 c 8,2 16,-2 14,-10z"/>
+          <path class="stem-fine" d="M 0,0 c 4,-4 4,-10 0,-14"/>
+          <circle class="berry-moss" cx="2" cy="-16" r="1.8"/>
+        </g>
+
+        <!-- pos 1200: leaf cluster hanging (mirror) -->
+        <g transform="translate(1200,40)">
+          <path class="leaf" d="M 0,0 c 8,4 14,16 10,28 c -8,2 -18,-8 -16,-22z"/>
+          <path class="leaf-bright" d="M -4,8 c -8,2 -14,12 -12,22 c 8,2 16,-6 16,-18z"/>
+          <path class="stem-fine" d="M 0,0 c 0,6 -2,14 -6,18"/>
+        </g>
+
+        <!-- pos 1305: pendant berry cluster (mirror) -->
+        <g transform="translate(1305,40)">
+          <path class="stem-fine" d="M 0,0 c 2,4 4,8 4,16"/>
+          <circle class="berry-copper" cx="4" cy="20" r="3"/>
+          <circle class="berry-copper" cx="-2" cy="26" r="2.6"/>
+          <circle class="berry-copper" cx="8" cy="28" r="2.4"/>
+          <circle class="berry-moss" cx="2" cy="34" r="1.8"/>
+        </g>
+
+        <!-- pos 1430: terminal flourish (down-pointing) -->
+        <g transform="translate(1430,40)">
+          <path class="stem-fine" d="M 0,0 c 14,-2 22,12 22,26"/>
+          <path class="stem-fine" d="M 22,26 c 4,6 12,4 16,-2"/>
+          <circle class="berry-copper" cx="38" cy="22" r="2"/>
+          <path class="leaf-bright" d="M 22,26 c -4,-4 -4,-14 4,-16"/>
+          <path class="leaf" d="M 0,0 c 6,-4 8,-12 4,-18 c -6,2 -8,10 -4,18z"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ═══ LEFT ENDPIECE (sparse — avatar overlaps) ═══ -->
+    <div class="endpiece left" aria-hidden="true">
+      <svg viewBox="0 0 86 310" preserveAspectRatio="none">
+        <path class="stem" d="M 30,0 C 25,40 40,80 35,140 C 30,200 50,240 40,310"/>
+        <path class="leaf" d="M 30,40 c -10,4 -14,14 -10,24 c 8,-2 12,-12 10,-24z"/>
+        <path class="leaf-sage" d="M 35,90 c 10,4 14,14 10,24 c -8,-2 -12,-12 -10,-24z"/>
+        <circle class="berry-copper" cx="38" cy="160" r="2.4"/>
+        <circle class="berry-copper" cx="34" cy="166" r="2"/>
+        <path class="leaf" d="M 40,200 c -10,2 -16,12 -12,22 c 8,0 14,-10 12,-22z"/>
+        <path class="stem-fine" d="M 40,240 c 8,8 10,20 6,30"/>
+        <path class="leaf-sage" d="M 46,270 c -8,2 -14,10 -10,18 c 6,0 12,-8 10,-18z"/>
+      </svg>
+    </div>
+
+    <!-- ═══ RIGHT ENDPIECE (denser) ═══ -->
+    <div class="endpiece right" aria-hidden="true">
+      <svg viewBox="0 0 86 310" preserveAspectRatio="none">
+        <path class="stem" d="M 56,0 C 50,40 65,80 56,140 C 50,200 65,240 56,310"/>
+        <path class="leaf" d="M 56,30 c 10,4 14,14 10,24 c -8,-2 -12,-12 -10,-24z"/>
+        <path class="leaf-bright" d="M 56,30 c -8,2 -12,10 -8,18 c 6,-2 10,-8 8,-18z"/>
+        <g transform="translate(56,80)">
+          <circle class="berry-copper" cx="0" cy="0" r="2.4"/>
+          <circle class="berry-copper" cx="6" cy="6" r="2"/>
+          <circle class="berry-copper" cx="-4" cy="8" r="2"/>
+        </g>
+        <path class="leaf" d="M 60,110 c -10,4 -14,14 -10,24 c 8,-2 12,-12 10,-24z"/>
+        <path class="leaf-sage" d="M 56,150 c 8,4 12,12 10,20 c -6,0 -12,-8 -10,-20z"/>
+        <g transform="translate(58,180)">
+          <path class="leaf" d="M 0,0 c 8,2 12,12 8,22 c -6,-2 -10,-12 -8,-22z"/>
+          <circle class="berry-copper" cx="6" cy="14" r="2"/>
+        </g>
+        <path class="leaf-bright" d="M 56,230 c -10,2 -16,12 -12,22 c 8,0 14,-10 12,-22z"/>
+        <circle class="berry-moss" cx="56" cy="262" r="1.8"/>
+        <path class="leaf-sage" d="M 56,278 c 8,2 14,10 10,20 c -6,0 -12,-8 -10,-20z"/>
+        <path class="stem-fine" d="M 56,298 c 6,4 10,10 8,16"/>
+      </svg>
+    </div>
+
+    <div class="grain"></div>
+
+    <!-- ═══ CENTRAL CARTOUCHE ═══ -->
+    <div class="cartouche">
+      <div class="cartouche-frame" aria-hidden="true">
+        <svg viewBox="0 0 880 280" preserveAspectRatio="none">
+          <!-- inner wash darker than parchment -->
+          <rect x="14" y="14" width="852" height="252" rx="2" fill="#ebe3d2" opacity="0.55"/>
+          <!-- outer rule -->
+          <rect x="8" y="8" width="864" height="264" rx="3" fill="none" stroke="#2f4a30" stroke-width="1.2" opacity="0.9"/>
+          <!-- inner thin rule (double-line effect) -->
+          <rect x="14" y="14" width="852" height="252" rx="2" fill="none" stroke="#2f4a30" stroke-width="0.6" opacity="0.5"/>
+
+          <!-- corner ornaments — repeated via transforms -->
+          <g>
+            <!-- TL -->
+            <g transform="translate(22,22)">
+              <path fill="#2f4a30" d="M 0,18 c 0,-10 8,-18 18,-18 c -2,8 -8,14 -18,18z"/>
+              <path fill="#4a7a4d" d="M 8,12 c 0,-6 4,-10 10,-12 c -2,6 -6,10 -10,12z" opacity="0.92"/>
+              <circle fill="#a8693a" cx="16" cy="4" r="2.4"/>
+              <path stroke="#2f4a30" stroke-width="0.7" fill="none" d="M 22,0 c 4,2 6,6 6,12"/>
+              <circle fill="#a8693a" cx="28" cy="14" r="1.6"/>
+            </g>
+            <!-- TR -->
+            <g transform="translate(858,22) scale(-1,1)">
+              <path fill="#2f4a30" d="M 0,18 c 0,-10 8,-18 18,-18 c -2,8 -8,14 -18,18z"/>
+              <path fill="#4a7a4d" d="M 8,12 c 0,-6 4,-10 10,-12 c -2,6 -6,10 -10,12z" opacity="0.92"/>
+              <circle fill="#a8693a" cx="16" cy="4" r="2.4"/>
+              <path stroke="#2f4a30" stroke-width="0.7" fill="none" d="M 22,0 c 4,2 6,6 6,12"/>
+              <circle fill="#a8693a" cx="28" cy="14" r="1.6"/>
+            </g>
+            <!-- BL -->
+            <g transform="translate(22,258) scale(1,-1)">
+              <path fill="#2f4a30" d="M 0,18 c 0,-10 8,-18 18,-18 c -2,8 -8,14 -18,18z"/>
+              <path fill="#4a7a4d" d="M 8,12 c 0,-6 4,-10 10,-12 c -2,6 -6,10 -10,12z" opacity="0.92"/>
+              <circle fill="#a8693a" cx="16" cy="4" r="2.4"/>
+              <path stroke="#2f4a30" stroke-width="0.7" fill="none" d="M 22,0 c 4,2 6,6 6,12"/>
+              <circle fill="#a8693a" cx="28" cy="14" r="1.6"/>
+            </g>
+            <!-- BR -->
+            <g transform="translate(858,258) scale(-1,-1)">
+              <path fill="#2f4a30" d="M 0,18 c 0,-10 8,-18 18,-18 c -2,8 -8,14 -18,18z"/>
+              <path fill="#4a7a4d" d="M 8,12 c 0,-6 4,-10 10,-12 c -2,6 -6,10 -10,12z" opacity="0.92"/>
+              <circle fill="#a8693a" cx="16" cy="4" r="2.4"/>
+              <path stroke="#2f4a30" stroke-width="0.7" fill="none" d="M 22,0 c 4,2 6,6 6,12"/>
+              <circle fill="#a8693a" cx="28" cy="14" r="1.6"/>
+            </g>
+          </g>
+
+          <!-- top center: rosette breaking the border -->
+          <g transform="translate(440,8)">
+            <circle fill="#f4efe3" cx="0" cy="0" r="13"/>
+            <circle fill="#2f4a30" cx="0" cy="0" r="11" opacity="0.55"/>
+            <circle fill="#a8693a" cx="0" cy="0" r="6"/>
+            <circle fill="#f4efe3" cx="0" cy="0" r="2.6"/>
+            <circle fill="#a8693a" cx="0" cy="0" r="1"/>
+            <path stroke="#a8693a" stroke-width="0.9" fill="none" d="M -14,0 L -24,0 M 14,0 L 24,0"/>
+            <path stroke="#a8693a" stroke-width="0.9" fill="none" d="M 0,-12 L 0,-18"/>
+          </g>
+
+          <!-- bottom center: rosette breaking the border -->
+          <g transform="translate(440,272)">
+            <circle fill="#f4efe3" cx="0" cy="0" r="13"/>
+            <circle fill="#2f4a30" cx="0" cy="0" r="11" opacity="0.55"/>
+            <circle fill="#a8693a" cx="0" cy="0" r="6"/>
+            <circle fill="#f4efe3" cx="0" cy="0" r="2.6"/>
+            <circle fill="#a8693a" cx="0" cy="0" r="1"/>
+            <path stroke="#a8693a" stroke-width="0.9" fill="none" d="M -14,0 L -24,0 M 14,0 L 24,0"/>
+            <path stroke="#a8693a" stroke-width="0.9" fill="none" d="M 0,12 L 0,18"/>
+          </g>
+
+          <!-- mid-side tiny leaf accents -->
+          <g transform="translate(8,140)">
+            <circle fill="#a8693a" cx="0" cy="0" r="3"/>
+            <path fill="#2f4a30" d="M -4,0 c -6,-2 -8,-8 -2,-12 c 4,-2 8,2 6,8z"/>
+            <path fill="#2f4a30" d="M -4,0 c -6,2 -8,8 -2,12 c 4,2 8,-2 6,-8z"/>
+          </g>
+          <g transform="translate(872,140) scale(-1,1)">
+            <circle fill="#a8693a" cx="0" cy="0" r="3"/>
+            <path fill="#2f4a30" d="M -4,0 c -6,-2 -8,-8 -2,-12 c 4,-2 8,2 6,8z"/>
+            <path fill="#2f4a30" d="M -4,0 c -6,2 -8,8 -2,12 c 4,2 8,-2 6,-8z"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="cartouche-body">
+        <div class="drop-row">
+          <span class="drop-cap" aria-hidden="true">A<svg class="filigree" viewBox="0 0 58 38" fill="none">
+              <path d="M 6,30 c -4,-4 -4,-14 4,-20 c 6,-4 14,0 16,6" stroke="currentColor" stroke-width="1.1" fill="none"/>
+              <circle cx="26" cy="16" r="2" fill="currentColor"/>
+              <path d="M 26,16 c 6,-2 14,2 16,8" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M 42,24 c 4,0 8,4 6,10" stroke="currentColor" stroke-width="0.9" fill="none"/>
+              <circle cx="48" cy="34" r="1.4" fill="currentColor"/>
+            </svg></span>
+          <p class="tagline">
+            <span class="sr-only">A </span>clearing in the woods —<br />
+            a garden for your <em>numbers</em> to live.
+          </p>
+        </div>
+        <div class="url-rule" aria-hidden="true">
+          <div class="rule"></div>
+          <span class="center-mark">
+            <span class="pip"></span>
+            bitgarth.app
+            <span class="pip"></span>
+          </span>
+          <div class="rule"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- safe-area overlay -->
+    <div class="safe-overlay">
+      <div class="avatar-circle"></div>
+      <div class="crop-band-top"></div>
+      <div class="crop-band-bottom"></div>
+      <span class="label top">mobile may crop this band</span>
+      <span class="label bottom">mobile may crop this band</span>
+    </div>
+  </section>
+
+  <!-- ───────────────── X BANNER · IMAGE CANDIDATE PREVIEW · 1500 × 500 ───────────────── -->
+  <div class="frame-label">
+    <span><span class="num">§ iii.</span> &nbsp; X banner — image candidate preview</span>
+    <span class="dim">drop, click, or paste an image · 1500 × 500</span>
+  </div>
+
+  <section class="card-frame x-image" id="x-image" aria-label="X banner image candidate preview">
+    <div class="dropzone" id="x-dropzone">
+      <div class="dropzone-inner">
+        <svg class="upload" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 16V4M12 4l-5 5M12 4l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <p><em>drop a banner candidate here</em></p>
+        <p class="hint">click to choose · or paste from clipboard · jpg, png, webp · ideally 1500×500</p>
+      </div>
+    </div>
+
+    <input type="file" id="x-image-input" accept="image/*" hidden />
+
+    <!-- live avatar overlay (the real hero image) -->
+    <div class="avatar-overlay" aria-hidden="true">
+      <picture>
+        <source srcset="assets/bitgarth-hero.webp" type="image/webp" />
+        <img src="assets/bitgarth-hero.jpg" alt="" />
+      </picture>
+    </div>
+
+    <!-- mobile crop bands -->
+    <div class="crop-overlay">
+      <div class="band top"></div>
+      <div class="band bottom"></div>
+      <span class="label top">mobile may crop this band</span>
+      <span class="label bottom">mobile may crop this band</span>
+    </div>
+  </section>
+
+  <div class="preview-controls" role="toolbar" aria-label="Preview controls">
+    <button id="x-toggle-avatar" type="button" class="active">Toggle avatar</button>
+    <button id="x-toggle-crop" type="button" class="active">Toggle mobile crop bands</button>
+    <button id="x-clear" type="button">Clear image</button>
+    <span class="filename" id="x-filename"></span>
+  </div>
+
+  <script>
+    document.getElementById("toggle-safe").addEventListener("click", function () {
+      document.body.classList.toggle("show-safe");
+      this.classList.toggle("active");
+    });
+    document.getElementById("toggle-mark").addEventListener("click", function () {
+      var mark = document.getElementById("og-mark");
+      var hidden = mark.style.display === "none";
+      mark.style.display = hidden ? "" : "none";
+      this.classList.toggle("active", hidden);
+    });
+
+    // ─── X banner image-candidate preview ──────────────────────────────
+    (function () {
+      var card     = document.getElementById("x-image");
+      var dropzone = document.getElementById("x-dropzone");
+      var input    = document.getElementById("x-image-input");
+      var filename = document.getElementById("x-filename");
+      var clearBtn = document.getElementById("x-clear");
+      var avatarBtn = document.getElementById("x-toggle-avatar");
+      var cropBtn   = document.getElementById("x-toggle-crop");
+
+      // crop bands on by default to match button .active state
+      document.body.classList.add("show-crop");
+
+      function loadFile(file) {
+        if (!file || !/^image\//.test(file.type)) return;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          card.style.backgroundImage = "url(" + JSON.stringify(e.target.result) + ")";
+          card.classList.add("has-image");
+          filename.textContent = file.name || "(pasted image)";
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // click anywhere on the dropzone → file picker
+      dropzone.addEventListener("click", function () { input.click(); });
+      input.addEventListener("change", function (e) {
+        if (e.target.files && e.target.files[0]) loadFile(e.target.files[0]);
+      });
+
+      // drag & drop on the whole card (so you can drop onto the existing image too)
+      ["dragenter", "dragover"].forEach(function (ev) {
+        card.addEventListener(ev, function (e) {
+          e.preventDefault();
+          dropzone.classList.add("drag-over");
+        });
+      });
+      ["dragleave", "drop"].forEach(function (ev) {
+        card.addEventListener(ev, function () {
+          dropzone.classList.remove("drag-over");
+        });
+      });
+      card.addEventListener("drop", function (e) {
+        e.preventDefault();
+        if (e.dataTransfer && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+      });
+
+      // clipboard paste anywhere on the page
+      document.addEventListener("paste", function (e) {
+        if (!e.clipboardData) return;
+        var items = e.clipboardData.items || [];
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].type && items[i].type.indexOf("image/") === 0) {
+            loadFile(items[i].getAsFile());
+            break;
+          }
+        }
+      });
+
+      clearBtn.addEventListener("click", function () {
+        card.style.backgroundImage = "";
+        card.classList.remove("has-image");
+        input.value = "";
+        filename.textContent = "";
+      });
+
+      avatarBtn.addEventListener("click", function () {
+        document.body.classList.toggle("hide-avatar");
+        this.classList.toggle("active", !document.body.classList.contains("hide-avatar"));
+      });
+
+      cropBtn.addEventListener("click", function () {
+        document.body.classList.toggle("show-crop");
+        this.classList.toggle("active", document.body.classList.contains("show-crop"));
+      });
+    })();
+  </script>
+</body>
+</html>
