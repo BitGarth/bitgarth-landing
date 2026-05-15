@@ -130,9 +130,7 @@
       padding-block: 0.95rem;
     }
     .wordmark {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
+      display: inline-block;
       font-family: var(--display);
       font-style: italic;
       font-size: 1.35rem;
@@ -141,12 +139,6 @@
       color: var(--ink);
       background: none !important;
     }
-    .wordmark .glyph {
-      width: 1.5rem;
-      height: 1.5rem;
-      color: var(--moss);
-    }
-    .wordmark .ampersand { font-style: italic; color: var(--moss); }
 
     nav.primary {
       display: flex;
@@ -740,10 +732,6 @@
   <header class="site-header" role="banner">
     <div class="wrap">
       <a class="wordmark" href="#top" aria-label="BitGarth — home">
-        <svg class="glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 21c0-4.5-2.2-7.2-5.6-8.3C9.2 12 11 9.8 12 6c1 3.8 2.8 6 5.6 6.7C14.2 13.8 12 16.5 12 21z" fill="currentColor"/>
-          <path d="M12 21V3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-        </svg>
         BitGarth
       </a>
       <nav class="primary" aria-label="Primary">
@@ -1010,10 +998,6 @@
     <div class="wrap">
       <div class="colophon">
         <span class="wordmark" style="color: color-mix(in srgb, var(--paper) 90%, transparent);">
-          <svg class="glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="color: var(--copper-soft);">
-            <path d="M12 21c0-4.5-2.2-7.2-5.6-8.3C9.2 12 11 9.8 12 6c1 3.8 2.8 6 5.6 6.7C14.2 13.8 12 16.5 12 21z" fill="currentColor"/>
-            <path d="M12 21V3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-          </svg>
           BitGarth
         </span>
         <p>A clearing in the woods. A garden. A quiet place for your numbers to live.</p>
