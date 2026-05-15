@@ -213,6 +213,29 @@
     .hero {
       padding-block: clamp(4rem, 10vw, 8rem) clamp(2rem, 6vw, 4rem);
       position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .hero .wrap { position: relative; z-index: 1; }
+    .hero-mark {
+      position: absolute;
+      top: 50%;
+      right: clamp(-160px, -5vw, -40px);
+      transform: translateY(-50%) rotate(-3deg);
+      width: clamp(440px, 56vw, 720px);
+      margin: 0;
+      z-index: 0;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      opacity: 0.6;
+    }
+    .hero-mark img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    @media (max-width: 720px) {
+      .hero-mark { display: none; }
     }
     .hero .eyebrow {
       font-family: var(--display);
@@ -742,37 +765,46 @@
 
     <!-- ─────────────────── hero ─────────────────── -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="wrap reveal">
-        <p class="eyebrow"><em>garth, noun:&nbsp; a clearing in the woods. A garden.</em></p>
-        <h1 id="hero-title">
-          Your wallets,<br />
-          <em>in a quiet garden<br />of your own.</em>
-        </h1>
-        <p class="lede">
-          BitGarth downloads your Bitcoin and Ethereum self-custody transactions into a
-          local, encrypted database on your computer — then exports them as plain-text
-          accounting files which your tools, your accountant, and your AI can actually read.
-        </p>
-        <div class="ctas">
-          <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
-            Try the demo
-            <span class="arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="btn ghost" href="#install">
-            Install with Docker
-          </a>
-          <span class="footnote">No email. No tracking.</span>
-        </div>
-        <div class="ornament" aria-hidden="true">
-          <!-- hairline vine flourish -->
-          <svg width="260" height="22" viewBox="0 0 260 22" fill="none">
-            <path d="M0 11 H100" stroke="currentColor" stroke-width="0.8"/>
-            <path d="M160 11 H260" stroke="currentColor" stroke-width="0.8"/>
-            <path d="M115 11c2-4 6-6 10-3 3 2.5 3 7 0 9-3 2-7 1-10-1z M145 11c-2-4-6-6-10-3-3 2.5-3 7 0 9 3 2 7 1 10-1z" fill="currentColor" opacity="0.85"/>
-            <circle cx="130" cy="11" r="1.7" fill="currentColor"/>
-            <path d="M122 6 c2-3 6-2 8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
-            <path d="M138 16 c-2 3-6 2-8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
-          </svg>
+      <picture class="hero-mark" aria-hidden="true">
+        <source srcset="assets/bitgarth-hero.webp" type="image/webp" />
+        <img src="assets/bitgarth-hero.jpg"
+             alt=""
+             width="800" height="800"
+             decoding="async" />
+      </picture>
+      <div class="wrap">
+        <div class="reveal">
+          <p class="eyebrow"><em>garth, noun:&nbsp; a clearing in the woods. A garden.</em></p>
+          <h1 id="hero-title">
+            Your wallets,<br />
+            <em>in a quiet garden<br />of your own.</em>
+          </h1>
+          <p class="lede">
+            BitGarth downloads your Bitcoin and Ethereum self-custody transactions into a
+            local, encrypted database on your computer — then exports them as plain-text
+            accounting files which your tools, your accountant, and your AI can actually read.
+          </p>
+          <div class="ctas">
+            <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
+              Try the demo
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="btn ghost" href="#install">
+              Install with Docker
+            </a>
+            <span class="footnote">No email. No tracking.</span>
+          </div>
+          <div class="ornament" aria-hidden="true">
+            <!-- hairline vine flourish -->
+            <svg width="260" height="22" viewBox="0 0 260 22" fill="none">
+              <path d="M0 11 H100" stroke="currentColor" stroke-width="0.8"/>
+              <path d="M160 11 H260" stroke="currentColor" stroke-width="0.8"/>
+              <path d="M115 11c2-4 6-6 10-3 3 2.5 3 7 0 9-3 2-7 1-10-1z M145 11c-2-4-6-6-10-3-3 2.5-3 7 0 9 3 2 7 1 10-1z" fill="currentColor" opacity="0.85"/>
+              <circle cx="130" cy="11" r="1.7" fill="currentColor"/>
+              <path d="M122 6 c2-3 6-2 8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+              <path d="M138 16 c-2 3-6 2-8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            </svg>
+          </div>
         </div>
       </div>
     </section>
