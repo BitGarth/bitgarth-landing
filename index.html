@@ -514,6 +514,35 @@
     .code-card .tok-cmd  { color: #ece5d2; }
     .code-card .tok-img  { color: #d8a877; font-weight: 500; }
     .code-card .tok-dim  { color: #6b7568; }
+    /* purely-decorative line-continuations — stripped on copy so the command
+       pastes as one line and works in any shell, including Windows cmd.exe */
+    .code-card .tok-cont {
+      color: color-mix(in srgb, #6b7568 65%, transparent);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .copy-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin: 0.9rem 0 0;
+      font-family: var(--body);
+      font-size: 0.82rem;
+      color: var(--sage);
+      letter-spacing: 0.005em;
+    }
+    .copy-note em {
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: 0.92em;
+      color: color-mix(in srgb, var(--ink) 70%, var(--sage));
+      background: color-mix(in srgb, var(--ink) 6%, transparent);
+      padding: 0.05em 0.38em;
+      border-radius: 3px;
+      margin: 0 0.08rem;
+    }
+    .copy-note svg { flex: none; opacity: 0.7; }
 
     .copy-btn {
       position: absolute;
@@ -982,11 +1011,17 @@
             </svg>
             <span class="label">Copy</span>
           </button>
-<pre id="install-cmd"><span class="tok-cmd">docker</span> <span class="tok-cmd">run</span> <span class="tok-flag">-d</span> <span class="tok-dim">\</span>
-  <span class="tok-flag">-p</span> <span class="tok-str">8080:8080</span> <span class="tok-dim">\</span>
-  <span class="tok-flag">-v</span> <span class="tok-str">bitgarth-data:/data</span> <span class="tok-dim">\</span>
-  <span class="tok-flag">--name</span> <span class="tok-str">bitgarth</span> <span class="tok-dim">\</span>
+<pre id="install-cmd" data-oneline="docker run -d -p 8080:8080 -v bitgarth-data:/data --name bitgarth bitgarth/bitgarth:latest"><span class="tok-cmd">docker</span> <span class="tok-cmd">run</span> <span class="tok-flag">-d</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">-p</span> <span class="tok-str">8080:8080</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">-v</span> <span class="tok-str">bitgarth-data:/data</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">--name</span> <span class="tok-str">bitgarth</span> <span class="tok-cont" aria-hidden="true"> \</span>
   <span class="tok-img">bitgarth/bitgarth:latest</span></pre>
+          <p class="copy-note">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="13" height="13">
+              <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            Copies as a single line — pastes cleanly into <em>bash</em>, <em>zsh</em>, <em>PowerShell</em>, or <em>cmd.exe</em>.
+          </p>
         </div>
 
         <p class="after">
@@ -1129,12 +1164,18 @@
       if (y) y.textContent = String(new Date().getFullYear());
 
       // copy-to-clipboard handlers
+      // Always copy a single-line version of the command so it pastes cleanly
+      // in bash, zsh, PowerShell, and Windows cmd.exe — none of which agree on
+      // how to do line continuations.
       function getCommandText(target) {
         var el = document.getElementById(target);
         if (!el) return "";
-        // Walk the pre and reconstruct the command, dropping the trailing backslashes for cleaner pasting.
-        var raw = el.innerText.replace(/ /g, " ");
-        return raw;
+        if (el.dataset && el.dataset.oneline) return el.dataset.oneline;
+        // Fallback: strip " \" continuations and collapse whitespace.
+        return el.innerText
+          .replace(/\s*\\\s*\n\s*/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
       }
 
       function flash(btn) {
