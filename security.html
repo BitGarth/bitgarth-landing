@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Security &amp; Privacy | BitGarth</title>
+  <meta name="description" content="How BitGarth protects wallet data, encrypted user storage, app account records, exports, network requests, and payment privacy." />
+  <link rel="canonical" href="https://bitgarth.app/security.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="any" />
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
+    @font-face { font-family: 'Instrument Sans'; src: url('assets/fonts/instrument-sans-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+    :root { --paper:#f4efe3; --paper-deep:#ebe3d2; --ink:#1a1f1a; --ink-soft:#2e352e; --moss:#2f4a30; --copper:#a8693a; --display:"Fraunces","Times New Roman",serif; --body:"Instrument Sans",system-ui,sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.65; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.3; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); mix-blend-mode: multiply; }
+    header, main, footer { position: relative; z-index: 1; }
+    .wrap { width: min(100% - 2.5rem, 58rem); margin: 0 auto; }
+    header { border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); background: color-mix(in srgb, var(--paper) 88%, transparent); }
+    header .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; padding-block: 1rem; }
+    .wordmark { font-family: var(--display); font-style: italic; font-size: 1.35rem; color: var(--ink); text-decoration: none; }
+    nav { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.95rem; }
+    a { color: var(--moss); text-decoration: none; background-image: linear-gradient(currentColor,currentColor); background-position: 0 100%; background-repeat: no-repeat; background-size: 0 1px; transition: background-size 180ms ease; }
+    a:hover, a:focus-visible { background-size: 100% 1px; }
+    .hero { padding: clamp(4rem, 10vw, 7rem) 0 2.5rem; }
+    .eyebrow { color: var(--copper); font-family: var(--display); font-style: italic; margin: 0 0 0.75rem; }
+    h1, h2 { font-family: var(--display); font-weight: 500; line-height: 1.08; margin: 0; }
+    h1 { font-size: clamp(3rem, 9vw, 6.5rem); max-width: 11ch; }
+    h1 em, h2 em { color: var(--moss); font-style: italic; font-weight: 400; }
+    .lede { max-width: 42rem; margin-top: 1.25rem; color: var(--ink-soft); font-size: clamp(1.1rem, 2vw, 1.25rem); }
+    article { padding: 2rem 0 4rem; }
+    section { border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); padding: 2rem 0; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); margin-bottom: 0.8rem; }
+    p, li { color: var(--ink-soft); }
+    ul { padding-left: 1.2rem; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+    footer { background: var(--ink); color: color-mix(in srgb, var(--paper) 75%, transparent); padding: 2rem 0; }
+    footer .wrap { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between; }
+    footer a { color: color-mix(in srgb, var(--paper) 88%, transparent); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="wordmark" href="/">BitGarth</a>
+      <nav aria-label="Legal pages">
+        <a href="security.html" aria-current="page">Security</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="hero">
+        <p class="eyebrow">Security &amp; Privacy</p>
+        <h1>Security <em>&amp; Privacy</em></h1>
+        <p class="lede">BitGarth is built for people who do not want their financial life pooled into someone else's database.</p>
+      </div>
+
+      <article>
+        <section>
+          <p>Your wallet data, transaction history, labels, settings, and saved API keys live in your encrypted user database. Transaction exports and backups are encrypted by default, although you can export them unencrypted when you need to.</p>
+          <p>BitGarth does not need your name, email address, seed phrase, private keys, or exchange login passwords to use the app. It only needs public wallet information, such as Bitcoin addresses, xpubs, and Ethereum addresses. That is enough to sync transaction history without ever being able to move funds.</p>
+        </section>
+        <section><h2>What BitGarth Protects Against</h2><p>BitGarth reduces the risk of exposing your portfolio to hosted crypto trackers, tax SaaS platforms, cloud aggregators, and data brokers.</p><p>Because private financial data stays in your app instance, there is no central BitGarth account database containing everyone's wallet balances, transaction histories, labels, or identity details. There is no marketing profile to build, and no email list required to use the app.</p><p>The app is designed around a simple rule: if BitGarth does not need a piece of information, it should not collect it.</p></section>
+        <section><h2>What BitGarth Does Not Need For Wallet Sync</h2><p>BitGarth does not need:</p><ul><li>Seed phrases</li><li>Private keys</li><li>Signing keys</li><li>Exchange login passwords</li><li>Custodial withdrawal access</li><li>Your legal name or address for wallet sync</li><li>Your email address to use the app</li></ul><p>Public addresses and extended public keys can reveal transaction history, so they still deserve care. BitGarth uses internal IDs in URLs so addresses and xpubs are not exposed through browser history, cached pages, or proxy logs.</p><p>Public wallet data cannot spend funds. BitGarth treats it as sensitive financial data without turning it into custody risk.</p><p>Future exchange support will use API keys instead of exchange login passwords. Those API keys will be saved in your encrypted user database, like the Etherscan API key BitGarth can store today.</p></section>
+        <section><h2>Encrypted User Storage</h2><p>Your private BitGarth data is stored in a SQLCipher-encrypted SQLite user database.</p><p>The user database is protected by a randomly generated 256-bit data encryption key. Your password is used to derive a key with Argon2id. That derived key wraps the database encryption key, so changing your password can re-wrap the key without rewriting the entire database.</p><p>Your password unlocks the user database. BitGarth cannot recover it for you. If you lose the password and do not have an export or backup, you will need to re-add and re-sync your wallets. Encrypted exports and backups are there to make that avoidable.</p></section>
+        <section><h2>App Account Records</h2><p>BitGarth also has an app database for login records and app-level metadata. This app database is not encrypted.</p><p>The app database can contain your app username, login metadata, and the fact that your app account acknowledged a specific version of the Terms and Privacy Notice. It should not contain wallet addresses, transaction history, balances, labels, saved API keys, invoice details, or other private financial records.</p><p>If you run BitGarth yourself, this app database stays with your app instance and is not sent to BitGarth. If you use a BitGarth-hosted app in the future, BitGarth may operate the app database for that hosted service and keep the minimum records needed to run it.</p></section>
+        <section><h2>What BitGarth Knows About You</h2><p>BitGarth does not need your name, address, or email address to use the app.</p><p>For paid plans, BitGarth needs enough information to recognize payment history. It uses a privacy-preserving anonymous payment ID that is separate from your app user ID. That lets the app retrieve your payment status without building a normal identity account around you.</p><p>Cryptocurrency payments have different privacy properties depending on the asset and network used. If you want the strongest payment privacy among supported options, you can pay with Monero.</p><p>If BitGarth adds invoice support, invoice details will be entered inside the app. You will choose whether to save them, and saved invoice details will live in your encrypted user database rather than in a central BitGarth account.</p></section>
+        <section><h2>What BitGarth Does Not Protect Against</h2><p>BitGarth is not magic. It cannot protect you from every threat.</p><p>It does not protect against:</p><ul><li>Malware or screen-recording software on your computer</li><li>A compromised browser, operating system, Docker host, desktop app runtime, or mobile device</li><li>Malicious browser extensions reading pages you open</li><li>Someone who knows your BitGarth username/password combination and has access to your computer or files</li><li>Losing your password without a backup</li><li>Publishing your exported accounting files somewhere public</li><li>Blockchain privacy limits inherent to public addresses and xpubs</li></ul><p>If your device or host is compromised, assume your financial data can be compromised too. BitGarth's model is local-first, not invincible.</p></section>
+        <section><h2>Exports Are Yours</h2><p>BitGarth exports to plain-text accounting formats such as hledger and ledger-cli. That is intentional.</p><p>Plain text is easy to inspect, back up, diff, archive, and move between tools. It is also a natural fit for AI analysis.</p><p>That openness means exported files are your responsibility. Treat them like financial records. Store them somewhere you control, encrypt backups where appropriate, and avoid syncing them into services you do not trust.</p></section>
+        <section><h2>Network Requests</h2><p>BitGarth connects to blockchain data providers such as Mempool and Etherscan so it can sync public transaction history for the addresses and xpubs you add. Those providers can see the public wallet data being queried.</p><p>BitGarth can also fetch market prices from services such as CoinMarketCap or CoinGecko. This is optional and off by default. It is only enabled when you choose to fetch prices or display asset values in another currency.</p><p>Where possible, BitGarth is designed so you can choose or self-host the services it talks to, for instance your own hosted Mempool instance.</p><p>The goal is not to pretend public-chain privacy is solved. The goal is to give you clear control over where your data goes.</p></section>
+        <section><h2>Responsible Disclosure</h2><p>If you find a security issue in BitGarth, please report it privately before publishing details.</p><p>Email: <code>security@bitgarth.app</code></p><p>Useful reports include:</p><ul><li>A clear description of the issue</li><li>Steps to reproduce it</li><li>The affected version</li><li>Any logs, screenshots, or proof-of-concept details that help confirm the problem</li></ul><p>We will acknowledge reports, investigate them, and publish fixes with clear release notes when user safety is affected.</p></section>
+        <section><h2>The Principle</h2><p>BitGarth is built on a narrow promise: your self-custody accounting should not require surrendering custody of your data.</p><p>Encrypted user storage, public-key-only wallet access, plain-text exports, and honest limits all serve that promise.</p></section>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 BitGarth</span>
+      <span><a href="/">Home</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+    </div>
+  </footer>
+</body>
+</html>

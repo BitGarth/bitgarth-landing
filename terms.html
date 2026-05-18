@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terms | BitGarth</title>
+  <meta name="description" content="Plain-English terms for using BitGarth, including account, payment, self-custody, and responsibility boundaries." />
+  <link rel="canonical" href="https://bitgarth.app/terms.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="any" />
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
+    @font-face { font-family: 'Instrument Sans'; src: url('assets/fonts/instrument-sans-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+    :root { --paper:#f4efe3; --paper-deep:#ebe3d2; --ink:#1a1f1a; --ink-soft:#2e352e; --moss:#2f4a30; --copper:#a8693a; --display:"Fraunces","Times New Roman",serif; --body:"Instrument Sans",system-ui,sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.65; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.3; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); mix-blend-mode: multiply; }
+    header, main, footer { position: relative; z-index: 1; }
+    .wrap { width: min(100% - 2.5rem, 58rem); margin: 0 auto; }
+    header { border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); background: color-mix(in srgb, var(--paper) 88%, transparent); }
+    header .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; padding-block: 1rem; }
+    .wordmark { font-family: var(--display); font-style: italic; font-size: 1.35rem; color: var(--ink); text-decoration: none; }
+    nav { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.95rem; }
+    a { color: var(--moss); text-decoration: none; background-image: linear-gradient(currentColor,currentColor); background-position: 0 100%; background-repeat: no-repeat; background-size: 0 1px; transition: background-size 180ms ease; }
+    a:hover, a:focus-visible { background-size: 100% 1px; }
+    .hero { padding: clamp(4rem, 10vw, 7rem) 0 2.5rem; }
+    .eyebrow { color: var(--copper); font-family: var(--display); font-style: italic; margin: 0 0 0.75rem; }
+    h1, h2 { font-family: var(--display); font-weight: 500; line-height: 1.08; margin: 0; }
+    h1 { font-size: clamp(3rem, 9vw, 6.5rem); max-width: 9ch; }
+    h1 em, h2 em { color: var(--moss); font-style: italic; font-weight: 400; }
+    .lede { max-width: 42rem; margin-top: 1.25rem; color: var(--ink-soft); font-size: clamp(1.1rem, 2vw, 1.25rem); }
+    article { padding: 2rem 0 4rem; }
+    section { border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); padding: 2rem 0; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); margin-bottom: 0.8rem; }
+    p, li { color: var(--ink-soft); }
+    ul { padding-left: 1.2rem; }
+    .notice { margin: 2rem 0; padding: 1rem 1.15rem; background: var(--paper-deep); border-left: 3px solid var(--moss); color: var(--ink-soft); }
+    footer { background: var(--ink); color: color-mix(in srgb, var(--paper) 75%, transparent); padding: 2rem 0; }
+    footer .wrap { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between; }
+    footer a { color: color-mix(in srgb, var(--paper) 88%, transparent); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="wordmark" href="/">BitGarth</a>
+      <nav aria-label="Legal pages">
+        <a href="security.html">Security</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html" aria-current="page">Terms</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="hero">
+        <p class="eyebrow">Last updated: May 18, 2026</p>
+        <h1>Terms, <em>without the thicket.</em></h1>
+        <p class="lede">These terms set the basic rules for using BitGarth. They are meant to be readable, but the important boundaries are serious: BitGarth helps organize records, does not take custody, and is not a substitute for professional advice.</p>
+      </div>
+
+      <article>
+        <section>
+          <h2>Using BitGarth</h2>
+          <p>BitGarth is self-custody accounting software. You are responsible for the wallets, addresses, xpubs, records, exports, backups, and reports you choose to use with the app.</p>
+          <p>BitGarth does not ask for seed phrases or private keys and cannot move your funds. Do not enter private keys, seed phrases, or exchange login passwords into BitGarth.</p>
+        </section>
+
+        <section>
+          <h2>Accounts And Access</h2>
+          <p>The app may ask you to create an app account so it can protect access to your app data and encrypted user database. You are responsible for choosing a strong password and keeping backups or exports where appropriate.</p>
+          <p>If you forget your password and have no backup or export, BitGarth cannot recover your encrypted user database for you.</p>
+        </section>
+
+        <section id="paid-plans">
+          <h2>Paid Plans</h2>
+          <p>Paid plans unlock additional sync limits or features. Prices, plan limits, payment methods, and availability may change over time. The app should show the applicable plan details before you pay.</p>
+          <p>Cryptocurrency payments have different privacy properties depending on the asset and network. Monero is the strongest payment privacy option among supported assets.</p>
+        </section>
+
+        <section>
+          <h2>No Professional Advice</h2>
+          <p>BitGarth helps organize records. It is not tax, legal, financial, accounting, or investment advice. You are responsible for reviewing exports, reports, classifications, and balances before relying on them.</p>
+        </section>
+
+        <section>
+          <h2>Software Limits</h2>
+          <p>BitGarth depends on your device, browser or app runtime, configured providers, public blockchain data, and the information you enter. Bugs, provider outages, chain reorganizations, import mistakes, and classification mistakes can happen.</p>
+          <p>Use backups, review important outputs, and keep independent records where the result matters.</p>
+        </section>
+
+        <section>
+          <h2>Privacy And Security</h2>
+          <p>The <a href="privacy.html">Privacy Notice</a> explains what information BitGarth needs for different workflows. The <a href="security.html">Security page</a> explains how BitGarth protects wallet data and where the limits are.</p>
+        </section>
+
+        <section>
+          <h2>Changes</h2>
+          <p>These terms may change as BitGarth changes. If a change materially affects app accounts or paid plans, the app should make the new terms visible before asking users to continue.</p>
+        </section>
+
+        <div class="notice">Questions about these terms: <a href="mailto:hello&#64;bitgarth&#46;app">hello&#64;bitgarth&#46;app</a>.</div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 BitGarth</span>
+      <span><a href="/">Home</a> · <a href="privacy.html">Privacy</a> · <a href="security.html">Security</a></span>
+    </div>
+  </footer>
+</body>
+</html>

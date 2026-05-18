@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BitGarth — a quiet garden for your wallets</title>
-  <meta name="description" content="BitGarth downloads your Bitcoin and Ethereum self-custody transactions into a local encrypted database, then exports them as plain-text accounting files your tools and AI can read." />
+  <meta name="description" content="BitGarth downloads your Bitcoin and Ethereum self-custody transactions into an encrypted user database, then exports plain-text accounting files your tools and AI can read." />
   <meta name="theme-color" content="#F4EFE3" />
 
   <link rel="canonical" href="https://bitgarth.app/" />
@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="BitGarth" />
   <meta property="og:url" content="https://bitgarth.app/" />
   <meta property="og:title" content="BitGarth — a quiet garden for your wallets" />
-  <meta property="og:description" content="Local-first self-custody accounting for Bitcoin and Ethereum. Exports to hledger and ledger-cli. No email, no tracking." />
+  <meta property="og:description" content="Local-first self-custody accounting for Bitcoin and Ethereum. Exports to hledger and ledger-cli. No email required for the app." />
   <meta property="og:image" content="https://bitgarth.app/assets/og-card.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
@@ -26,7 +26,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@BitGarth" />
   <meta name="twitter:title" content="BitGarth — a quiet garden for your wallets" />
-  <meta name="twitter:description" content="Local-first self-custody accounting for Bitcoin and Ethereum. Exports to hledger and ledger-cli. No email, no tracking." />
+  <meta name="twitter:description" content="Local-first self-custody accounting for Bitcoin and Ethereum. Exports to hledger and ledger-cli. No email required for the app." />
   <meta name="twitter:image" content="https://bitgarth.app/assets/og-card.jpg" />
   <meta name="twitter:image:alt" content="BitGarth — a quiet garden for your wallets" />
 
@@ -800,7 +800,7 @@
     .site-footer a:hover { color: var(--paper); }
     .site-footer .wrap {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      grid-template-columns: 1.5fr 0.9fr 0.9fr 1fr 1.2fr;
       gap: 2rem;
       align-items: start;
     }
@@ -888,7 +888,7 @@
         "@type": "SoftwareApplication",
         "@id": "https://bitgarth.app/#app",
         "name": "BitGarth",
-        "description": "Local-first self-custody accounting for Bitcoin and Ethereum. Downloads your transactions into an encrypted local database and exports plain-text accounting files for hledger and ledger-cli.",
+        "description": "Local-first self-custody accounting for Bitcoin and Ethereum. Downloads your transactions into an encrypted user database and exports plain-text accounting files for hledger and ledger-cli.",
         "applicationCategory": "FinanceApplication",
         "applicationSubCategory": "Accounting",
         "operatingSystem": "Linux, macOS, Windows (via Docker)",
@@ -898,7 +898,7 @@
         "publisher": { "@id": "https://bitgarth.app/#org" },
         "featureList": [
           "Bitcoin xpub and Ethereum address sync",
-          "Local encrypted SQLite database",
+          "Encrypted user database",
           "Export to hledger and ledger-cli",
           "No seed phrases, no email required"
         ],
@@ -987,7 +987,7 @@
           </h1>
           <p class="lede">
             BitGarth downloads your Bitcoin and Ethereum self-custody transactions into a
-            local, encrypted database on your computer — then exports them as plain-text
+            private encrypted user database, then exports them as plain-text
             accounting files which your tools, your accountant, and your AI can actually read.
           </p>
           <div class="ctas">
@@ -998,7 +998,7 @@
             <a class="btn ghost" href="#install">
               Install with Docker
             </a>
-            <span class="footnote">No email. No tracking.</span>
+            <span class="footnote">No email required for the app.</span>
           </div>
           <div class="ornament" aria-hidden="true">
             <!-- hairline vine flourish -->
@@ -1039,8 +1039,8 @@
               <path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
               <circle cx="12" cy="15.5" r="1.2" fill="currentColor"/>
             </svg>
-            <h3>Local, encrypted, yours.</h3>
-            <p>Everything lives in an encrypted SQLite database on your machine. It opens with your password and only your password.</p>
+            <h3>Encrypted where it matters.</h3>
+            <p>Your wallet data, labels, settings, and saved API keys live in your encrypted user database. It opens with your password and only your password.</p>
           </article>
           <article class="card">
             <span class="label">iii.</span>
@@ -1080,8 +1080,8 @@
               <path d="M8 11h8M8 14h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
             </svg>
             <div>
-              <strong>No name. No email.</strong>
-              <span>You don't provide personal information to use BitGarth. We don't know who you are, and we have no place to leak data we never collected.</span>
+              <strong>No email required for the app.</strong>
+              <span>You do not need to tell us who you are to use BitGarth. If a feature needs extra details later, the app should ask only for that feature.</span>
             </div>
           </div>
           <div class="row">
@@ -1090,7 +1090,7 @@
             </svg>
             <div>
               <strong>Your password unlocks the database.</strong>
-              <span>We can't unlock it for you — and that is the point. If you forget the password, the data is gone. Hold it carefully; the trade-off is real privacy.</span>
+              <span>We cannot unlock it for you. If you forget the password and have no backup or export, you will need to re-add and re-sync your wallets.</span>
             </div>
           </div>
         </div>
@@ -1218,11 +1218,15 @@
         <div class="commitments">
           <p>
             <em>Your data is always yours.</em>
-            If a paid plan expires, the local database stays on your machine and fully exportable to hledger or ledger-cli — only new transaction syncs pause.
+            If a paid plan expires, your app data stays with your app instance and remains exportable to hledger or ledger-cli. Only new transaction syncs pause.
           </p>
           <p>
             <em>Pay in your own coin.</em>
-            Bitcoin, Ethereum, stablecoins (USDC, USDT), or Monero — for fully private settlement, on principle.
+            Bitcoin, Ethereum, stablecoins (USDC, USDT), or Monero. Monero is the strongest payment privacy option among supported assets.
+          </p>
+          <p>
+            <em>Clear limits.</em>
+            BitGarth helps organize records. It is not tax, legal, financial, accounting, or investment advice.
           </p>
         </div>
       </div>
@@ -1242,6 +1246,14 @@
         <ul>
           <li><a href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Live demo</a></li>
           <li><a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
       </div>
       <div>
