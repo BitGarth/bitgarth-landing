@@ -83,7 +83,7 @@
               <li>Signing keys</li>
               <li>Exchange login passwords</li>
               <li>Custodial withdrawal access</li>
-              <li>Your legal name or address for wallet sync</li>
+              <li>Your legal name or address</li>
               <li>Your email address to use the app</li>
             </ul>
             <p>Public addresses and extended public keys can reveal transaction history, so they still deserve care. BitGarth uses internal IDs in URLs so addresses and xpubs are not exposed through browser history, cached pages, or proxy logs.</p>
@@ -95,8 +95,8 @@
             <span class="num">iii.</span>
             <h2>Encrypted user storage</h2>
             <p>Your private BitGarth data is stored in a <code>SQLCipher</code>-encrypted SQLite user database.</p>
-            <p>The user database is protected by a randomly generated 256-bit data encryption key. Your password is used to derive a key with <code>Argon2id</code>. That derived key wraps the database encryption key, so changing your password can re-wrap the key without rewriting the entire database.</p>
-            <p>Your password unlocks the user database. BitGarth cannot recover it for you. If you lose the password and do not have an export or backup, you will need to re-add and re-sync your wallets. Encrypted exports and backups are there to make that avoidable.</p>
+            <p>Your user database is protected by a randomly generated 256-bit data encryption key. Your password is used to derive a key with <code>Argon2id</code>. That derived key wraps the database encryption key, so changing your password can re-wrap the key without rewriting the entire database.</p>
+            <p>Your password unlocks your user database. BitGarth cannot recover it for you. If you lose the password and do not have an export or backup, you will need to re-add and re-sync your wallets. Encrypted exports and backups are there to make that avoidable.</p>
           </section>
 
           <section>
@@ -111,7 +111,7 @@
             <span class="num">v.</span>
             <h2>What BitGarth knows about you</h2>
             <p>BitGarth does not need your name, address, or email address to use the app.</p>
-            <p>For paid plans, BitGarth needs enough information to recognize payment history. It uses a privacy-preserving anonymous payment ID that is separate from your app user ID. That lets the app retrieve your payment status without building a normal identity account around you.</p>
+            <p>For paid plans, BitGarth needs enough information to recognize payment history. It uses privacy-preserving anonymous payment IDs that is separate from your app user ID. That lets the app retrieve your payment status without building a normal identity account around you.</p>
             <p>Cryptocurrency payments have different privacy properties depending on the asset and network used. If you want the strongest payment privacy among supported options, you can pay with Monero.</p>
             <p>If BitGarth adds invoice support, invoice details will be entered inside the app. You will choose whether to save them, and saved invoice details will live in your encrypted user database rather than in a central BitGarth account.</p>
           </section>
