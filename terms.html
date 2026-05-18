@@ -5,111 +5,169 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Terms | BitGarth</title>
   <meta name="description" content="Plain-English terms for using BitGarth, including account, payment, self-custody, and responsibility boundaries." />
+  <meta name="theme-color" content="#F4EFE3" />
   <link rel="canonical" href="https://bitgarth.app/terms.html" />
   <meta name="robots" content="index, follow" />
+
   <link rel="icon" href="assets/favicon/favicon.ico" sizes="any" />
-  <style>
-    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
-    @font-face { font-family: 'Instrument Sans'; src: url('assets/fonts/instrument-sans-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
-    :root { --paper:#f4efe3; --paper-deep:#ebe3d2; --ink:#1a1f1a; --ink-soft:#2e352e; --moss:#2f4a30; --copper:#a8693a; --display:"Fraunces","Times New Roman",serif; --body:"Instrument Sans",system-ui,sans-serif; }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.65; }
-    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.3; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); mix-blend-mode: multiply; }
-    header, main, footer { position: relative; z-index: 1; }
-    .wrap { width: min(100% - 2.5rem, 58rem); margin: 0 auto; }
-    header { border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); background: color-mix(in srgb, var(--paper) 88%, transparent); }
-    header .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; padding-block: 1rem; }
-    .wordmark { font-family: var(--display); font-style: italic; font-size: 1.35rem; color: var(--ink); text-decoration: none; }
-    nav { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.95rem; }
-    a { color: var(--moss); text-decoration: none; background-image: linear-gradient(currentColor,currentColor); background-position: 0 100%; background-repeat: no-repeat; background-size: 0 1px; transition: background-size 180ms ease; }
-    a:hover, a:focus-visible { background-size: 100% 1px; }
-    .hero { padding: clamp(4rem, 10vw, 7rem) 0 2.5rem; }
-    .eyebrow { color: var(--copper); font-family: var(--display); font-style: italic; margin: 0 0 0.75rem; }
-    h1, h2 { font-family: var(--display); font-weight: 500; line-height: 1.08; margin: 0; }
-    h1 { font-size: clamp(3rem, 9vw, 6.5rem); max-width: 9ch; }
-    h1 em, h2 em { color: var(--moss); font-style: italic; font-weight: 400; }
-    .lede { max-width: 42rem; margin-top: 1.25rem; color: var(--ink-soft); font-size: clamp(1.1rem, 2vw, 1.25rem); }
-    article { padding: 2rem 0 4rem; }
-    section { border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); padding: 2rem 0; }
-    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); margin-bottom: 0.8rem; }
-    p, li { color: var(--ink-soft); }
-    ul { padding-left: 1.2rem; }
-    .notice { margin: 2rem 0; padding: 1rem 1.15rem; background: var(--paper-deep); border-left: 3px solid var(--moss); color: var(--ink-soft); }
-    footer { background: var(--ink); color: color-mix(in srgb, var(--paper) 75%, transparent); padding: 2rem 0; }
-    footer .wrap { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between; }
-    footer a { color: color-mix(in srgb, var(--paper) 88%, transparent); }
-  </style>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
+
+  <link rel="preload" href="assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/instrument-sans-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/trust.css" />
 </head>
 <body>
-  <header>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" role="banner">
     <div class="wrap">
-      <a class="wordmark" href="/">BitGarth</a>
-      <nav aria-label="Legal pages">
-        <a href="security.html">Security</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html" aria-current="page">Terms</a>
+      <a class="wordmark" href="/" aria-label="BitGarth — home">BitGarth</a>
+      <nav class="primary" aria-label="Primary">
+        <div class="links">
+          <a href="/#why">Why</a>
+          <a href="security.html">Security</a>
+          <a href="/#install">Install</a>
+          <a href="/#pricing">Pricing</a>
+        </div>
+        <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
+          Try the demo
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <div class="wrap">
-      <div class="hero">
-        <p class="eyebrow">Last updated: May 18, 2026</p>
-        <h1>Terms, <em>without the thicket.</em></h1>
-        <p class="lede">These terms set the basic rules for using BitGarth. They are meant to be readable, but the important boundaries are serious: BitGarth helps organize records, does not take custody, and is not a substitute for professional advice.</p>
+  <main id="main">
+    <section class="trust-shell">
+      <div class="wrap">
+
+        <nav class="trust-tabs" aria-label="Trust pages">
+          <a href="security.html">Security</a>
+          <span aria-hidden="true">·</span>
+          <a href="privacy.html">Privacy</a>
+          <span aria-hidden="true">·</span>
+          <a href="terms.html" aria-current="page">Terms</a>
+        </nav>
+
+        <header class="trust-hero">
+          <p class="eyebrow">Last updated · 18 May 2026</p>
+          <h1>Terms, <em>without the thicket.</em></h1>
+          <p class="lede">These terms set the basic rules for using BitGarth. They are meant to be readable, but the important boundaries are serious: BitGarth helps organize records, does not take custody, and is not a substitute for professional advice.</p>
+        </header>
+
+        <article class="trust-article">
+
+          <section>
+            <span class="num">i.</span>
+            <h2>Using BitGarth</h2>
+            <p>BitGarth is self-custody accounting software. You are responsible for the wallets, addresses, xpubs, records, exports, backups, and reports you choose to use with the app.</p>
+            <p>BitGarth does not ask for seed phrases or private keys and cannot move your funds. Do not enter private keys, seed phrases, or exchange login passwords into BitGarth.</p>
+          </section>
+
+          <section>
+            <span class="num">ii.</span>
+            <h2>Accounts and access</h2>
+            <p>The app may ask you to create an app account so it can protect access to your app data and encrypted user database. You are responsible for choosing a strong password and keeping backups or exports where appropriate.</p>
+            <p>If you forget your password and have no backup or export, BitGarth cannot recover your encrypted user database for you.</p>
+          </section>
+
+          <section id="paid-plans">
+            <span class="num">iii.</span>
+            <h2>Paid plans</h2>
+            <p>Paid plans unlock additional sync limits or features. Prices, plan limits, payment methods, and availability may change over time. The app should show the applicable plan details before you pay.</p>
+            <p>Cryptocurrency payments have different privacy properties depending on the asset and network. Monero is the strongest payment privacy option among supported assets.</p>
+          </section>
+
+          <section>
+            <span class="num">iv.</span>
+            <h2>No professional advice</h2>
+            <p>BitGarth helps organize records. It is not tax, legal, financial, accounting, or investment advice. You are responsible for reviewing exports, reports, classifications, and balances before relying on them.</p>
+          </section>
+
+          <section>
+            <span class="num">v.</span>
+            <h2>Software limits</h2>
+            <p>BitGarth depends on your device, browser or app runtime, configured providers, public blockchain data, and the information you enter. Bugs, provider outages, chain reorganizations, import mistakes, and classification mistakes can happen.</p>
+            <p>Use backups, review important outputs, and keep independent records where the result matters.</p>
+          </section>
+
+          <section>
+            <span class="num">vi.</span>
+            <h2>Privacy and security</h2>
+            <p>The <a href="privacy.html">Privacy Notice</a> explains what information BitGarth needs for different workflows. The <a href="security.html">Security page</a> explains how BitGarth protects wallet data and where the limits are.</p>
+          </section>
+
+          <section>
+            <span class="num">vii.</span>
+            <h2>Changes</h2>
+            <p>These terms may change as BitGarth changes. If a change materially affects app accounts or paid plans, the app should make the new terms visible before asking users to continue.</p>
+          </section>
+
+          <div class="notice">
+            <strong>Questions about these terms?</strong>
+            Write to <a class="contact-email" href="mailto:hello&#64;bitgarth&#46;app">hello@bitgarth.app</a> and we'll get back to you.
+          </div>
+
+          <p class="updated">Last updated · 18 May 2026</p>
+        </article>
+
+        <div class="vine" aria-hidden="true">
+          <svg width="260" height="22" viewBox="0 0 260 22" fill="none">
+            <path d="M0 11 H100" stroke="currentColor" stroke-width="0.8"/>
+            <path d="M160 11 H260" stroke="currentColor" stroke-width="0.8"/>
+            <path d="M115 11c2-4 6-6 10-3 3 2.5 3 7 0 9-3 2-7 1-10-1z M145 11c-2-4-6-6-10-3-3 2.5-3 7 0 9 3 2 7 1 10-1z" fill="currentColor" opacity="0.85"/>
+            <circle cx="130" cy="11" r="1.7" fill="currentColor"/>
+            <path d="M122 6 c2-3 6-2 8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            <path d="M138 16 c-2 3-6 2-8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+          </svg>
+        </div>
+
       </div>
-
-      <article>
-        <section>
-          <h2>Using BitGarth</h2>
-          <p>BitGarth is self-custody accounting software. You are responsible for the wallets, addresses, xpubs, records, exports, backups, and reports you choose to use with the app.</p>
-          <p>BitGarth does not ask for seed phrases or private keys and cannot move your funds. Do not enter private keys, seed phrases, or exchange login passwords into BitGarth.</p>
-        </section>
-
-        <section>
-          <h2>Accounts And Access</h2>
-          <p>The app may ask you to create an app account so it can protect access to your app data and encrypted user database. You are responsible for choosing a strong password and keeping backups or exports where appropriate.</p>
-          <p>If you forget your password and have no backup or export, BitGarth cannot recover your encrypted user database for you.</p>
-        </section>
-
-        <section id="paid-plans">
-          <h2>Paid Plans</h2>
-          <p>Paid plans unlock additional sync limits or features. Prices, plan limits, payment methods, and availability may change over time. The app should show the applicable plan details before you pay.</p>
-          <p>Cryptocurrency payments have different privacy properties depending on the asset and network. Monero is the strongest payment privacy option among supported assets.</p>
-        </section>
-
-        <section>
-          <h2>No Professional Advice</h2>
-          <p>BitGarth helps organize records. It is not tax, legal, financial, accounting, or investment advice. You are responsible for reviewing exports, reports, classifications, and balances before relying on them.</p>
-        </section>
-
-        <section>
-          <h2>Software Limits</h2>
-          <p>BitGarth depends on your device, browser or app runtime, configured providers, public blockchain data, and the information you enter. Bugs, provider outages, chain reorganizations, import mistakes, and classification mistakes can happen.</p>
-          <p>Use backups, review important outputs, and keep independent records where the result matters.</p>
-        </section>
-
-        <section>
-          <h2>Privacy And Security</h2>
-          <p>The <a href="privacy.html">Privacy Notice</a> explains what information BitGarth needs for different workflows. The <a href="security.html">Security page</a> explains how BitGarth protects wallet data and where the limits are.</p>
-        </section>
-
-        <section>
-          <h2>Changes</h2>
-          <p>These terms may change as BitGarth changes. If a change materially affects app accounts or paid plans, the app should make the new terms visible before asking users to continue.</p>
-        </section>
-
-        <div class="notice">Questions about these terms: <a href="mailto:hello&#64;bitgarth&#46;app">hello&#64;bitgarth&#46;app</a>.</div>
-      </article>
-    </div>
+    </section>
   </main>
 
-  <footer>
+  <footer class="site-footer" role="contentinfo">
     <div class="wrap">
-      <span>© 2026 BitGarth</span>
-      <span><a href="/">Home</a> · <a href="privacy.html">Privacy</a> · <a href="security.html">Security</a></span>
+      <div class="colophon">
+        <span class="wordmark">BitGarth</span>
+        <p>A clearing in the woods. A garden. A quiet place for your numbers to live.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Live demo</a></li>
+          <li><a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html" aria-current="page">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="https://hledger.org" target="_blank" rel="noopener noreferrer">hledger</a></li>
+          <li><a href="https://ledger-cli.org" target="_blank" rel="noopener noreferrer">ledger-cli</a></li>
+          <li><a href="https://plaintextaccounting.org" target="_blank" rel="noopener noreferrer">Plain Text Accounting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="https://x.com/BitGarth" target="_blank" rel="noopener noreferrer">@BitGarth on X</a></li>
+          <li><a href="mailto:hello&#64;bitgarth&#46;app">hello&#64;bitgarth&#46;app</a></li>
+        </ul>
+      </div>
+      <div class="meta">
+        © 2026 BitGarth. Made with care, in plain text.
+      </div>
     </div>
   </footer>
 </body>

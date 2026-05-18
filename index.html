@@ -491,6 +491,21 @@
       font-size: 0.97rem;
       line-height: 1.5;
     }
+    .privacy .more {
+      margin-top: clamp(2rem, 4vw, 3rem);
+      max-width: var(--measure);
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+    .privacy .more a {
+      font-style: italic;
+      color: var(--moss);
+    }
+    .privacy .more .arrow { transition: transform 220ms ease; display: inline-block; }
+    .privacy .more a:hover .arrow { transform: translateX(3px); }
 
     /* ─────────────────────────── install ─────────────────────────── */
 
@@ -955,6 +970,7 @@
       <nav class="primary" aria-label="Primary">
         <div class="links">
           <a href="#why">Why</a>
+          <a href="security.html">Security</a>
           <a href="#install">Install</a>
           <a href="#pricing">Pricing</a>
         </div>
@@ -1094,6 +1110,9 @@
             </div>
           </div>
         </div>
+        <p class="more">
+          The longer story — what we store, what we don't, and where the limits are — lives in the <a href="security.html">security &amp; privacy notes <span class="arrow" aria-hidden="true">→</span></a>.
+        </p>
       </div>
     </section>
 

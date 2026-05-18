@@ -5,119 +5,176 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Privacy | BitGarth</title>
   <meta name="description" content="How BitGarth handles app data, encrypted user data, payments, invoices, providers, and optional network requests." />
+  <meta name="theme-color" content="#F4EFE3" />
   <link rel="canonical" href="https://bitgarth.app/privacy.html" />
   <meta name="robots" content="index, follow" />
+
   <link rel="icon" href="assets/favicon/favicon.ico" sizes="any" />
-  <style>
-    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
-    @font-face { font-family: 'Instrument Sans'; src: url('assets/fonts/instrument-sans-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
-    :root { --paper:#f4efe3; --paper-deep:#ebe3d2; --ink:#1a1f1a; --ink-soft:#2e352e; --moss:#2f4a30; --copper:#a8693a; --display:"Fraunces","Times New Roman",serif; --body:"Instrument Sans",system-ui,sans-serif; }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.65; }
-    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.3; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); mix-blend-mode: multiply; }
-    header, main, footer { position: relative; z-index: 1; }
-    .wrap { width: min(100% - 2.5rem, 58rem); margin: 0 auto; }
-    header { border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); background: color-mix(in srgb, var(--paper) 88%, transparent); }
-    header .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; padding-block: 1rem; }
-    .wordmark { font-family: var(--display); font-style: italic; font-size: 1.35rem; color: var(--ink); text-decoration: none; }
-    nav { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.95rem; }
-    a { color: var(--moss); text-decoration: none; background-image: linear-gradient(currentColor,currentColor); background-position: 0 100%; background-repeat: no-repeat; background-size: 0 1px; transition: background-size 180ms ease; }
-    a:hover, a:focus-visible { background-size: 100% 1px; }
-    .hero { padding: clamp(4rem, 10vw, 7rem) 0 2.5rem; }
-    .eyebrow { color: var(--copper); font-family: var(--display); font-style: italic; margin: 0 0 0.75rem; }
-    h1, h2 { font-family: var(--display); font-weight: 500; line-height: 1.08; margin: 0; }
-    h1 { font-size: clamp(3rem, 9vw, 6.5rem); max-width: 10ch; }
-    h1 em, h2 em { color: var(--moss); font-style: italic; font-weight: 400; }
-    .lede { max-width: 42rem; margin-top: 1.25rem; color: var(--ink-soft); font-size: clamp(1.1rem, 2vw, 1.25rem); }
-    article { padding: 2rem 0 4rem; }
-    section { border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); padding: 2rem 0; }
-    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); margin-bottom: 0.8rem; }
-    p, li { color: var(--ink-soft); }
-    ul { padding-left: 1.2rem; }
-    .notice { margin: 2rem 0; padding: 1rem 1.15rem; background: var(--paper-deep); border-left: 3px solid var(--moss); color: var(--ink-soft); }
-    footer { background: var(--ink); color: color-mix(in srgb, var(--paper) 75%, transparent); padding: 2rem 0; }
-    footer .wrap { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between; }
-    footer a { color: color-mix(in srgb, var(--paper) 88%, transparent); }
-  </style>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
+
+  <link rel="preload" href="assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/instrument-sans-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/trust.css" />
 </head>
 <body>
-  <header>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" role="banner">
     <div class="wrap">
-      <a class="wordmark" href="/">BitGarth</a>
-      <nav aria-label="Legal pages">
-        <a href="security.html">Security</a>
-        <a href="privacy.html" aria-current="page">Privacy</a>
-        <a href="terms.html">Terms</a>
+      <a class="wordmark" href="/" aria-label="BitGarth — home">BitGarth</a>
+      <nav class="primary" aria-label="Primary">
+        <div class="links">
+          <a href="/#why">Why</a>
+          <a href="security.html">Security</a>
+          <a href="/#install">Install</a>
+          <a href="/#pricing">Pricing</a>
+        </div>
+        <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
+          Try the demo
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <div class="wrap">
-      <div class="hero">
-        <p class="eyebrow">Last updated: May 18, 2026</p>
-        <h1>Privacy, <em>by default.</em></h1>
-        <p class="lede">BitGarth is designed to keep private financial data in your app instance unless you choose a feature that needs a network request. This notice explains the main data boundaries.</p>
+  <main id="main">
+    <section class="trust-shell">
+      <div class="wrap">
+
+        <nav class="trust-tabs" aria-label="Trust pages">
+          <a href="security.html">Security</a>
+          <span aria-hidden="true">·</span>
+          <a href="privacy.html" aria-current="page">Privacy</a>
+          <span aria-hidden="true">·</span>
+          <a href="terms.html">Terms</a>
+        </nav>
+
+        <header class="trust-hero">
+          <p class="eyebrow">Last updated · 18 May 2026</p>
+          <h1>Privacy, <em>by default.</em></h1>
+          <p class="lede">BitGarth is designed to keep private financial data in your app instance unless you choose a feature that needs a network request. This notice explains the main data boundaries.</p>
+        </header>
+
+        <article class="trust-article">
+
+          <section class="intro">
+            <h2>What you can use <em>without telling us</em></h2>
+            <p>You do not need to give BitGarth your legal name, postal address, or email address to use the app. Wallet sync uses public wallet information such as addresses and xpubs, not seed phrases or private keys.</p>
+          </section>
+
+          <section>
+            <span class="num">i.</span>
+            <h2>App DB and encrypted user DB</h2>
+            <p>The app DB stores registered users, login metadata, and app-level records such as which Terms and Privacy Notice version an app account acknowledged. The app DB is not encrypted, so it must stay minimal.</p>
+            <p>Your wallet data, transaction history, labels, settings, saved API keys, and saved invoice details belong in the encrypted user DB. This user DB is protected by your password.</p>
+          </section>
+
+          <section>
+            <span class="num">ii.</span>
+            <h2>Self-hosted and downloaded apps</h2>
+            <p>If you run BitGarth yourself, app DB records and encrypted user DB records stay with that app instance. The app does not send legal acknowledgement records back to BitGarth central services by default.</p>
+          </section>
+
+          <section>
+            <span class="num">iii.</span>
+            <h2>Hosted services</h2>
+            <p>If BitGarth operates a hosted app instance in the future, BitGarth may operate the app DB for that hosted service and keep the minimum records needed to run accounts, payments, support, and entitlements.</p>
+          </section>
+
+          <section>
+            <span class="num">iv.</span>
+            <h2>Payments</h2>
+            <p>For paid plans, BitGarth needs enough information to recognize payment history. The app uses a privacy-preserving anonymous payment ID that is separate from your app user ID.</p>
+            <p>Cryptocurrency payment privacy depends on the asset and network. Monero is the strongest payment privacy option among supported assets.</p>
+          </section>
+
+          <section>
+            <span class="num">v.</span>
+            <h2>Invoices</h2>
+            <p>If invoice support is added, invoice details will be entered inside the app. You will choose whether to save them. Saved invoice details should live in your encrypted user DB, not in a central BitGarth account.</p>
+          </section>
+
+          <section>
+            <span class="num">vi.</span>
+            <h2>Providers</h2>
+            <p>BitGarth can contact blockchain explorers such as Mempool and Etherscan to sync public transaction history for addresses and xpubs you add. Those providers can see the public wallet data being queried.</p>
+            <p>BitGarth can also fetch prices from services such as CoinMarketCap or CoinGecko. Price fetching is optional and off by default. It is enabled only when you choose to fetch prices or display asset values in another currency.</p>
+          </section>
+
+          <section>
+            <span class="num">vii.</span>
+            <h2>Analytics and cookies</h2>
+            <p>The app does not use in-app analytics today. If privacy-preserving app analytics are added later, they should be off by default unless you enable them.</p>
+            <p>The landing site is a static website and does not need an account cookie to read these pages.</p>
+          </section>
+
+          <section>
+            <span class="num">viii.</span>
+            <h2>Contact</h2>
+            <p>Questions about privacy: <a class="contact-email" href="mailto:hello&#64;bitgarth&#46;app">hello@bitgarth.app</a></p>
+            <p>Security reports: <a class="contact-email" href="mailto:security&#64;bitgarth&#46;app">security@bitgarth.app</a></p>
+          </section>
+
+          <p class="updated">Last updated · 18 May 2026</p>
+        </article>
+
+        <div class="vine" aria-hidden="true">
+          <svg width="260" height="22" viewBox="0 0 260 22" fill="none">
+            <path d="M0 11 H100" stroke="currentColor" stroke-width="0.8"/>
+            <path d="M160 11 H260" stroke="currentColor" stroke-width="0.8"/>
+            <path d="M115 11c2-4 6-6 10-3 3 2.5 3 7 0 9-3 2-7 1-10-1z M145 11c-2-4-6-6-10-3-3 2.5-3 7 0 9 3 2 7 1 10-1z" fill="currentColor" opacity="0.85"/>
+            <circle cx="130" cy="11" r="1.7" fill="currentColor"/>
+            <path d="M122 6 c2-3 6-2 8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            <path d="M138 16 c-2 3-6 2-8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+          </svg>
+        </div>
+
       </div>
-
-      <article>
-        <section>
-          <h2>What You Can Use Without Telling Us</h2>
-          <p>You do not need to give BitGarth your legal name, postal address, or email address to use the app. Wallet sync uses public wallet information such as addresses and xpubs, not seed phrases or private keys.</p>
-        </section>
-
-        <section>
-          <h2>App DB And Encrypted User DB</h2>
-          <p>The app DB stores registered users, login metadata, and app-level records such as which Terms and Privacy Notice version an app account acknowledged. The app DB is not encrypted, so it must stay minimal.</p>
-          <p>Your wallet data, transaction history, labels, settings, saved API keys, and saved invoice details belong in the encrypted user DB. This user DB is protected by your password.</p>
-        </section>
-
-        <section>
-          <h2>Self-Hosted And Downloaded Apps</h2>
-          <p>If you run BitGarth yourself, app DB records and encrypted user DB records stay with that app instance. The app does not send legal acknowledgement records back to BitGarth central services by default.</p>
-        </section>
-
-        <section>
-          <h2>Hosted Services</h2>
-          <p>If BitGarth operates a hosted app instance in the future, BitGarth may operate the app DB for that hosted service and keep the minimum records needed to run accounts, payments, support, and entitlements.</p>
-        </section>
-
-        <section>
-          <h2>Payments</h2>
-          <p>For paid plans, BitGarth needs enough information to recognize payment history. The app uses a privacy-preserving anonymous payment ID that is separate from your app user ID.</p>
-          <p>Cryptocurrency payment privacy depends on the asset and network. Monero is the strongest payment privacy option among supported assets.</p>
-        </section>
-
-        <section>
-          <h2>Invoices</h2>
-          <p>If invoice support is added, invoice details will be entered inside the app. You will choose whether to save them. Saved invoice details should live in your encrypted user DB, not in a central BitGarth account.</p>
-        </section>
-
-        <section>
-          <h2>Providers</h2>
-          <p>BitGarth can contact blockchain explorers such as Mempool and Etherscan to sync public transaction history for addresses and xpubs you add. Those providers can see the public wallet data being queried.</p>
-          <p>BitGarth can also fetch prices from services such as CoinMarketCap or CoinGecko. Price fetching is optional and off by default. It is enabled only when you choose to fetch prices or display asset values in another currency.</p>
-        </section>
-
-        <section>
-          <h2>Analytics And Cookies</h2>
-          <p>The app does not use in-app analytics today. If privacy-preserving app analytics are added later, they should be off by default unless you enable them.</p>
-          <p>The landing site is a static website and does not need an account cookie to read these pages.</p>
-        </section>
-
-        <section>
-          <h2>Contact</h2>
-          <p>Questions about privacy: <a href="mailto:hello&#64;bitgarth&#46;app">hello&#64;bitgarth&#46;app</a>. Security reports: <a href="mailto:security&#64;bitgarth&#46;app">security&#64;bitgarth&#46;app</a>.</p>
-        </section>
-      </article>
-    </div>
+    </section>
   </main>
 
-  <footer>
+  <footer class="site-footer" role="contentinfo">
     <div class="wrap">
-      <span>© 2026 BitGarth</span>
-      <span><a href="/">Home</a> · <a href="terms.html">Terms</a> · <a href="security.html">Security</a></span>
+      <div class="colophon">
+        <span class="wordmark">BitGarth</span>
+        <p>A clearing in the woods. A garden. A quiet place for your numbers to live.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Live demo</a></li>
+          <li><a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html" aria-current="page">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="https://hledger.org" target="_blank" rel="noopener noreferrer">hledger</a></li>
+          <li><a href="https://ledger-cli.org" target="_blank" rel="noopener noreferrer">ledger-cli</a></li>
+          <li><a href="https://plaintextaccounting.org" target="_blank" rel="noopener noreferrer">Plain Text Accounting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="https://x.com/BitGarth" target="_blank" rel="noopener noreferrer">@BitGarth on X</a></li>
+          <li><a href="mailto:hello&#64;bitgarth&#46;app">hello&#64;bitgarth&#46;app</a></li>
+        </ul>
+      </div>
+      <div class="meta">
+        © 2026 BitGarth. Made with care, in plain text.
+      </div>
     </div>
   </footer>
 </body>
