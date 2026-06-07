@@ -53,7 +53,7 @@
         </nav>
 
         <header class="trust-hero">
-          <p class="eyebrow">Last updated · 18 May 2026</p>
+          <p class="eyebrow">Last updated · 7 June 2026</p>
           <h1>Security, <em>and its limits.</em></h1>
           <p class="lede">BitGarth is built for people who do not want their financial life pooled into someone else's database. Here is what we protect — and where the protection ends.</p>
         </header>
@@ -152,6 +152,14 @@
 
           <section>
             <span class="num">ix.</span>
+            <h2>Software update checks</h2>
+            <p>If software update checks are enabled, your BitGarth app instance contacts BitGarthCentral to ask for the latest release for its install channel.</p>
+            <p>The request sends two BitGarth-specific headers: <code>X-BitGarth-App-Version</code>, such as <code>0.1.4</code> or <code>0.1.4-a1b2c3d</code>, and <code>X-BitGarth-App-Channel</code>, such as <code>docker</code>.</p>
+            <p>The global User-Agent used for outgoing HTTP integrations is generic and does not include your app version, channel, operating system, or Docker status. BitGarthCentral also sees normal HTTP metadata such as IP address, timing, and User-Agent. The update check does not send wallet data, user identifiers, instance IDs, addresses, xpubs, balances, labels, or API keys.</p>
+          </section>
+
+          <section>
+            <span class="num">x.</span>
             <h2>Responsible disclosure</h2>
             <p>If you find a security issue in BitGarth, please report it privately before publishing details.</p>
             <p><a class="contact-email" href="mailto:security&#64;bitgarth&#46;app">security@bitgarth.app</a></p>
@@ -166,13 +174,13 @@
           </section>
 
           <section>
-            <span class="num">x.</span>
+            <span class="num">xi.</span>
             <h2>The principle</h2>
             <p>BitGarth is built on a narrow promise: your self-custody accounting should not require surrendering custody of your data.</p>
             <p>Encrypted user storage, public-key-only wallet access, plain-text exports, and honest limits all serve that promise.</p>
           </section>
 
-          <p class="updated">Last updated · 18 May 2026</p>
+          <p class="updated">Last updated · 7 June 2026</p>
         </article>
 
         <div class="vine" aria-hidden="true">
