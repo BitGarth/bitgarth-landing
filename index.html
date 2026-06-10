@@ -1371,11 +1371,11 @@
             </svg>
             <span class="label">Copy</span>
           </button>
-<pre id="upgrade-cmd" data-oneline="curl -fsSL https://bitgarth.app/upgrade.sh | sh"><span class="tok-cmd">curl</span> <span class="tok-flag">-fsSL</span> <span class="tok-str">https://bitgarth.app/upgrade.sh</span> <span class="tok-pipe">|</span> <span class="tok-cmd">sh</span></pre>
+<pre id="upgrade-cmd" data-oneline="curl -fsSL https://bitgarth.app/docker.sh | sh"><span class="tok-cmd">curl</span> <span class="tok-flag">-fsSL</span> <span class="tok-str">https://bitgarth.app/docker.sh</span> <span class="tok-pipe">|</span> <span class="tok-cmd">sh</span></pre>
           <p class="copy-note">
             Upgrade an existing Docker install. The script replays published ports, named volumes, restart policy, and allowlisted BitGarth environment variables.
           </p>
-          <a href="#inspect-script" class="inspect-link" data-inspect-script>
+          <a href="#inspect-docker" class="inspect-link" data-inspect-script>
             <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
               <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1640,11 +1640,11 @@
   </script>
 
   <!-- Script inspector modal -->
-  <div class="script-overlay" id="script-overlay" role="dialog" aria-modal="true" aria-label="upgrade.sh source code">
+  <div class="script-overlay" id="script-overlay" role="dialog" aria-modal="true" aria-label="docker.sh source code">
     <div class="script-panel">
       <div class="script-bar">
         <span class="dot"></span>
-        <span class="filename">upgrade.sh</span>
+        <span class="filename">docker.sh</span>
         <button class="close-btn" type="button" aria-label="Close" data-close-overlay>
           <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
             <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -1679,14 +1679,14 @@
         overlay.setAttribute("open", "");
         document.body.style.overflow = "hidden";
         if (!scriptLoaded) {
-          fetch("/upgrade.sh")
+          fetch("/docker.sh")
             .then(function (r) { return r.text(); })
             .then(function (text) {
               sourceEl.innerHTML = addLineNumbers(text);
               scriptLoaded = true;
             })
             .catch(function () {
-              sourceEl.textContent = "Could not load upgrade.sh — try visiting https://bitgarth.app/upgrade.sh directly.";
+              sourceEl.textContent = "Could not load docker.sh — try visiting https://bitgarth.app/docker.sh directly.";
             });
         }
         overlay.querySelector(".close-btn").focus();
@@ -1695,7 +1695,8 @@
       function closeOverlay() {
         overlay.removeAttribute("open");
         document.body.style.overflow = "";
-        if (location.hash === "#inspect-script") {
+        var r = parseRoute(location.hash);
+        if (r && r.action === "inspect") {
           history.replaceState(null, "", location.pathname + location.search);
         }
       }
@@ -1717,25 +1718,35 @@
         });
       });
 
+      // Routes are <action>[-<channel>]: action is install | upgrade | inspect,
+      // channel names a distribution channel (e.g. #install-docker, #inspect-docker).
+      // Bare #install / #upgrade / #inspect are channel-agnostic. Today only Docker
+      // ships (docker.sh), so route.channel is captured but not yet branched on —
+      // when umbrel/mac/etc. land, switch tabs/instructions/script on route.channel.
+      function parseRoute(hash) {
+        var m = hash.replace(/^#/, "").match(/^(install|upgrade|inspect)(?:-([a-z0-9]+))?$/);
+        return m ? { action: m[1], channel: m[2] || null } : null;
+      }
+
       function handleHash() {
-        var hash = location.hash;
-        if (hash === "#upgrade") {
-          var tab = document.getElementById("tab-upgrade");
-          if (tab) {
-            tab.click();
-            var section = document.getElementById("install");
-            if (section) section.scrollIntoView({ behavior: "smooth" });
-          }
-        }
-        if (hash === "#inspect-script") {
-          var tab = document.getElementById("tab-upgrade");
-          if (tab) tab.click();
+        var route = parseRoute(location.hash);
+        if (!route) return;
+        if (route.action === "inspect") {
+          var inspectTab = document.getElementById("tab-upgrade");
+          if (inspectTab) inspectTab.click();
           openOverlay();
+          return;
         }
+        var tab = document.getElementById(
+          route.action === "upgrade" ? "tab-upgrade" : "tab-install"
+        );
+        if (tab) tab.click();
+        var section = document.getElementById("install");
+        if (section) section.scrollIntoView({ behavior: "smooth" });
       }
 
       window.addEventListener("hashchange", handleHash);
-      if (location.hash === "#upgrade" || location.hash === "#inspect-script") {
+      if (parseRoute(location.hash)) {
         setTimeout(handleHash, 80);
       }
     })();

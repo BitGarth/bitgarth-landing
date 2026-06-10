@@ -79,7 +79,7 @@ else
   if [ -n "$unsupported_mounts" ]; then
     echo "This container uses non-volume mounts that the automatic upgrade script will not replay safely:"
     echo "$unsupported_mounts"
-    echo "Use the manual upgrade instructions at https://bitgarth.app/#install and add your mount flags explicitly."
+    echo "Use the manual upgrade instructions at https://bitgarth.app/#upgrade-docker and add your mount flags explicitly."
     exit 1
   fi
 
