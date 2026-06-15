@@ -743,6 +743,128 @@
       font-size: 0.98rem;
     }
 
+    /* ── zoomable shot frame ── */
+    button.shot-frame {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      display: block;
+      position: relative;
+      cursor: zoom-in;
+      font: inherit;
+      color: inherit;
+    }
+    button.shot-frame:focus-visible {
+      outline: 2px solid var(--moss);
+      outline-offset: 2px;
+    }
+    .zoom-cue {
+      position: absolute;
+      right: 0.6rem;
+      bottom: 0.6rem;
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+      color: var(--ink-soft);
+      box-shadow: 0 6px 16px -10px rgba(26,31,26,0.6);
+      opacity: 0;
+      transform: translateY(3px);
+      transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
+    }
+    button.shot-frame:hover .zoom-cue,
+    button.shot-frame:focus-visible .zoom-cue {
+      opacity: 1;
+      transform: none;
+    }
+    .zoom-cue svg { display: block; }
+
+    /* ── lightbox ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      padding: clamp(1rem, 4vw, 3rem);
+      background: rgba(26, 31, 26, 0.62);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0; visibility: hidden;
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+    .lightbox[open] { opacity: 1; visibility: visible; }
+    .lightbox-panel {
+      position: relative;
+      transform: translateY(12px) scale(0.98);
+      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .lightbox[open] .lightbox-panel { transform: none; }
+    .lightbox-fig { margin: 0; }
+    .lightbox-fig img {
+      display: block;
+      max-width: min(94vw, 84rem);
+      max-height: 82vh;
+      width: auto; height: auto;
+      background: var(--paper);
+      border: 1px solid var(--paper-edge);
+      border-radius: 12px;
+      box-shadow: 0 32px 64px -16px rgba(26,31,26,0.5);
+    }
+    .lightbox-cap {
+      margin: 0.7rem 0 0;
+      text-align: center;
+      font-family: var(--display);
+      font-style: italic;
+      color: var(--paper-on-ink);
+      font-size: 0.95rem;
+    }
+    .lightbox-cap:empty { display: none; }
+    .lightbox .close-btn {
+      position: absolute;
+      top: 0.6rem; right: 0.6rem;
+      display: grid; place-items: center;
+      width: 2.2rem; height: 2.2rem;
+      appearance: none; border: 1px solid var(--paper-edge);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      border-radius: 999px;
+      cursor: pointer;
+      color: var(--ink-soft);
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .lightbox .close-btn:hover { color: var(--ink); background: var(--paper); }
+    .lightbox .close-btn:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+    .lightbox .close-btn svg { display: block; }
+    .lightbox .nav-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      display: grid; place-items: center;
+      width: 2.6rem; height: 2.6rem;
+      appearance: none; border: 1px solid var(--paper-edge);
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      border-radius: 999px;
+      cursor: pointer;
+      color: var(--ink-soft);
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .lightbox .nav-btn[hidden] { display: none; }
+    .lightbox .nav-btn:hover { color: var(--ink); background: var(--paper); }
+    .lightbox .nav-btn:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+    .lightbox .nav-btn svg { display: block; }
+    .lightbox .nav-prev { left: 0.6rem; }
+    .lightbox .nav-next { right: 0.6rem; }
+    @media (max-width: 560px) {
+      .lightbox .nav-btn { width: 2.2rem; height: 2.2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .lightbox-panel { transition: none; transform: none; }
+      .zoom-cue { transition: opacity 180ms ease; transform: none; }
+    }
+
     .panel-intro {
       max-width: var(--measure);
       color: var(--ink-soft);
@@ -1305,13 +1427,25 @@
         <div class="tabpanel" id="panel-shot-wallets" role="tabpanel" aria-labelledby="tab-shot-wallets" tabindex="0">
           <figure class="shot">
             <div class="shot-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-            <div class="shot-frame">
+            <button class="shot-frame" type="button" data-zoom
+                    aria-label="View larger: the BitGarth wallets screen"
+                    data-webp="assets/screenshots/wallets.webp"
+                    data-png="assets/screenshots/wallets.png"
+                    data-cap="Wallets — everything in one place"
+                    data-alt="The BitGarth wallets screen: a single net-worth figure above one wallet holding Bitcoin, Ethereum and Monero accounts, each with its balance.">
               <picture>
                 <source srcset="assets/screenshots/wallets.webp" type="image/webp" />
                 <img src="assets/screenshots/wallets.png" width="1280" height="842" loading="lazy" decoding="async"
                      alt="The BitGarth wallets screen: a single net-worth figure above one wallet holding Bitcoin, Ethereum and Monero accounts, each with its balance." />
               </picture>
-            </div>
+              <span class="zoom-cue" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+                  <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  <path d="M11 8.5v5M8.5 11h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </button>
           </figure>
         </div>
 
@@ -1319,23 +1453,47 @@
           <div class="shot-pair">
             <figure class="shot">
               <div class="shot-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <div class="shot-frame">
+              <button class="shot-frame" type="button" data-zoom
+                      aria-label="View larger: the 2024 wallet report"
+                      data-webp="assets/screenshots/report-2024.webp"
+                      data-png="assets/screenshots/report-2024.png"
+                      data-cap="2024 — a green year"
+                      data-alt="A 2024 wallet report showing opening and closing values with gains across every account.">
                 <picture>
                   <source srcset="assets/screenshots/report-2024.webp" type="image/webp" />
                   <img src="assets/screenshots/report-2024.png" width="1280" height="771" loading="lazy" decoding="async"
                        alt="A 2024 wallet report showing opening and closing values with gains across every account." />
                 </picture>
-              </div>
+                <span class="zoom-cue" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+                    <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    <path d="M11 8.5v5M8.5 11h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </button>
             </figure>
             <figure class="shot">
               <div class="shot-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <div class="shot-frame">
+              <button class="shot-frame" type="button" data-zoom
+                      aria-label="View larger: the 2025 wallet report"
+                      data-webp="assets/screenshots/report-2025.webp"
+                      data-png="assets/screenshots/report-2025.png"
+                      data-cap="2025 — the same wallet, a red year"
+                      data-alt="A 2025 wallet report for the same wallet showing losses across every account.">
                 <picture>
                   <source srcset="assets/screenshots/report-2025.webp" type="image/webp" />
                   <img src="assets/screenshots/report-2025.png" width="1280" height="771" loading="lazy" decoding="async"
                        alt="A 2025 wallet report for the same wallet showing losses across every account." />
                 </picture>
-              </div>
+                <span class="zoom-cue" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+                    <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    <path d="M11 8.5v5M8.5 11h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </button>
             </figure>
           </div>
           <p class="shot-cap">The same wallet, two years — up and down.</p>
@@ -1344,13 +1502,25 @@
         <div class="tabpanel" id="panel-shot-exports" role="tabpanel" aria-labelledby="tab-shot-exports" tabindex="0" hidden>
           <figure class="shot">
             <div class="shot-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-            <div class="shot-frame">
+            <button class="shot-frame" type="button" data-zoom
+                    aria-label="View larger: the accounting export screen"
+                    data-webp="assets/screenshots/exports-hledger.webp"
+                    data-png="assets/screenshots/exports-hledger.png"
+                    data-cap="Plain-text accounting export"
+                    data-alt="The accounting export screen showing double-entry hledger journal entries in plain text.">
               <picture>
                 <source srcset="assets/screenshots/exports-hledger.webp" type="image/webp" />
                 <img src="assets/screenshots/exports-hledger.png" width="1280" height="1199" loading="lazy" decoding="async"
                      alt="The accounting export screen showing double-entry hledger journal entries in plain text." />
               </picture>
-            </div>
+              <span class="zoom-cue" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+                  <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  <path d="M11 8.5v5M8.5 11h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </button>
           </figure>
         </div>
       </div>
@@ -1933,6 +2103,96 @@
       if (parseRoute(location.hash)) {
         setTimeout(handleHash, 80);
       }
+    })();
+  </script>
+
+  <!-- Screenshot lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot, enlarged">
+    <div class="lightbox-panel">
+      <button class="close-btn" type="button" aria-label="Close" data-close-lightbox>
+        <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+          <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button class="nav-btn nav-prev" type="button" aria-label="Previous screenshot" data-lightbox-prev>
+        <svg viewBox="0 0 24 24" fill="none" width="20" height="20" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="nav-btn nav-next" type="button" aria-label="Next screenshot" data-lightbox-next>
+        <svg viewBox="0 0 24 24" fill="none" width="20" height="20" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <figure class="lightbox-fig">
+        <picture id="lightbox-pic"></picture>
+        <figcaption class="lightbox-cap" id="lightbox-cap" aria-live="polite"></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var lb = document.getElementById("lightbox");
+      if (!lb) return;
+      var pic = document.getElementById("lightbox-pic");
+      var cap = document.getElementById("lightbox-cap");
+      var prevBtn = lb.querySelector("[data-lightbox-prev]");
+      var nextBtn = lb.querySelector("[data-lightbox-next]");
+      var zoomBtns = Array.prototype.slice.call(document.querySelectorAll("[data-zoom]"));
+      var lastFocus = null;
+      var idx = 0;
+
+      function esc(s) { return (s || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+      function render(i) {
+        idx = (i + zoomBtns.length) % zoomBtns.length;
+        var btn = zoomBtns[idx];
+        var webp = btn.getAttribute("data-webp");
+        var png = btn.getAttribute("data-png");
+        var alt = btn.getAttribute("data-alt") || "";
+        pic.innerHTML =
+          (webp ? '<source srcset="' + esc(webp) + '" type="image/webp" />' : '') +
+          '<img src="' + esc(png) + '" alt="' + esc(alt) + '" />';
+        cap.textContent = btn.getAttribute("data-cap") || "";
+      }
+
+      function openLightbox(btn) {
+        lastFocus = btn;
+        render(zoomBtns.indexOf(btn));
+        lb.setAttribute("open", "");
+        document.body.style.overflow = "hidden";
+        lb.querySelector(".close-btn").focus();
+      }
+
+      function closeLightbox() {
+        lb.removeAttribute("open");
+        document.body.style.overflow = "";
+        pic.innerHTML = "";
+        if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+      }
+
+      function prev() { render(idx - 1); }
+      function next() { render(idx + 1); }
+
+      zoomBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () { openLightbox(btn); });
+      });
+      lb.querySelector("[data-close-lightbox]").addEventListener("click", closeLightbox);
+      if (zoomBtns.length > 1) {
+        prevBtn.addEventListener("click", prev);
+        nextBtn.addEventListener("click", next);
+      } else {
+        prevBtn.hidden = true;
+        nextBtn.hidden = true;
+      }
+      lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
+      document.addEventListener("keydown", function (e) {
+        if (!lb.hasAttribute("open")) return;
+        if (e.key === "Escape") { closeLightbox(); }
+        else if (zoomBtns.length > 1 && e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+        else if (zoomBtns.length > 1 && e.key === "ArrowRight") { e.preventDefault(); next(); }
+      });
     })();
   </script>
 </body>
