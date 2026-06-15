@@ -691,6 +691,58 @@
       .tabpanel { animation: none; }
     }
 
+    /* ── app showcase gallery ── */
+    .showcase .lede { max-width: var(--measure); }
+    .showcase .gallery-tabs { margin: 1.6rem 0 1.8rem; }
+    .showcase .shot {
+      margin: 0;
+      border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: var(--paper-deep);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset,
+                  0 22px 48px -30px rgba(26,31,26,0.5);
+    }
+    .showcase .tabpanel > .shot { max-width: 60rem; margin-inline: auto; }
+    .shot-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.5rem 0.7rem;
+      background: color-mix(in srgb, var(--ink) 5%, var(--paper-deep));
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    }
+    .shot-bar .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 16%, transparent);
+    }
+    .shot-frame { aspect-ratio: 16 / 10; background: var(--paper); }
+    .shot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .shot-pair {
+      display: grid;
+      gap: var(--space-5);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 860px) {
+      .shot-pair { grid-template-columns: 1fr 1fr; }
+    }
+    .shot-cap {
+      margin: var(--space-4) 0 0;
+      text-align: center;
+      font-family: var(--display);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+    }
+
     .panel-intro {
       max-width: var(--measure);
       color: var(--ink-soft);
@@ -1225,6 +1277,85 @@
       </div>
     </section>
 
+    <!-- ─────────────────── showcase ─────────────────── -->
+    <section class="showcase" id="showcase" aria-labelledby="showcase-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="showcase-title">A look inside, <em>before you install.</em></h2>
+        </div>
+        <p class="lede">
+          Real screens from the app — your wallets in one place, the year in review,
+          and plain-text exports you can actually read.
+        </p>
+
+        <div class="gallery-tabs">
+          <div class="tablist" role="tablist" aria-label="App screenshots">
+            <button class="tab" type="button" role="tab" id="tab-shot-wallets" aria-controls="panel-shot-wallets" aria-selected="true">
+              <span class="tab-num">i.</span> Wallets
+            </button>
+            <button class="tab" type="button" role="tab" id="tab-shot-reports" aria-controls="panel-shot-reports" aria-selected="false" tabindex="-1">
+              <span class="tab-num">ii.</span> Reports
+            </button>
+            <button class="tab" type="button" role="tab" id="tab-shot-exports" aria-controls="panel-shot-exports" aria-selected="false" tabindex="-1">
+              <span class="tab-num">iii.</span> Exports
+            </button>
+          </div>
+        </div>
+
+        <div class="tabpanel" id="panel-shot-wallets" role="tabpanel" aria-labelledby="tab-shot-wallets" tabindex="0">
+          <figure class="shot">
+            <div class="shot-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="shot-frame">
+              <picture>
+                <source srcset="assets/screenshots/wallets.webp" type="image/webp" />
+                <img src="assets/screenshots/wallets.png" width="1280" height="842" loading="lazy" decoding="async"
+                     alt="The BitGarth wallets screen: a single net-worth figure above one wallet holding Bitcoin, Ethereum and Monero accounts, each with its balance." />
+              </picture>
+            </div>
+          </figure>
+        </div>
+
+        <div class="tabpanel" id="panel-shot-reports" role="tabpanel" aria-labelledby="tab-shot-reports" tabindex="0" hidden>
+          <div class="shot-pair">
+            <figure class="shot">
+              <div class="shot-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <div class="shot-frame">
+                <picture>
+                  <source srcset="assets/screenshots/report-2024.webp" type="image/webp" />
+                  <img src="assets/screenshots/report-2024.png" width="1280" height="771" loading="lazy" decoding="async"
+                       alt="A 2024 wallet report showing opening and closing values with gains across every account." />
+                </picture>
+              </div>
+            </figure>
+            <figure class="shot">
+              <div class="shot-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <div class="shot-frame">
+                <picture>
+                  <source srcset="assets/screenshots/report-2025.webp" type="image/webp" />
+                  <img src="assets/screenshots/report-2025.png" width="1280" height="771" loading="lazy" decoding="async"
+                       alt="A 2025 wallet report for the same wallet showing losses across every account." />
+                </picture>
+              </div>
+            </figure>
+          </div>
+          <p class="shot-cap">The same wallet, two years — up and down.</p>
+        </div>
+
+        <div class="tabpanel" id="panel-shot-exports" role="tabpanel" aria-labelledby="tab-shot-exports" tabindex="0" hidden>
+          <figure class="shot">
+            <div class="shot-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="shot-frame">
+              <picture>
+                <source srcset="assets/screenshots/exports-hledger.webp" type="image/webp" />
+                <img src="assets/screenshots/exports-hledger.png" width="1280" height="1199" loading="lazy" decoding="async"
+                     alt="The accounting export screen showing double-entry hledger journal entries in plain text." />
+              </picture>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- ─────────────────── why ─────────────────── -->
     <section class="why" id="why" aria-labelledby="why-title">
       <div class="wrap">
@@ -1660,31 +1791,33 @@
         });
       });
 
-      // install / upgrade tabs
-      var tabs = Array.prototype.slice.call(
-        document.querySelectorAll(".install-tabs .tab")
-      );
-      function selectTab(tab) {
-        tabs.forEach(function (t) {
-          var on = t === tab;
-          t.setAttribute("aria-selected", on ? "true" : "false");
-          t.tabIndex = on ? 0 : -1;
-          var panel = document.getElementById(t.getAttribute("aria-controls"));
-          if (panel) panel.hidden = !on;
-        });
-      }
-      tabs.forEach(function (tab, i) {
-        tab.addEventListener("click", function () { selectTab(tab); });
-        tab.addEventListener("keydown", function (e) {
-          var idx = i;
-          if (e.key === "ArrowRight" || e.key === "ArrowDown") idx = (i + 1) % tabs.length;
-          else if (e.key === "ArrowLeft" || e.key === "ArrowUp") idx = (i - 1 + tabs.length) % tabs.length;
-          else if (e.key === "Home") idx = 0;
-          else if (e.key === "End") idx = tabs.length - 1;
-          else return;
-          e.preventDefault();
-          tabs[idx].focus();
-          selectTab(tabs[idx]);
+      // tablists: install/upgrade, app-showcase gallery — each group independent
+      Array.prototype.slice.call(
+        document.querySelectorAll('[role="tablist"]')
+      ).forEach(function (list) {
+        var tabs = Array.prototype.slice.call(list.querySelectorAll(".tab"));
+        function selectTab(tab) {
+          tabs.forEach(function (t) {
+            var on = t === tab;
+            t.setAttribute("aria-selected", on ? "true" : "false");
+            t.tabIndex = on ? 0 : -1;
+            var panel = document.getElementById(t.getAttribute("aria-controls"));
+            if (panel) panel.hidden = !on;
+          });
+        }
+        tabs.forEach(function (tab, i) {
+          tab.addEventListener("click", function () { selectTab(tab); });
+          tab.addEventListener("keydown", function (e) {
+            var idx = i;
+            if (e.key === "ArrowRight" || e.key === "ArrowDown") idx = (i + 1) % tabs.length;
+            else if (e.key === "ArrowLeft" || e.key === "ArrowUp") idx = (i - 1 + tabs.length) % tabs.length;
+            else if (e.key === "Home") idx = 0;
+            else if (e.key === "End") idx = tabs.length - 1;
+            else return;
+            e.preventDefault();
+            tabs[idx].focus();
+            selectTab(tabs[idx]);
+          });
         });
       });
     })();
