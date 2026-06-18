@@ -691,6 +691,117 @@
       .tabpanel { animation: none; }
     }
 
+    /* ── channel selector (Docker / Umbrel / …) ── */
+    /* The platform picker sits above the per-channel content so that every new
+       release channel adds one chip instead of another wall of commands. Only
+       the active channel's panel renders; the rest stay hidden. */
+    .channel-tabs { margin: 0 0 1.9rem; }
+    .channel-list {
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      max-width: 100%;
+    }
+    .chan {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-family: var(--body);
+      color: var(--ink-soft);
+      padding: 0.62rem 1.05rem;
+      border-radius: 9px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+    }
+    .chan svg { width: 1.2rem; height: 1.2rem; flex: none; opacity: 0.7; }
+    .chan .chan-name { font-size: 1rem; letter-spacing: 0.005em; line-height: 1.1; }
+    .chan .chan-sub {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 0.78rem;
+      opacity: 0.55;
+      letter-spacing: 0.01em;
+    }
+    .chan:hover { color: var(--ink); }
+    .chan:hover svg { opacity: 0.9; }
+    .chan[aria-selected="true"] {
+      background: var(--ink);
+      color: var(--paper);
+      box-shadow: 0 10px 22px -16px rgba(26,31,26,0.7);
+    }
+    .chan[aria-selected="true"] svg { opacity: 1; color: var(--copper-soft); }
+    .chan[aria-selected="true"] .chan-sub { color: var(--copper-soft); opacity: 0.9; }
+    .chan:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+
+    /* ── Umbrel: guided community-app-store flow ── */
+    .umbrel-steps {
+      list-style: none;
+      counter-reset: step;
+      margin: 0 0 1.8rem;
+      padding: 0;
+      max-width: var(--measure);
+      display: grid;
+      gap: 1.15rem;
+    }
+    .umbrel-steps li {
+      position: relative;
+      counter-increment: step;
+      padding-left: 3rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .umbrel-steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: -0.15rem;
+      width: 2rem;
+      height: 2rem;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--moss);
+      background: color-mix(in srgb, var(--moss) 8%, var(--paper));
+      border: 1px solid color-mix(in srgb, var(--moss) 32%, transparent);
+      border-radius: 50%;
+    }
+    .umbrel-steps li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 2.05rem;
+      bottom: -1.15rem;
+      width: 1px;
+      background: color-mix(in srgb, var(--moss) 22%, transparent);
+    }
+    .umbrel-steps strong { color: var(--ink); font-weight: 600; }
+    /* little glyphs that echo Umbrel's own UI: the ⋯ menu, the Add/Install buttons */
+    .ui-chip {
+      font-family: var(--body);
+      font-size: 0.84em;
+      white-space: nowrap;
+      padding: 0.1em 0.5em;
+      border-radius: 5px;
+      background: color-mix(in srgb, var(--ink) 7%, transparent);
+      border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+      color: var(--ink);
+    }
+    .ui-chip.dots { letter-spacing: 0.16em; padding-right: 0.36em; }
+    .ui-chip.go {
+      background: var(--moss);
+      border-color: var(--moss);
+      color: var(--paper);
+      font-weight: 500;
+    }
+    /* reuse the dark .code-card for the store URL, just relabel + let it wrap */
+    .code-card.is-url::before { content: "community store url"; }
+    .code-card.is-url pre { white-space: normal; word-break: break-all; }
+
     /* ── app showcase gallery ── */
     .showcase .lede { max-width: var(--measure); }
     .showcase .gallery-tabs { margin: 1.6rem 0 1.8rem; }
@@ -1256,7 +1367,8 @@
         "logo": "https://bitgarth.app/assets/favicon/apple-touch-icon.png",
         "sameAs": [
           "https://x.com/BitGarth",
-          "https://hub.docker.com/r/bitgarth/bitgarth"
+          "https://hub.docker.com/r/bitgarth/bitgarth",
+          "https://github.com/FernTrail/ferntrail-umbrel-app-store"
         ]
       },
       {
@@ -1274,7 +1386,7 @@
         "description": "Local-first self-custody accounting for Bitcoin and Ethereum. Downloads your transactions into an encrypted user database and exports plain-text accounting files for hledger and ledger-cli.",
         "applicationCategory": "FinanceApplication",
         "applicationSubCategory": "Accounting",
-        "operatingSystem": "Linux, macOS, Windows (via Docker)",
+        "operatingSystem": "Linux, macOS, Windows (via Docker); umbrelOS",
         "url": "https://bitgarth.app/",
         "image": "https://bitgarth.app/assets/og-card.jpg",
         "downloadUrl": "https://hub.docker.com/r/bitgarth/bitgarth",
@@ -1380,7 +1492,7 @@
               <span class="arrow" aria-hidden="true">→</span>
             </a>
             <a class="btn ghost" href="#install">
-              Install with Docker
+              Install BitGarth
             </a>
             <span class="footnote">No email required for the app.</span>
           </div>
@@ -1662,9 +1774,39 @@
       <div class="wrap">
         <div class="section-head">
           <span class="num">§ 04</span>
-          <h2 id="install-title">Install in <em>one command.</em></h2>
+          <h2 id="install-title">Install on <em>your own turf.</em></h2>
         </div>
         <p class="lede">
+          Run BitGarth wherever you already keep your self-hosted apps. Pick your platform below — from there it's a single command, or a couple of taps.
+        </p>
+
+        <div class="channel-tabs">
+          <div class="tablist channel-list" role="tablist" aria-label="Choose how to install BitGarth">
+            <button class="chan" type="button" role="tab" id="tab-ch-docker" aria-controls="panel-ch-docker" aria-selected="true">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 13h16.2c.4 2.1-1.1 5-5.1 5H8c-3 0-5-2-5-5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                <rect x="6" y="9.2" width="2.6" height="2.6" stroke="currentColor" stroke-width="1.3"/>
+                <rect x="9.7" y="9.2" width="2.6" height="2.6" stroke="currentColor" stroke-width="1.3"/>
+                <rect x="9.7" y="5.5" width="2.6" height="2.6" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M19.3 11.2c.9-.8 1.5-.4 1.9 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+              <span class="chan-name">Docker</span>
+              <span class="chan-sub">any machine</span>
+            </button>
+            <button class="chan" type="button" role="tab" id="tab-ch-umbrel" aria-controls="panel-ch-umbrel" aria-selected="false" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3.4 11.2a8.6 8.6 0 0 1 17.2 0c-1.2-1-2.4-1-3.5 0-1.1-1-2.4-1-3.5 0-1.1-1-2.4-1-3.5 0-1.1-1-2.3-1-3.5 0z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M12 11.2V18a2.1 2.1 0 0 1-3.3 1.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="chan-name">Umbrel</span>
+              <span class="chan-sub">community store</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Docker channel ── -->
+        <div class="tabpanel chan-panel" id="panel-ch-docker" role="tabpanel" aria-labelledby="tab-ch-docker" tabindex="0">
+        <p class="panel-intro">
           If you have <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener noreferrer">Docker</a> installed, you're a single command away from running BitGarth locally. The image is published to Docker Hub as <code style="font-family:var(--mono);">bitgarth/bitgarth</code> for both <code style="font-family:var(--mono);">amd64</code> and <code style="font-family:var(--mono);">arm64</code>.
         </p>
 
@@ -1759,6 +1901,50 @@
         <p class="fine-print">
           Docker image source: <a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">hub.docker.com/r/bitgarth/bitgarth</a>.
         </p>
+        </div><!-- /panel-ch-docker -->
+
+        <!-- ── Umbrel channel ── -->
+        <div class="tabpanel chan-panel" id="panel-ch-umbrel" role="tabpanel" aria-labelledby="tab-ch-umbrel" tabindex="0" hidden>
+        <p class="panel-intro">
+          BitGarth ships as an <a href="https://umbrel.com/" target="_blank" rel="noopener noreferrer">Umbrel</a> community app. Umbrel hides community stores by default, so you add ours once — then BitGarth installs like any other app, in one tap.
+        </p>
+
+        <ol class="umbrel-steps">
+          <li>On your Umbrel, open the <strong>App Store</strong>.</li>
+          <li>Click the <span class="ui-chip dots">···</span> menu beside <strong>Updates</strong> (top-right), then choose <strong>Community App Stores</strong>.</li>
+          <li>Paste the store URL below into the dialog and click <span class="ui-chip go">Add</span>.</li>
+          <li>Open the new <strong>BitGarth</strong> store that appears, then hit <span class="ui-chip">Install</span>. That's it.</li>
+        </ol>
+
+        <div class="method-kicker">Community app store URL</div>
+
+        <div class="code-card is-url" role="group" aria-label="BitGarth Umbrel community app store URL">
+          <button class="copy-btn" type="button" data-state="idle" data-copy-target="umbrel-store-url" aria-live="polite">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="label">Copy</span>
+          </button>
+<pre id="umbrel-store-url" data-oneline="https://github.com/FernTrail/ferntrail-umbrel-app-store"><span class="tok-str">https://github.com/FernTrail/ferntrail-umbrel-app-store</span></pre>
+          <p class="copy-note">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="13" height="13">
+              <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            Paste into Umbrel's <em>Community App Stores</em> dialog.
+          </p>
+        </div>
+
+        <p class="after">
+          Once it's installed, open BitGarth from your Umbrel dashboard. Pick a password, add a wallet, and watch your transactions land in your own little clearing.
+        </p>
+        <p class="fine-print">
+          Store source: <a href="https://github.com/FernTrail/ferntrail-umbrel-app-store" target="_blank" rel="noopener noreferrer">github.com/FernTrail/ferntrail-umbrel-app-store</a>.
+        </p>
+        </div><!-- /panel-ch-umbrel -->
       </div>
     </section>
 
@@ -1963,7 +2149,7 @@
       Array.prototype.slice.call(
         document.querySelectorAll('[role="tablist"]')
       ).forEach(function (list) {
-        var tabs = Array.prototype.slice.call(list.querySelectorAll(".tab"));
+        var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
         function selectTab(tab) {
           tabs.forEach(function (t) {
             var on = t === tab;
@@ -2071,28 +2257,45 @@
       });
 
       // Routes are <action>[-<channel>]: action is install | upgrade | inspect,
-      // channel names a distribution channel (e.g. #install-docker, #inspect-docker).
-      // Bare #install / #upgrade / #inspect are channel-agnostic. Today only Docker
-      // ships (docker.sh), so route.channel is captured but not yet branched on —
-      // when umbrel/mac/etc. land, switch tabs/instructions/script on route.channel.
+      // channel names a distribution channel (e.g. #install-docker, #install-umbrel,
+      // #inspect-docker). Bare #install / #upgrade / #inspect default to the Docker
+      // channel. The channel selects the outer platform tab; action selects the inner
+      // Install/Upgrade tab, which only exists for Docker. inspect (docker.sh viewer)
+      // is Docker-only, so it forces the Docker channel.
       function parseRoute(hash) {
         var m = hash.replace(/^#/, "").match(/^(install|upgrade|inspect)(?:-([a-z0-9]+))?$/);
         return m ? { action: m[1], channel: m[2] || null } : null;
       }
 
+      function selectChannel(channel) {
+        var chanTab = document.getElementById("tab-ch-" + channel);
+        if (chanTab) chanTab.click();
+        return !!chanTab;
+      }
+
       function handleHash() {
         var route = parseRoute(location.hash);
         if (!route) return;
+
         if (route.action === "inspect") {
+          selectChannel("docker"); // the script viewer only applies to Docker
           var inspectTab = document.getElementById("tab-upgrade");
           if (inspectTab) inspectTab.click();
           openOverlay();
           return;
         }
-        var tab = document.getElementById(
-          route.action === "upgrade" ? "tab-upgrade" : "tab-install"
-        );
-        if (tab) tab.click();
+
+        var channel = route.channel || "docker";
+        if (!selectChannel(channel)) { channel = "docker"; selectChannel(channel); }
+
+        // Install/Upgrade sub-tabs only exist on the Docker channel.
+        if (channel === "docker") {
+          var tab = document.getElementById(
+            route.action === "upgrade" ? "tab-upgrade" : "tab-install"
+          );
+          if (tab) tab.click();
+        }
+
         var section = document.getElementById("install");
         if (section) section.scrollIntoView({ behavior: "smooth" });
       }
