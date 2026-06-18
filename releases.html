@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Release notes | BitGarth</title>
+  <meta name="description" content="What's changed in BitGarth — a field log of every release, newest first." />
+  <meta name="theme-color" content="#F4EFE3" />
+  <link rel="canonical" href="https://bitgarth.app/releases.html" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
+
+  <link rel="preload" href="assets/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/instrument-sans-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/trust.css" />
+
+  <style>
+    /* ─────────────────────────────────────────────────────────────────────
+       releases.html — the changelog
+       Builds on trust.css (palette, fonts, header, footer, ornaments).
+       A botanical field-log: each release is a dated entry threaded onto a
+       single vine rail, newest first. The app deep-links to a version anchor
+       (e.g. releases.html#0.1.6); :target gives that entry a copper mark so
+       a visitor arriving from the "What's new" notice lands on it cleanly.
+       ───────────────────────────────────────────────────────────────────── */
+
+    .changelog {
+      position: relative;
+      max-width: 52rem;
+      display: grid;
+      gap: clamp(3rem, 6vw, 4.75rem);
+    }
+
+    /* the vine rail — a hairline thread running through every entry */
+    @media (min-width: 720px) {
+      .changelog { padding-left: clamp(2.25rem, 4vw, 3.25rem); }
+      .changelog::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 0.7rem;
+        bottom: 0.7rem;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          color-mix(in srgb, var(--moss) 32%, transparent) 8%,
+          color-mix(in srgb, var(--moss) 32%, transparent) 92%,
+          transparent
+        );
+      }
+    }
+
+    .release {
+      position: relative;
+      scroll-margin-top: 5.5rem;
+      border-radius: 10px;
+    }
+
+    /* node on the rail */
+    @media (min-width: 720px) {
+      .release::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.62rem;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 1.5px solid var(--moss);
+        box-shadow: 0 0 0 4px var(--paper);
+        transition: background 220ms var(--ease-default, ease),
+                    border-color 220ms var(--ease-default, ease),
+                    box-shadow 220ms var(--ease-default, ease);
+      }
+    }
+
+    /* ── entry head: version · date · latest mark ── */
+    .release-head {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.65rem 1rem;
+      margin-bottom: 1.7rem;
+    }
+    .release-version {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(1.95rem, 3.4vw, 2.65rem);
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin: 0;
+      font-variant-numeric: oldstyle-nums proportional-nums;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.45rem;
+    }
+    .release-anchor {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 0.62em;
+      color: var(--moss);
+      background-image: none;
+      opacity: 0;
+      transition: opacity 180ms var(--ease-default, ease), color 180ms ease;
+    }
+    .release-head:hover .release-anchor,
+    .release-anchor:focus-visible { opacity: 1; }
+    .release-anchor.copied { opacity: 1; color: var(--copper); font-style: italic; }
+    @media (hover: none) { .release-anchor { opacity: 0.45; } }
+
+    .release-date {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--sage);
+      letter-spacing: 0.03em;
+      margin: 0;
+    }
+    .latest-tag {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--copper);
+      border: 1px solid color-mix(in srgb, var(--copper) 38%, transparent);
+      background: color-mix(in srgb, var(--copper) 8%, var(--paper));
+      padding: 0.2rem 0.62rem;
+      border-radius: 999px;
+      align-self: center;
+    }
+
+    /* ── change groups ── */
+    .change-group { margin-bottom: 1.7rem; }
+    .change-group:last-child { margin-bottom: 0; }
+    .change-group h3 {
+      font-family: var(--body);
+      font-size: 0.74rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-soft);
+      margin: 0 0 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .change-group h3::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--marker, var(--moss));
+      flex: 0 0 auto;
+    }
+    .change-group.highlights { --marker: var(--copper); }
+    .change-group.new        { --marker: var(--moss); }
+    .change-group.fixed      { --marker: var(--sage); }
+
+    /* highlights read as an editorial lede, not a bullet list */
+    .change-group.highlights .highlight {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.15rem, 1.9vw, 1.42rem);
+      line-height: 1.5;
+      color: var(--ink);
+      margin: 0 0 0.6rem;
+      max-width: 40rem;
+    }
+    .change-group.highlights .highlight:last-child { margin-bottom: 0; }
+    .change-group.highlights .highlight em {
+      font-style: normal;
+      color: var(--moss);
+    }
+
+    .change-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-width: var(--measure);
+      display: grid;
+    }
+    .change-list li {
+      position: relative;
+      padding: 0.55rem 0 0.55rem 1.4rem;
+      border-top: 1px dashed color-mix(in srgb, var(--ink) 16%, transparent);
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .change-list li:first-child { border-top: none; }
+    .change-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.95rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--marker, var(--moss));
+    }
+    .change-list code,
+    .change-group .highlight code {
+      font-family: var(--mono);
+      font-size: 0.9em;
+      background: color-mix(in srgb, var(--ink) 7%, transparent);
+      color: var(--ink);
+      padding: 0.1em 0.42em;
+      border-radius: 4px;
+      border: 1px solid color-mix(in srgb, var(--ink) 6%, transparent);
+    }
+
+    /* ── :target — the version the app linked to ── */
+    .release:target::before {
+      background: var(--copper);
+      border-color: var(--copper);
+      box-shadow: 0 0 0 4px var(--paper), 0 0 0 7px color-mix(in srgb, var(--copper) 18%, transparent);
+    }
+    @media (max-width: 719px) {
+      .release:target {
+        border-left: 2px solid var(--copper);
+        padding-left: 1rem;
+        margin-left: -1.1rem;
+      }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .release:target {
+        animation: rel-target 1.8s var(--ease-default, ease) 1;
+      }
+      @keyframes rel-target {
+        0%   { background: color-mix(in srgb, var(--copper) 12%, transparent); }
+        100% { background: transparent; }
+      }
+    }
+
+    /* ── page-load reveal (gated) ── */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal > * {
+        opacity: 0;
+        transform: translateY(0.55rem);
+        animation: rel-rise 0.7s var(--ease-default, ease) forwards;
+      }
+      .reveal > *:nth-child(1) { animation-delay: 0.04s; }
+      .reveal > *:nth-child(2) { animation-delay: 0.14s; }
+      .reveal > *:nth-child(3) { animation-delay: 0.24s; }
+      .reveal > *:nth-child(4) { animation-delay: 0.34s; }
+      .reveal > *:nth-child(n+5) { animation-delay: 0.42s; }
+      @keyframes rel-rise {
+        to { opacity: 1; transform: none; }
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="wrap">
+      <a class="wordmark" href="/" aria-label="BitGarth — home">BitGarth</a>
+      <nav class="primary" aria-label="Primary">
+        <div class="links">
+          <a href="/#why">Why</a>
+          <a href="security.html">Security</a>
+          <a href="/#install">Install</a>
+          <a href="/#pricing">Pricing</a>
+        </div>
+        <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
+          Try the demo
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="trust-shell">
+      <div class="wrap">
+
+        <header class="trust-hero reveal">
+          <p class="eyebrow">Release notes</p>
+          <h1>What's <em>changed.</em></h1>
+          <p class="lede">A field log of every BitGarth release, newest first.</p>
+        </header>
+
+        <div class="changelog">
+
+          <!-- ════════════════════════════════════════════════════════════════
+               To add a release: copy one <article class="release"> block,
+               give it id="X.Y.Z" (anchor the app links to), update the head,
+               and place it at the TOP — newest first. Drop the "latest-tag"
+               from the previous newest. Source: docs/releases/X.Y.Z.md.
+               Groups: highlights → new → fixed (omit any that are empty).
+               ════════════════════════════════════════════════════════════════ -->
+
+          <article class="release" id="0.1.6">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.1.6
+                <a class="release-anchor" href="#0.1.6" aria-label="Copy link to version 0.1.6">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">17 June 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Wallet reports now value your holdings using <em>real market prices</em> pulled from data providers, instead of relying only on manual or zero prices.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>Provider-sourced daily prices in wallet reports, with the price source shown.</li>
+                <li>Year-dial control to pick the date range on the Wallets page.</li>
+                <li>Transactions now default to the current year with simpler filters.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>Wallet report prices ignore zero balances so empty assets don&rsquo;t skew values.</li>
+                <li>Manual asset assertions carry forward correctly across years.</li>
+                <li>Identicon line glyphs render correctly again.</li>
+              </ul>
+            </section>
+          </article>
+
+          <article class="release" id="0.1.5">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.1.5
+                <a class="release-anchor" href="#0.1.5" aria-label="Copy link to version 0.1.5">#</a>
+              </h2>
+              <p class="release-date">14 June 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Wallet values can now use real market prices from CoinGecko, with your explicit consent and an optional CoinGecko API key for higher limits.</p>
+              <p class="highlight">BitGarth now tells you when a newer version is available, and warns when the running build has drifted from the server.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>CoinGecko price fetching for wallet values, controlled from the navbar and Settings with a clear consent toggle.</li>
+                <li>Historical daily price backfill so past-dated wallet values reconcile over time.</li>
+                <li>Discover and add manual assets from the CoinGecko catalog, with a live search count of matching assets.</li>
+                <li>In-app upgrade awareness: update-status banner, channel-aware upgrade notice, and an automatic throttled check after login.</li>
+                <li>Server/client build-drift detection that prompts a reload when they diverge.</li>
+                <li>hledger export now includes network-fee accounts, a root include tree, and signed balance deltas for correct asset postings.</li>
+                <li>Settings &ldquo;Security&rdquo; tab renamed to &ldquo;Account&rdquo;, plus a navbar identity dropdown with deep links and larger botanical-ledger identicons.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>BTC ledger values repair on database open and exclude network fees so balances and exports stay correct.</li>
+                <li>Manual assets no longer duplicate, and CoinGecko tickers are not persisted as display glyphs.</li>
+                <li>CoinGecko API keys are redacted from logs and the loader fails closed on a bad key.</li>
+                <li>The build endpoint is gated to web server contexts and the drift notice clears once the server build matches.</li>
+              </ul>
+            </section>
+          </article>
+
+          <article class="release" id="0.1.4">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.1.4
+                <a class="release-anchor" href="#0.1.4" aria-label="Copy link to version 0.1.4">#</a>
+              </h2>
+              <p class="release-date">5 June 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Manual assets are now backed by a CoinGecko-sourced asset catalog, so you can search and add a far wider range of coins and tokens.</p>
+              <p class="highlight">Wallet reports gain a Prices section where you can set your own price for an asset and see it applied to your holdings.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>Searchable manual-asset picker (combobox) ordered by market-cap rank, with many new networks including Monero, Tezos, Zcash, Dash and Polkadot.</li>
+                <li>User price overrides, shown as inline price chips in desktop and mobile wallet reports.</li>
+                <li>Etherscan API key visibility: a set/unset badge in Settings and warnings on the Wallets and Transactions pages when a key is missing.</li>
+                <li>Migration of legacy custom accounts into the new manual-asset model, with confirmation options on the Account page.</li>
+                <li>Wallet Data Export V4, which now backs up and restores your stored API keys.</li>
+                <li>Settings sections are deep-linkable via a query parameter.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>Manual ERC-20 assets are no longer rejected unless they were USDC on Ethereum.</li>
+                <li>Imported xpub addresses are bootstrapped correctly and empty HD sync work sets are preserved.</li>
+                <li>Stored API keys are kept in a dedicated table and blank keys are rejected.</li>
+                <li>Corrected the Cardano ledger model and the Uniswap unit code.</li>
+              </ul>
+            </section>
+          </article>
+
+        </div>
+
+        <p class="updated">Newest release at the <a href="#main">top</a> &middot; older versions stay anchored below.</p>
+
+        <div class="vine" aria-hidden="true">
+          <svg width="260" height="22" viewBox="0 0 260 22" fill="none">
+            <path d="M0 11 H100" stroke="currentColor" stroke-width="0.8"/>
+            <path d="M160 11 H260" stroke="currentColor" stroke-width="0.8"/>
+            <path d="M115 11c2-4 6-6 10-3 3 2.5 3 7 0 9-3 2-7 1-10-1z M145 11c-2-4-6-6-10-3-3 2.5-3 7 0 9 3 2 7 1 10-1z" fill="currentColor" opacity="0.85"/>
+            <circle cx="130" cy="11" r="1.7" fill="currentColor"/>
+            <path d="M122 6 c2-3 6-2 8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            <path d="M138 16 c-2 3-6 2-8 0" stroke="currentColor" stroke-width="0.7" fill="none"/>
+          </svg>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="wrap">
+      <div class="colophon">
+        <span class="wordmark">BitGarth</span>
+        <p>A clearing in the woods. A garden. A quiet place for your numbers to live.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Live demo</a></li>
+          <li><a href="releases.html" aria-current="page">Release notes</a></li>
+          <li><a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="https://hledger.org" target="_blank" rel="noopener noreferrer">hledger</a></li>
+          <li><a href="https://ledger-cli.org" target="_blank" rel="noopener noreferrer">ledger-cli</a></li>
+          <li><a href="https://plaintextaccounting.org" target="_blank" rel="noopener noreferrer">Plain Text Accounting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="https://x.com/BitGarth" target="_blank" rel="noopener noreferrer">@BitGarth on X</a></li>
+          <li><a href="mailto:hello&#64;bitgarth&#46;app">hello&#64;bitgarth&#46;app</a></li>
+        </ul>
+      </div>
+      <div class="meta">
+        © 2026 BitGarth. Made with care, in plain text.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Click a version's "#" to copy its deep link — borrows the design
+    // system's Copy → Copied feedback. Navigation (hash + scroll) still
+    // happens natively; the copy is a quiet bonus.
+    document.querySelectorAll('.release-anchor').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var url = location.origin + location.pathname + a.getAttribute('href');
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).catch(function () {});
+        }
+        a.classList.add('copied');
+        a.textContent = 'link copied';
+        a.setAttribute('aria-live', 'polite');
+        setTimeout(function () {
+          a.textContent = '#';
+          a.classList.remove('copied');
+        }, 1600);
+      });
+    });
+  </script>
+</body>
+</html>
