@@ -1355,6 +1355,7 @@
     .inspect-link svg { flex-shrink: 0; }
   </style>
 
+  <!-- PRICING:JSONLD:START -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1376,7 +1377,9 @@
         "@id": "https://bitgarth.app/#website",
         "url": "https://bitgarth.app/",
         "name": "BitGarth",
-        "publisher": { "@id": "https://bitgarth.app/#org" },
+        "publisher": {
+          "@id": "https://bitgarth.app/#org"
+        },
         "inLanguage": "en"
       },
       {
@@ -1390,7 +1393,9 @@
         "url": "https://bitgarth.app/",
         "image": "https://bitgarth.app/assets/og-card.jpg",
         "downloadUrl": "https://hub.docker.com/r/bitgarth/bitgarth",
-        "publisher": { "@id": "https://bitgarth.app/#org" },
+        "publisher": {
+          "@id": "https://bitgarth.app/#org"
+        },
         "featureList": [
           "Bitcoin xpub and Ethereum address sync",
           "Encrypted user database",
@@ -1403,7 +1408,7 @@
             "name": "Free",
             "price": "0",
             "priceCurrency": "USD",
-            "description": "5 balance-synced accounts, free hledger and ledger-cli export."
+            "description": "Local ownership with 5 accounts and balance-focused basics."
           },
           {
             "@type": "Offer",
@@ -1417,7 +1422,7 @@
               "unitCode": "MON",
               "billingDuration": "P1M"
             },
-            "description": "10 synced accounts with full transaction history up to 5,000 transactions per account."
+            "description": "Ten accounts with transaction history for supported synced accounts."
           },
           {
             "@type": "Offer",
@@ -1431,13 +1436,14 @@
               "unitCode": "MON",
               "billingDuration": "P1M"
             },
-            "description": "50 synced accounts with full transaction history up to 100,000 transactions per account."
+            "description": "Fifty accounts with deeper transaction history for supported synced accounts."
           }
         ]
       }
     ]
   }
   </script>
+  <!-- PRICING:JSONLD:END -->
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -1959,9 +1965,9 @@
           <span class="chip free">Free</span> syncs your balances and tracks manual crypto assets for a full net-worth view. <span class="chip paid">Paid</span> tiers add transaction-history sync and more synced accounts.
         </p>
 
-        <div class="grid">
-          <!-- ───── Free ───── -->
-          <article class="tier" aria-labelledby="tier-free">
+        <div class="grid" id="pricing-grid">
+          <!-- PRICING:CARDS:START -->
+<article class="tier" aria-labelledby="tier-free">
             <svg class="corner tl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
             <svg class="corner tr" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
             <svg class="corner bl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
@@ -1973,14 +1979,13 @@
             <p class="summary">Local ownership with 5 accounts and balance-focused basics.</p>
             <ul>
               <li><span><strong>5</strong> accounts</span></li>
-              <li>Balance fetching for supported accounts</li>
-              <li>Current market values for supported assets</li>
-              <li>hledger &amp; ledger-cli exports included</li>
+              <li><span>Balance fetching for supported accounts</span></li>
+              <li><span>Current market values for supported assets</span></li>
+              <li><span>hledger and ledger-cli exports included</span></li>
             </ul>
             <a class="btn ghost cta" href="#install">Install &amp; start <span class="arrow" aria-hidden="true">→</span></a>
           </article>
 
-          <!-- ───── Basic ───── -->
           <article class="tier featured" aria-labelledby="tier-basic">
             <div class="ribbon">Early adopter discount</div>
             <svg class="corner tl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
@@ -1994,14 +1999,13 @@
             <p class="summary">Ten accounts with transaction history for supported synced accounts.</p>
             <ul>
               <li><span><strong>10</strong> accounts</span></li>
-              <li>Transaction history up to 5,000 per account</li>
-              <li>Price history for supported assets</li>
-              <li>hledger and ledger-cli exports included</li>
+              <li><span>Transaction history up to 5,000 per account</span></li>
+              <li><span>Price history for supported assets</span></li>
+              <li><span>hledger and ledger-cli exports included</span></li>
             </ul>
             <a class="btn cta" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Try it in the demo <span class="arrow" aria-hidden="true">→</span></a>
           </article>
 
-          <!-- ───── Premium ───── -->
           <article class="tier" aria-labelledby="tier-premium">
             <svg class="corner tl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
             <svg class="corner tr" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
@@ -2014,12 +2018,13 @@
             <p class="summary">Fifty accounts with deeper transaction history for supported synced accounts.</p>
             <ul>
               <li><span><strong>50</strong> accounts</span></li>
-              <li>Transaction history up to 100,000 per account</li>
-              <li>Price history for supported assets</li>
-              <li>hledger and ledger-cli exports included</li>
+              <li><span>Transaction history up to 100,000 per account</span></li>
+              <li><span>Price history for supported assets</span></li>
+              <li><span>hledger and ledger-cli exports included</span></li>
             </ul>
             <a class="btn ghost cta" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Try it in the demo <span class="arrow" aria-hidden="true">→</span></a>
           </article>
+          <!-- PRICING:CARDS:END -->
         </div>
 
         <div class="commitments">
@@ -2399,5 +2404,6 @@
       });
     })();
   </script>
+  <script type="module" src="assets/pricing/runtime.js"></script>
 </body>
 </html>
