@@ -68,6 +68,7 @@ test('main returns 1 and writes nothing on fetch failure', async () => {
     readFile: async () => 'unused',
     writeFile: async (p, c) => { writes[p] = c; },
     log: () => {},
+    errorLog: () => {},
   });
   assert.equal(code, 1);
   assert.deepEqual(writes, {}); // previous snapshot preserved
