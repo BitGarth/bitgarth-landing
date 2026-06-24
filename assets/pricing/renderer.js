@@ -1,3 +1,5 @@
+import { ctaByTier } from './cta-config.js';
+
 function escapeHtml(s) {
   return String(s)
     .replace(/&/g, '&amp;')
@@ -32,8 +34,6 @@ export function pickTerms(purchaseOptions = []) {
   return { monthly: find(1), yearly: find(12) };
 }
 
-import { ctaByTier } from './cta-config.js';
-
 const CORNERS = ['tl', 'tr', 'bl', 'br'].map((p) =>
   `<svg class="corner ${p}" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>`
 ).join('\n            ');
@@ -54,7 +54,7 @@ export function renderPriceBlock(tier) {
 
 export function renderTier(tier) {
   const featured = tier.presentation.is_featured;
-  const ribbon = tier.presentation.ribbon_label
+  const ribbon = (featured && tier.presentation.ribbon_label)
     ? `\n            <div class="ribbon">${escapeHtml(tier.presentation.ribbon_label)}</div>` : '';
   const cta = ctaByTier[tier.tier];
   const ctaClass = `btn${cta.ghost ? ' ghost' : ''} cta`;
@@ -96,7 +96,7 @@ export function buildOffers(snapshot) {
         billingDuration: 'P1M',
       };
     }
-    // Keep key order: description last to match buildOffers test expectation for free.
+    // Paid tiers: move description after priceSpecification to keep a stable key order.
     if (offer.priceSpecification) {
       const { description, ...rest } = offer;
       return { ...rest, description };
