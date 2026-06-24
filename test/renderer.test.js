@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { formatPrice, priceAmount, renderBullets, pickTerms } from '../assets/pricing/renderer.js';
+import { formatPrice, priceAmount, renderBullets, pickTerms, renderPriceBlock, renderTier, renderCards, buildOffers, renderPricing } from '../assets/pricing/renderer.js';
 
 const usd = (minor) => ({ minor_units: minor, currency: 'USD', currency_symbol: '$', display_scale: 2 });
 
@@ -30,4 +30,62 @@ test('pickTerms splits monthly and yearly', () => {
   assert.equal(monthly.price.minor_units, 500);
   assert.equal(yearly.price.minor_units, 5000);
   assert.equal(pickTerms([]).monthly, null);
+});
+
+const sampleSnapshot = {
+  catalog_schema_version: 4,
+  tiers: [
+    {
+      tier: 'free', display_name: 'Free',
+      presentation: { summary: 'Local ownership.', bullets: ['**5** accounts'], is_featured: false, ribbon_label: null },
+      purchase_options: [],
+    },
+    {
+      tier: 'basic', display_name: 'Basic',
+      presentation: { summary: 'Ten accounts.', bullets: ['**10** accounts'], is_featured: true, ribbon_label: 'Early adopter discount' },
+      purchase_options: [
+        { term: { quantity: 1, unit: 'month' }, price: usd(500) },
+        { term: { quantity: 12, unit: 'month' }, price: usd(5000) },
+      ],
+    },
+  ],
+};
+
+test('renderPriceBlock: free shows $0 and no yearly amount', () => {
+  const html = renderPriceBlock(sampleSnapshot.tiers[0]);
+  assert.match(html, /\$0/);
+  assert.doesNotMatch(html, /\/ year/);
+});
+
+test('renderPriceBlock: paid shows monthly headline + yearly secondary', () => {
+  const html = renderPriceBlock(sampleSnapshot.tiers[1]);
+  assert.match(html, /\$5<small>\/month<\/small>/);
+  assert.match(html, /or \$50 \/ year/);
+});
+
+test('renderTier: featured tier gets class + ribbon, free does not', () => {
+  const free = renderTier(sampleSnapshot.tiers[0]);
+  const basic = renderTier(sampleSnapshot.tiers[1]);
+  assert.match(basic, /class="tier featured"/);
+  assert.match(basic, /<div class="ribbon">Early adopter discount<\/div>/);
+  assert.match(basic, /Try it in the demo/);
+  assert.doesNotMatch(free, /class="tier featured"/);
+  assert.doesNotMatch(free, /ribbon/);
+  assert.match(free, /Install &amp; start/);
+});
+
+test('buildOffers derives from snapshot, free price 0, paid monthly price', () => {
+  const offers = buildOffers(sampleSnapshot);
+  assert.deepEqual(offers[0], {
+    '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'USD',
+    description: 'Local ownership.',
+  });
+  assert.equal(offers[1].price, '5');
+  assert.equal(offers[1].priceSpecification.billingDuration, 'P1M');
+});
+
+test('renderPricing returns cards + offers together', () => {
+  const { cardsHTML, offers } = renderPricing(sampleSnapshot);
+  assert.match(cardsHTML, /id="tier-free"/);
+  assert.equal(offers.length, 2);
 });
