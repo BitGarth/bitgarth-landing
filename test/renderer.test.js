@@ -100,3 +100,12 @@ test('renderPricing returns cards + offers together', () => {
   assert.match(cardsHTML, /id="tier-free"/);
   assert.equal(offers.length, 2);
 });
+
+test('renderTier throws a clear error for a tier with no CTA config', () => {
+  const tier = {
+    tier: 'enterprise', display_name: 'Enterprise',
+    presentation: { summary: 'S', bullets: ['x'], is_featured: false, ribbon_label: null },
+    purchase_options: [],
+  };
+  assert.throws(() => renderTier(tier), /No CTA config for tier "enterprise"/);
+});

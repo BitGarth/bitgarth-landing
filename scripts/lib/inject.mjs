@@ -21,7 +21,8 @@ export function replaceJsonLdOffers(html, offers) {
   const node = (data['@graph'] || []).find((n) => n['@type'] === 'SoftwareApplication');
   if (!node) throw new Error('No SoftwareApplication node in JSON-LD');
   node.offers = offers;
-  const serialized = `${scriptMatch[1]}\n  ${JSON.stringify(data, null, 2).replace(/\n/g, '\n  ')}\n  ${scriptMatch[3]}`;
+  const stringified = JSON.stringify(data, null, 2).replace(/</g, '\\u003c');
+  const serialized = `${scriptMatch[1]}\n  ${stringified.replace(/\n/g, '\n  ')}\n  ${scriptMatch[3]}`;
   const newRegion = region.replace(scriptMatch[0], serialized);
   return html.slice(0, sIdx) + newRegion + html.slice(eIdx);
 }

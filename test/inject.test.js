@@ -38,3 +38,13 @@ test('replaceJsonLdOffers replaces only SoftwareApplication offers', () => {
   assert.deepEqual(app.offers, [{ '@type': 'Offer', name: 'Free' }]);
   assert.ok(json['@graph'].some((n) => n['@type'] === 'Organization'));
 });
+
+test('replaceJsonLdOffers escapes < to prevent script breakout', () => {
+  const out = replaceJsonLdOffers(jsonLdHtml, [{ '@type': 'Offer', name: 'X</script><script>bad' }]);
+  assert.doesNotMatch(out, /<\/script><script>bad/); // no literal breakout
+  assert.match(out, /\\u003c\/script/);              // escaped form present
+  // round-trips: parsing the script JSON recovers the original value
+  const json = JSON.parse(out.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  const app = json['@graph'].find((n) => n['@type'] === 'SoftwareApplication');
+  assert.equal(app.offers[0].name, 'X</script><script>bad');
+});

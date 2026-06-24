@@ -57,6 +57,7 @@ export function renderTier(tier) {
   const ribbon = (featured && tier.presentation.ribbon_label)
     ? `\n            <div class="ribbon">${escapeHtml(tier.presentation.ribbon_label)}</div>` : '';
   const cta = ctaByTier[tier.tier];
+  if (!cta) throw new Error(`No CTA config for tier "${tier.tier}"`);
   const ctaClass = `btn${cta.ghost ? ' ghost' : ''} cta`;
   const ctaAttrs = cta.external ? ' target="_blank" rel="noopener noreferrer"' : '';
   return `<article class="tier${featured ? ' featured' : ''}" aria-labelledby="tier-${tier.tier}">${ribbon}
