@@ -74,6 +74,17 @@ test('renderTier: featured tier gets class + ribbon, free does not', () => {
   assert.match(free, /Install &amp; start/);
 });
 
+test('renderTier: non-featured tier with a ribbon_label renders no ribbon', () => {
+  const tier = {
+    tier: 'free', display_name: 'Free',
+    presentation: { summary: 'S', bullets: ['**5** accounts'], is_featured: false, ribbon_label: 'Stray label' },
+    purchase_options: [],
+  };
+  const html = renderTier(tier);
+  assert.doesNotMatch(html, /class="ribbon"/);
+  assert.doesNotMatch(html, /class="tier featured"/);
+});
+
 test('buildOffers derives from snapshot, free price 0, paid monthly price', () => {
   const offers = buildOffers(sampleSnapshot);
   assert.deepEqual(offers[0], {
