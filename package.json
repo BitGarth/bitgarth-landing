@@ -1,0 +1,11 @@
+{
+  "name": "bitgarth-landing",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test",
+    "update-pricing": "node scripts/update-pricing.mjs"
+  }
+}
