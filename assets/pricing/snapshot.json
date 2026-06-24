@@ -1,0 +1,205 @@
+{
+  "catalog_schema_version": 4,
+  "tiers": [
+    {
+      "tier": "free",
+      "display_name": "Free",
+      "presentation": {
+        "display_order": 10,
+        "summary": "Local ownership with 5 accounts and balance-focused basics.",
+        "bullets": [
+          "**5** accounts",
+          "Balance fetching for supported accounts",
+          "Current market values for supported assets",
+          "hledger and ledger-cli exports included"
+        ],
+        "is_featured": false,
+        "ribbon_label": null
+      },
+      "capability_set_id": "free.v3",
+      "capability_schema_version": 3,
+      "minimum_app_version": null,
+      "capabilities": {
+        "limits": {
+          "accounts": {
+            "total": 5
+          },
+          "synced_accounts": 5,
+          "history": {
+            "max_transactions_per_account": 0
+          }
+        },
+        "features": {
+          "transaction_history_sync": false,
+          "historical_sync": false,
+          "balance_sync": true,
+          "balance_assertions": true,
+          "hledger_export": true,
+          "tax_reports": false,
+          "exchange_rates_current": true,
+          "exchange_rates_history": false,
+          "price_overrides": true
+        }
+      },
+      "purchase_options": []
+    },
+    {
+      "tier": "basic",
+      "display_name": "Basic",
+      "presentation": {
+        "display_order": 20,
+        "summary": "Ten accounts with transaction history for supported synced accounts.",
+        "bullets": [
+          "**10** accounts",
+          "Transaction history up to 5,000 per account",
+          "Price history for supported assets",
+          "hledger and ledger-cli exports included"
+        ],
+        "is_featured": true,
+        "ribbon_label": "Early adopter discount"
+      },
+      "capability_set_id": "basic.v3",
+      "capability_schema_version": 3,
+      "minimum_app_version": null,
+      "capabilities": {
+        "limits": {
+          "accounts": {
+            "total": 10
+          },
+          "synced_accounts": 10,
+          "history": {
+            "max_transactions_per_account": 5000
+          }
+        },
+        "features": {
+          "transaction_history_sync": true,
+          "historical_sync": true,
+          "balance_sync": true,
+          "balance_assertions": true,
+          "hledger_export": true,
+          "tax_reports": true,
+          "exchange_rates_current": true,
+          "exchange_rates_history": true,
+          "price_overrides": true
+        }
+      },
+      "purchase_options": [
+        {
+          "id": "basic_1_month_usd",
+          "term": {
+            "quantity": 1,
+            "unit": "month",
+            "label": "1 month"
+          },
+          "price": {
+            "minor_units": 500,
+            "currency": "USD",
+            "currency_symbol": "$",
+            "display_scale": 2
+          },
+          "presentation": {
+            "display_order": 10
+          }
+        },
+        {
+          "id": "basic_12_months_usd",
+          "term": {
+            "quantity": 12,
+            "unit": "month",
+            "label": "1 year"
+          },
+          "price": {
+            "minor_units": 5000,
+            "currency": "USD",
+            "currency_symbol": "$",
+            "display_scale": 2
+          },
+          "presentation": {
+            "display_order": 20,
+            "is_default": true,
+            "badge": "Best value"
+          }
+        }
+      ]
+    },
+    {
+      "tier": "premium",
+      "display_name": "Premium",
+      "presentation": {
+        "display_order": 30,
+        "summary": "Fifty accounts with deeper transaction history for supported synced accounts.",
+        "bullets": [
+          "**50** accounts",
+          "Transaction history up to 100,000 per account",
+          "Price history for supported assets",
+          "hledger and ledger-cli exports included"
+        ],
+        "is_featured": false,
+        "ribbon_label": null
+      },
+      "capability_set_id": "premium.v3",
+      "capability_schema_version": 3,
+      "minimum_app_version": null,
+      "capabilities": {
+        "limits": {
+          "accounts": {
+            "total": 50
+          },
+          "synced_accounts": 50,
+          "history": {
+            "max_transactions_per_account": 100000
+          }
+        },
+        "features": {
+          "transaction_history_sync": true,
+          "historical_sync": true,
+          "balance_sync": true,
+          "balance_assertions": true,
+          "hledger_export": true,
+          "tax_reports": true,
+          "exchange_rates_current": true,
+          "exchange_rates_history": true,
+          "price_overrides": true
+        }
+      },
+      "purchase_options": [
+        {
+          "id": "premium_1_month_usd",
+          "term": {
+            "quantity": 1,
+            "unit": "month",
+            "label": "1 month"
+          },
+          "price": {
+            "minor_units": 5000,
+            "currency": "USD",
+            "currency_symbol": "$",
+            "display_scale": 2
+          },
+          "presentation": {
+            "display_order": 10
+          }
+        },
+        {
+          "id": "premium_12_months_usd",
+          "term": {
+            "quantity": 12,
+            "unit": "month",
+            "label": "1 year"
+          },
+          "price": {
+            "minor_units": 50000,
+            "currency": "USD",
+            "currency_symbol": "$",
+            "display_scale": 2
+          },
+          "presentation": {
+            "display_order": 20,
+            "is_default": true,
+            "badge": "Premium"
+          }
+        }
+      ]
+    }
+  ]
+}
