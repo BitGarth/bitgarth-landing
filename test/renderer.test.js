@@ -68,7 +68,7 @@ test('renderTier: featured tier gets class + ribbon, free does not', () => {
   const basic = renderTier(sampleSnapshot.tiers[1]);
   assert.match(basic, /class="tier featured"/);
   assert.match(basic, /<div class="ribbon">Early adopter discount<\/div>/);
-  assert.match(basic, /Try it in the demo/);
+  assert.match(basic, /Get started/);
   assert.doesNotMatch(free, /class="tier featured"/);
   assert.doesNotMatch(free, /ribbon/);
   assert.match(free, /Install &amp; start/);
