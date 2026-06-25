@@ -736,6 +736,47 @@
     .chan[aria-selected="true"] .chan-sub { color: var(--copper-soft); opacity: 0.9; }
     .chan:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
 
+    /* ── Hosted: managed-instance reassurances ── */
+    .hosted-cta { margin: 0 0 1.9rem; }
+    .assure {
+      list-style: none;
+      margin: 0 0 1.7rem;
+      padding: 0;
+      max-width: var(--measure);
+      display: grid;
+      gap: 1.05rem;
+    }
+    .assure li {
+      display: grid;
+      grid-template-columns: 1.5rem 1fr;
+      gap: 0.85rem;
+      align-items: start;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .assure svg {
+      width: 1.35rem;
+      height: 1.35rem;
+      margin-top: 0.12rem;
+      color: var(--moss);
+      flex: none;
+    }
+    .assure strong { color: var(--ink); font-weight: 600; }
+    /* the honest counterweight: hosted trades a little privacy for convenience,
+       so the note carries the page's copper accent rather than the calm moss */
+    .tradeoff {
+      max-width: var(--measure);
+      margin: 0 0 1.5rem;
+      padding: 1.05rem 1.25rem;
+      border: 1px solid color-mix(in srgb, var(--copper) 26%, transparent);
+      border-left: 3px solid var(--copper);
+      border-radius: 9px;
+      background: color-mix(in srgb, var(--copper) 6%, var(--paper));
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .tradeoff strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: 0.2rem; }
+
     /* ── Umbrel: guided community-app-store flow ── */
     .umbrel-steps {
       list-style: none;
@@ -1460,8 +1501,8 @@
           <a href="#install">Install</a>
           <a href="#pricing">Pricing</a>
         </div>
-        <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
-          Try the demo
+        <a class="btn" href="#install">
+          Get started
           <span class="arrow" aria-hidden="true">→</span>
         </a>
       </nav>
@@ -1493,12 +1534,12 @@
             accounting files which your tools, your accountant, and your AI can actually read.
           </p>
           <div class="ctas">
-            <a class="btn" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">
-              Try the demo
+            <a class="btn" href="#install">
+              Get started
               <span class="arrow" aria-hidden="true">→</span>
             </a>
-            <a class="btn ghost" href="#install">
-              Install BitGarth
+            <a class="btn ghost" href="#showcase">
+              Take a look inside
             </a>
             <span class="footnote">No email required for the app.</span>
           </div>
@@ -1780,15 +1821,26 @@
       <div class="wrap">
         <div class="section-head">
           <span class="num">§ 04</span>
-          <h2 id="install-title">Install on <em>your own turf.</em></h2>
+          <h2 id="install-title">Run it <em>your way.</em></h2>
         </div>
         <p class="lede">
-          Run BitGarth wherever you already keep your self-hosted apps. Pick your platform below — from there it's a single command, or a couple of taps.
+          Let us host it for you, or self-host on hardware you already own — same app, same encryption, your call. Pick a path below.
         </p>
 
         <div class="channel-tabs">
-          <div class="tablist channel-list" role="tablist" aria-label="Choose how to install BitGarth">
-            <button class="chan" type="button" role="tab" id="tab-ch-docker" aria-controls="panel-ch-docker" aria-selected="true">
+          <div class="tablist channel-list" role="tablist" aria-label="Choose how to run BitGarth">
+            <button class="chan" type="button" role="tab" id="tab-ch-hosted" aria-controls="panel-ch-hosted" aria-selected="true">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5.5 14a6.5 6.5 0 0 1 13 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M3.8 14h16.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 14v-3.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 11.4c-.4-1.5-1.6-2-2.6-1.9.1 1.4 1.1 2 2.6 1.9z" fill="currentColor"/>
+                <path d="M12 12.1c.2-1.1 1.1-1.6 2-1.5-.1 1-.9 1.5-2 1.5z" fill="currentColor"/>
+              </svg>
+              <span class="chan-name">Hosted</span>
+              <span class="chan-sub">no setup</span>
+            </button>
+            <button class="chan" type="button" role="tab" id="tab-ch-docker" aria-controls="panel-ch-docker" aria-selected="false" tabindex="-1">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M3 13h16.2c.4 2.1-1.1 5-5.1 5H8c-3 0-5-2-5-5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
                 <rect x="6" y="9.2" width="2.6" height="2.6" stroke="currentColor" stroke-width="1.3"/>
@@ -1810,8 +1862,59 @@
           </div>
         </div>
 
+        <!-- ── Hosted channel ── -->
+        <div class="tabpanel chan-panel" id="panel-ch-hosted" role="tabpanel" aria-labelledby="tab-ch-hosted" tabindex="0">
+        <p class="panel-intro">
+          Don't want to run a server? We host BitGarth for you at <a href="https://my.bitgarth.app/" target="_blank" rel="noopener noreferrer">my.bitgarth.app</a>. Create an account and you're tracking wallets in under a minute — nothing to install, nothing to keep updated.
+        </p>
+
+        <a class="btn hosted-cta" href="https://my.bitgarth.app/" target="_blank" rel="noopener noreferrer">
+          Open the hosted app
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+
+        <ul class="assure">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3.5" y="6" width="17" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 7l8 5.5L20 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 3l18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span><strong>No email, no personal data.</strong> Registration asks for a username and a password — nothing that identifies you, and nothing to sell or leak.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="8" cy="15" r="3.2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M10.3 12.7L19 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M16 7l2 2M14 9l1.8 1.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span><strong>Encrypted with your password.</strong> Your user database is encrypted, and only the password you choose can unlock it.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 12s3.6-6 9-6 9 6 9 6-3.6 6-9 6-9-6-9-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="2.4" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M3.5 3.5l17 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span><strong>We can't read it either.</strong> Without your password your data is opaque to everyone — the people running the servers included.</span>
+          </li>
+        </ul>
+
+        <p class="tradeoff">
+          <strong>Hosted is the convenient choice, not the most private one.</strong>
+          Your encrypted database still lives on our servers. For the strongest privacy — where the database sits on hardware only you control — self-host with <a href="#install-docker">Docker</a> or <a href="#install-umbrel">Umbrel</a> instead.
+        </p>
+
+        <p class="after">
+          Once you're in, pick a password, add a wallet, and watch your transactions land in your own little clearing — hosted by us, but readable only by you.
+        </p>
+        <p class="fine-print">
+          Free hosted accounts left untouched for 180 days are deleted along with their data — we hold no email to warn you first, so export anytime. See the <a href="terms.html">Terms</a>.
+        </p>
+        </div><!-- /panel-ch-hosted -->
+
         <!-- ── Docker channel ── -->
-        <div class="tabpanel chan-panel" id="panel-ch-docker" role="tabpanel" aria-labelledby="tab-ch-docker" tabindex="0">
+        <div class="tabpanel chan-panel" id="panel-ch-docker" role="tabpanel" aria-labelledby="tab-ch-docker" tabindex="0" hidden>
         <p class="panel-intro">
           If you have <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener noreferrer">Docker</a> installed, you're a single command away from running BitGarth locally. The image is published to Docker Hub as <code style="font-family:var(--mono);">bitgarth/bitgarth</code> for both <code style="font-family:var(--mono);">amd64</code> and <code style="font-family:var(--mono);">arm64</code>.
         </p>
@@ -2003,7 +2106,7 @@
               <li><span>Price history for supported assets</span></li>
               <li><span>hledger and ledger-cli exports included</span></li>
             </ul>
-            <a class="btn cta" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Try it in the demo <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn cta" href="#install">Get started <span class="arrow" aria-hidden="true">→</span></a>
           </article>
 
           <article class="tier" aria-labelledby="tier-premium">
@@ -2022,7 +2125,7 @@
               <li><span>Price history for supported assets</span></li>
               <li><span>hledger and ledger-cli exports included</span></li>
             </ul>
-            <a class="btn ghost cta" href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Try it in the demo <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn ghost cta" href="#install">Get started <span class="arrow" aria-hidden="true">→</span></a>
           </article>
           <!-- PRICING:CARDS:END -->
         </div>
@@ -2056,7 +2159,7 @@
       <div>
         <h4>Product</h4>
         <ul>
-          <li><a href="https://demo.bitgarth.app/" target="_blank" rel="noopener noreferrer">Live demo</a></li>
+          <li><a href="https://my.bitgarth.app/" target="_blank" rel="noopener noreferrer">Hosted app</a></li>
           <li><a href="releases.html">Release notes</a></li>
           <li><a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">Docker Hub</a></li>
         </ul>
@@ -2265,11 +2368,11 @@
       });
 
       // Routes are <action>[-<channel>]: action is install | upgrade | inspect,
-      // channel names a distribution channel (e.g. #install-docker, #install-umbrel,
-      // #inspect-docker). Bare #install / #upgrade / #inspect default to the Docker
-      // channel. The channel selects the outer platform tab; action selects the inner
-      // Install/Upgrade tab, which only exists for Docker. inspect (docker.sh viewer)
-      // is Docker-only, so it forces the Docker channel.
+      // channel names a distribution channel (e.g. #install-hosted, #install-docker,
+      // #install-umbrel, #inspect-docker). Bare #install lands on the Hosted channel
+      // (the promoted default); bare #upgrade / #inspect are Docker-only concepts and
+      // fall back to Docker. The channel selects the outer platform tab; action selects
+      // the inner Install/Upgrade tab, which only exists for Docker.
       function parseRoute(hash) {
         var m = hash.replace(/^#/, "").match(/^(install|upgrade|inspect)(?:-([a-z0-9]+))?$/);
         return m ? { action: m[1], channel: m[2] || null } : null;
@@ -2293,7 +2396,7 @@
           return;
         }
 
-        var channel = route.channel || "docker";
+        var channel = route.channel || (route.action === "upgrade" ? "docker" : "hosted");
         if (!selectChannel(channel)) { channel = "docker"; selectChannel(channel); }
 
         // Install/Upgrade sub-tabs only exist on the Docker channel.
