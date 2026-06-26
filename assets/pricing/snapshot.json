@@ -6,9 +6,9 @@
       "display_name": "Free",
       "presentation": {
         "display_order": 10,
-        "summary": "Local ownership with 5 accounts and balance-focused basics.",
+        "summary": "Local ownership with generous account coverage and balance-focused basics.",
         "bullets": [
-          "**5** accounts",
+          "**20** accounts",
           "Balance fetching for supported accounts",
           "Current market values for supported assets",
           "hledger and ledger-cli exports included"
@@ -22,9 +22,9 @@
       "capabilities": {
         "limits": {
           "accounts": {
-            "total": 5
+            "total": 20
           },
-          "synced_accounts": 5,
+          "synced_accounts": 20,
           "history": {
             "max_transactions_per_account": 0
           }
@@ -48,10 +48,10 @@
       "display_name": "Basic",
       "presentation": {
         "display_order": 20,
-        "summary": "Ten accounts with transaction history for supported synced accounts.",
+        "summary": "Personal transaction history, balances, and historical pricing for supported synced accounts.",
         "bullets": [
-          "**10** accounts",
-          "Transaction history up to 5,000 per account",
+          "**30** accounts",
+          "Transaction history up to 3,000 transactions per account",
           "Price history for supported assets",
           "hledger and ledger-cli exports included"
         ],
@@ -64,11 +64,11 @@
       "capabilities": {
         "limits": {
           "accounts": {
-            "total": 10
+            "total": 30
           },
-          "synced_accounts": 10,
+          "synced_accounts": 30,
           "history": {
-            "max_transactions_per_account": 5000
+            "max_transactions_per_account": 3000
           }
         },
         "features": {
@@ -127,10 +127,10 @@
       "display_name": "Premium",
       "presentation": {
         "display_order": 30,
-        "summary": "Fifty accounts with deeper transaction history for supported synced accounts.",
+        "summary": "Higher account capacity and deeper transaction history for complex self-custody setups.",
         "bullets": [
           "**50** accounts",
-          "Transaction history up to 100,000 per account",
+          "Transaction history up to 50,000 transactions per account",
           "Price history for supported assets",
           "hledger and ledger-cli exports included"
         ],
@@ -147,7 +147,7 @@
           },
           "synced_accounts": 50,
           "history": {
-            "max_transactions_per_account": 100000
+            "max_transactions_per_account": 50000
           }
         },
         "features": {
@@ -171,7 +171,7 @@
             "label": "1 month"
           },
           "price": {
-            "minor_units": 5000,
+            "minor_units": 2000,
             "currency": "USD",
             "currency_symbol": "$",
             "display_scale": 2
@@ -188,15 +188,14 @@
             "label": "1 year"
           },
           "price": {
-            "minor_units": 50000,
+            "minor_units": 20000,
             "currency": "USD",
             "currency_symbol": "$",
             "display_scale": 2
           },
           "presentation": {
             "display_order": 20,
-            "is_default": true,
-            "badge": "Premium"
+            "is_default": true
           }
         }
       ]
