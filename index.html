@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BitGarth — a quiet garden for your wallets</title>
-  <meta name="description" content="BitGarth downloads your Bitcoin and Ethereum self-custody transactions into an encrypted user database, then exports plain-text accounting files your tools and AI can read." />
+  <meta name="description" content="BitGarth is a free, local-first portfolio tracker for Bitcoin and Ethereum — balances, manual assets, and net worth, exported to plain text your tools and AI can read. Paid adds transaction history and tax-season reports." />
   <meta name="theme-color" content="#F4EFE3" />
 
   <link rel="canonical" href="https://bitgarth.app/" />
@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="BitGarth" />
   <meta property="og:url" content="https://bitgarth.app/" />
   <meta property="og:title" content="BitGarth — a quiet garden for your wallets" />
-  <meta property="og:description" content="Local-first self-custody accounting for Bitcoin &amp; Ethereum. Exports to plaintext files — readable by hledger, ledger-cli, and any LLM." />
+  <meta property="og:description" content="A free, local-first portfolio tracker for Bitcoin &amp; Ethereum. Balances, manual assets, net worth — exported to plain text. Paid adds transaction history and tax reports." />
   <meta property="og:image" content="https://bitgarth.app/assets/og-card.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
@@ -26,7 +26,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@BitGarth" />
   <meta name="twitter:title" content="BitGarth — a quiet garden for your wallets" />
-  <meta name="twitter:description" content="Local-first self-custody accounting for Bitcoin &amp; Ethereum. Exports to plaintext files — readable by hledger, ledger-cli, and any LLM." />
+  <meta name="twitter:description" content="A free, local-first portfolio tracker for Bitcoin &amp; Ethereum. Balances, manual assets, net worth — exported to plain text. Paid adds transaction history and tax reports." />
   <meta name="twitter:image" content="https://bitgarth.app/assets/og-card.jpg" />
   <meta name="twitter:image:alt" content="BitGarth — a quiet garden for your wallets" />
 
@@ -1427,7 +1427,7 @@
         "@type": "SoftwareApplication",
         "@id": "https://bitgarth.app/#app",
         "name": "BitGarth",
-        "description": "Local-first self-custody accounting for Bitcoin and Ethereum. Downloads your transactions into an encrypted user database and exports plain-text accounting files for hledger and ledger-cli.",
+        "description": "A free, local-first crypto portfolio tracker for Bitcoin and Ethereum. Tracks balances and manual assets in an encrypted user database and exports plain-text accounting files for hledger and ledger-cli. Paid plans add transaction-history backfill and tax-support reports.",
         "applicationCategory": "FinanceApplication",
         "applicationSubCategory": "Accounting",
         "operatingSystem": "Linux, macOS, Windows (via Docker); umbrelOS",
@@ -1449,7 +1449,7 @@
             "name": "Free",
             "price": "0",
             "priceCurrency": "USD",
-            "description": "Local ownership with generous account coverage and balance-focused basics."
+            "description": "Track what you hold — local, private, and yours."
           },
           {
             "@type": "Offer",
@@ -1463,7 +1463,7 @@
               "unitCode": "MON",
               "billingDuration": "P1M"
             },
-            "description": "Personal transaction history, balances, and historical pricing for supported synced accounts."
+            "description": "Your transaction history and your tax season."
           },
           {
             "@type": "Offer",
@@ -1477,7 +1477,7 @@
               "unitCode": "MON",
               "billingDuration": "P1M"
             },
-            "description": "Higher account capacity and deeper transaction history for complex self-custody setups."
+            "description": "Built for heavy self-custody."
           }
         ]
       }
@@ -1529,9 +1529,10 @@
             <em>in a quiet garden<br />of your own.</em>
           </h1>
           <p class="lede">
-            BitGarth downloads your Bitcoin and Ethereum self-custody transactions into a
-            private encrypted user database, then exports them as plain-text
-            accounting files which your tools, your accountant, and your AI can actually read.
+            BitGarth keeps your Bitcoin and Ethereum wallets as balances, manual assets,
+            and one honest net-worth figure — in a private encrypted database you can export
+            to plain text. Free to track what you hold; upgrade when you want your transaction
+            history reconstructed and your tax season drawn up.
           </p>
           <div class="ctas">
             <a class="btn" href="#install">
@@ -2065,7 +2066,7 @@
           <h2 id="pricing-title">Pricing, <em>honestly drawn.</em></h2>
         </div>
         <p class="note">
-          <span class="chip free">Free</span> syncs your balances and tracks manual crypto assets for a full net-worth view. <span class="chip paid">Paid</span> tiers add transaction-history sync and more synced accounts.
+          <span class="chip free">Free</span> tracks what you hold — balances, manual assets, and one net-worth figure. <span class="chip paid">Paid</span> does the accounting: transaction-history backfill for Bitcoin and Ethereum, and tax-season reports.
         </p>
 
         <div class="grid" id="pricing-grid">
@@ -2079,12 +2080,12 @@
             <div class="name" id="tier-free">Free</div>
             <div class="price">$0<small>free</small></div>
             <div class="yearly">&nbsp;</div>
-            <p class="summary">Local ownership with generous account coverage and balance-focused basics.</p>
+            <p class="summary">Track what you hold — local, private, and yours.</p>
             <ul>
-              <li><span><strong>20</strong> accounts</span></li>
-              <li><span>Balance fetching for supported accounts</span></li>
-              <li><span>Current market values for supported assets</span></li>
-              <li><span>hledger and ledger-cli exports included</span></li>
+              <li><span>Balance sync for supported accounts</span></li>
+              <li><span>Live market values in your currency</span></li>
+              <li><span>Manual assets and balance assertions</span></li>
+              <li><span>hledger and ledger-cli export included</span></li>
             </ul>
             <a class="btn ghost cta" href="#install">Install &amp; start <span class="arrow" aria-hidden="true">→</span></a>
           </article>
@@ -2099,12 +2100,12 @@
             <div class="name" id="tier-basic">Basic</div>
             <div class="price">$5<small>/month</small></div>
             <div class="yearly">or $50 / year</div>
-            <p class="summary">Personal transaction history, balances, and historical pricing for supported synced accounts.</p>
+            <p class="summary">Your transaction history and your tax season.</p>
             <ul>
-              <li><span><strong>30</strong> accounts</span></li>
-              <li><span>Transaction history up to 3,000 transactions per account</span></li>
-              <li><span>Price history for supported assets</span></li>
-              <li><span>hledger and ledger-cli exports included</span></li>
+              <li><span><strong>Everything in Free</strong>, plus:</span></li>
+              <li><span>Transaction-history backfill for Bitcoin and Ethereum</span></li>
+              <li><span>Wallet reports to support tax filing — opening and closing balances</span></li>
+              <li><span>Past positions valued at the time, not today's price</span></li>
             </ul>
             <a class="btn cta" href="#install">Get started <span class="arrow" aria-hidden="true">→</span></a>
           </article>
@@ -2118,12 +2119,11 @@
             <div class="name" id="tier-premium">Premium</div>
             <div class="price">$20<small>/month</small></div>
             <div class="yearly">or $200 / year</div>
-            <p class="summary">Higher account capacity and deeper transaction history for complex self-custody setups.</p>
+            <p class="summary">Built for heavy self-custody.</p>
             <ul>
-              <li><span><strong>50</strong> accounts</span></li>
-              <li><span>Transaction history up to 50,000 transactions per account</span></li>
-              <li><span>Price history for supported assets</span></li>
-              <li><span>hledger and ledger-cli exports included</span></li>
+              <li><span><strong>Everything in Basic</strong>, plus:</span></li>
+              <li><span>Deeper transaction history for high-volume accounts</span></li>
+              <li><span>Higher account and sync capacity</span></li>
             </ul>
             <a class="btn ghost cta" href="#install">Get started <span class="arrow" aria-hidden="true">→</span></a>
           </article>
@@ -2133,7 +2133,7 @@
         <div class="commitments">
           <p>
             <em>Your data is always yours.</em>
-            If a paid plan expires, your app data stays with your app instance and remains exportable to hledger or ledger-cli. Only new transaction syncs pause.
+            If a paid plan expires, your data stays with your app instance — visible, searchable, and exportable to hledger or ledger-cli. Only new transaction syncs, history backfill, and paid reports pause.
           </p>
           <p>
             <em>Pay in your own coin.</em>
