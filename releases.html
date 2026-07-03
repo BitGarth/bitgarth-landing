@@ -302,13 +302,56 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.1.8">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.1.8
+                <a class="release-anchor" href="#0.1.8" aria-label="Copy link to version 0.1.8">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">3 July 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Self-hosted installs now hold to the <em>correct free-tier limits</em> on their own: refreshing when they can reach our servers, and keeping the last known limits when they can&rsquo;t.</p>
+              <p class="highlight">Manual tracking now reaches everything BitGarth already knows from your synced wallets, including Bitcoin and Ethereum.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>Free-tier limits stay accurate on self-hosted installs without a constant connection: they update from the latest plan information and fall back to the last known limits while offline.</li>
+                <li>You can add manual accounts for the assets BitGarth tracks in synced wallets, including Bitcoin and Ethereum, reusing their existing names and units.</li>
+                <li>Umbrel users now get an in-app notice when a new version is available, pointing to the Umbrel app store rather than showing a Docker command that wouldn&rsquo;t apply.</li>
+                <li>On hosted BitGarth, free users are now told at sign-up and when exporting wallet data how long inactive data is kept before it is removed, and inactive free accounts are cleaned up after that grace period.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>Visiting a page that does not exist now returns a proper &ldquo;not found&rdquo; response instead of a soft one.</li>
+                <li>Manual asset search keeps its original ordering and result counts.</li>
+                <li>Wallet rows no longer show confusing account-usage text.</li>
+              </ul>
+            </section>
+
+            <section class="change-group notes">
+              <h3>Notes</h3>
+              <ul class="change-list">
+                <li>The free tier now allows 50 accounts. Balance assertions and hledger export are included on Free; syncing full transaction history stays on the paid plans.</li>
+                <li>On hosted BitGarth, the terms were updated to describe how inactive free-account data is retained and removed.</li>
+              </ul>
+            </section>
+          </article>
+
           <article class="release" id="0.1.7">
             <header class="release-head">
               <h2 class="release-version">
                 0.1.7
                 <a class="release-anchor" href="#0.1.7" aria-label="Copy link to version 0.1.7">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">20 June 2026</p>
             </header>
 
