@@ -38,7 +38,7 @@
           "tax_reports": false,
           "exchange_rates_current": true,
           "exchange_rates_history": false,
-          "price_overrides": false
+          "price_overrides": true
         }
       },
       "purchase_options": []
