@@ -302,13 +302,56 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.1.9">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.1.9
+                <a class="release-anchor" href="#0.1.9" aria-label="Copy link to version 0.1.9">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">5 July 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">The new <em>Holdings Report</em> shows how every wallet moved over a date range you choose: opening value, closing value, and total change in one view.</p>
+              <p class="highlight">Wallet sync status now leads with the issue that matters most, and one click opens the exact sync record behind it.</p>
+              <p class="highlight">Hledger exports have their own settings view, with account-prefix controls that match how your ledger is named.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>Open the Holdings Report from the Reports section to compare wallet values across a full year or a custom date range.</li>
+                <li>Name an account when you add it. Every add-account form — xpub, Bitcoin address, Ethereum address, and manual asset — now takes an optional name, and keeps auto-naming it for you if you leave the field blank.</li>
+                <li>Set an account prefix in the new hledger export settings before you export.</li>
+                <li>Add a price override on the free tier when a report is missing the price for a date.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>Historical price lookups are steadier over daily ranges, and now back off instead of retrying hard when a provider asks BitGarth to slow down.</li>
+                <li>Long sync error messages stay fully readable — no more clipped or overflowing rows — and each sync row opens straight to its record.</li>
+                <li>The Holdings Report counts your manual assets alongside synced wallets, so the totals reflect everything you hold.</li>
+              </ul>
+            </section>
+
+            <section class="change-group notes">
+              <h3>Notes</h3>
+              <ul class="change-list">
+                <li>On the free tier the Holdings Report always covers a rolling nine-month window. Upgrade to see your full history.</li>
+              </ul>
+            </section>
+          </article>
+
           <article class="release" id="0.1.8">
             <header class="release-head">
               <h2 class="release-version">
                 0.1.8
                 <a class="release-anchor" href="#0.1.8" aria-label="Copy link to version 0.1.8">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">3 July 2026</p>
             </header>
 
