@@ -1314,6 +1314,15 @@
       color: color-mix(in srgb, var(--paper) 45%, transparent);
       letter-spacing: 0.02em;
     }
+    .site-footer .meta a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .site-footer .meta a:hover,
+    .site-footer .meta a:focus-visible {
+      color: var(--paper);
+    }
 
     /* sr-only */
     .sr-only {
@@ -2247,7 +2256,7 @@
         </ul>
       </div>
       <div class="meta">
-        © <span id="year">2026</span> BitGarth. Made with care, in plain text.
+        © <span id="year">2026</span> <a href="https://ferntrail.tech/" target="_blank" rel="noopener noreferrer">FernTrail&nbsp;B.V.</a> Made with care, in plain text.
       </div>
     </div>
   </footer>
