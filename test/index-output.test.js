@@ -24,6 +24,12 @@ test('baked cards match the renderer output for the committed snapshot', () => {
   assert.equal(region.trim(), cardsHTML.trim());
 });
 
+test('baked note matches the renderer output for the committed snapshot', () => {
+  const { summaryHTML } = renderPricing(snapshot);
+  const region = html.match(/<!-- PRICING:NOTE:START -->\n([\s\S]*?)\n\s*<!-- PRICING:NOTE:END -->/)[1];
+  assert.equal(region.trim(), summaryHTML.trim());
+});
+
 test('JSON-LD offers match snapshot-derived offers', () => {
   const { offers } = renderPricing(snapshot);
   const jsonText = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];

@@ -22,6 +22,29 @@ test('refreshPricing patches grid when live data differs', async () => {
   assert.match(grid.innerHTML, /id="tier-free"/);
 });
 
+test('refreshPricing patches note from pricing_summary', async () => {
+  const grid = { innerHTML: 'STALE' };
+  const note = { innerHTML: 'STALE NOTE' };
+  const ok = await refreshPricing({
+    fetchFn: async () => ({ ok: true, json: async () => ({ ...snapshot, pricing_summary: '**Free** does less.' }) }),
+    getGrid: () => grid,
+    getNote: () => note,
+  });
+  assert.equal(ok, true);
+  assert.equal(note.innerHTML, '<span class="chip free">Free</span> does less.');
+});
+
+test('refreshPricing leaves note untouched when pricing_summary is absent', async () => {
+  const note = { innerHTML: 'BAKED NOTE' };
+  const ok = await refreshPricing({
+    fetchFn: async () => ({ ok: true, json: async () => snapshot }),
+    getGrid: () => ({ innerHTML: '' }),
+    getNote: () => note,
+  });
+  assert.equal(ok, true);
+  assert.equal(note.innerHTML, 'BAKED NOTE');
+});
+
 test('refreshPricing leaves grid untouched on fetch failure', async () => {
   const grid = { innerHTML: 'BAKED' };
   const ok = await refreshPricing({

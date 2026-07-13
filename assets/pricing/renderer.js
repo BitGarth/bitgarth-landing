@@ -13,6 +13,18 @@ function inlineMarkup(s) {
   return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 }
 
+// Escapes text, then re-enables **bold** spans as pricing chips:
+// `**Free**` -> `<span class="chip free">Free</span>`. The modifier class is
+// the slugged label, so `.chip.free` / `.chip.paid` pick up their accent
+// colors and unknown labels fall back to the base .chip style.
+export function renderSummary(summary) {
+  if (typeof summary !== 'string' || !summary.trim()) return null;
+  return escapeHtml(summary).replace(/\*\*(.+?)\*\*/g, (_m, label) => {
+    const slug = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    return `<span class="chip${slug ? ` ${slug}` : ''}">${label}</span>`;
+  });
+}
+
 export function priceAmount(price) {
   const value = price.minor_units / 10 ** price.display_scale;
   return value
@@ -107,5 +119,9 @@ export function buildOffers(snapshot) {
 }
 
 export function renderPricing(snapshot) {
-  return { cardsHTML: renderCards(snapshot), offers: buildOffers(snapshot) };
+  return {
+    cardsHTML: renderCards(snapshot),
+    summaryHTML: renderSummary(snapshot.pricing_summary),
+    offers: buildOffers(snapshot),
+  };
 }

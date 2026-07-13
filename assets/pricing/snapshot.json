@@ -1,5 +1,6 @@
 {
   "catalog_schema_version": 4,
+  "pricing_summary": "**Free** tracks what you hold — balances, manual assets, and one net-worth figure. **Paid** does the accounting: transaction-history for Bitcoin and Ethereum, and tax-season reports.",
   "tiers": [
     {
       "tier": "free",
@@ -45,18 +46,18 @@
     },
     {
       "tier": "basic",
-      "display_name": "Basic",
+      "display_name": "Harvest",
       "presentation": {
         "display_order": 20,
         "summary": "Your transaction history and your tax season.",
         "bullets": [
           "**Everything in Free**, plus:",
           "Transaction-history backfill for Bitcoin and Ethereum",
-          "Wallet reports to support tax filing — opening and closing balances",
+          "Reports to support tax filing",
           "Past positions valued at the time, not today's price"
         ],
         "is_featured": true,
-        "ribbon_label": "Early adopter discount"
+        "ribbon_label": "Recommended"
       },
       "capability_set_id": "basic.v3",
       "capability_schema_version": 3,
@@ -85,23 +86,6 @@
       },
       "purchase_options": [
         {
-          "id": "basic_1_month_usd",
-          "term": {
-            "quantity": 1,
-            "unit": "month",
-            "label": "1 month"
-          },
-          "price": {
-            "minor_units": 500,
-            "currency": "USD",
-            "currency_symbol": "$",
-            "display_scale": 2
-          },
-          "presentation": {
-            "display_order": 10
-          }
-        },
-        {
           "id": "basic_12_months_usd",
           "term": {
             "quantity": 12,
@@ -109,85 +93,7 @@
             "label": "1 year"
           },
           "price": {
-            "minor_units": 5000,
-            "currency": "USD",
-            "currency_symbol": "$",
-            "display_scale": 2
-          },
-          "presentation": {
-            "display_order": 20,
-            "is_default": true,
-            "badge": "Best value"
-          }
-        }
-      ]
-    },
-    {
-      "tier": "premium",
-      "display_name": "Premium",
-      "presentation": {
-        "display_order": 30,
-        "summary": "Built for heavy self-custody.",
-        "bullets": [
-          "**Everything in Basic**, plus:",
-          "Deeper transaction history for high-volume accounts",
-          "Higher account and sync capacity"
-        ],
-        "is_featured": false,
-        "ribbon_label": null
-      },
-      "capability_set_id": "premium.v3",
-      "capability_schema_version": 3,
-      "minimum_app_version": null,
-      "capabilities": {
-        "limits": {
-          "accounts": {
-            "total": 500
-          },
-          "synced_accounts": 500,
-          "history": {
-            "max_transactions_per_account": 50000
-          }
-        },
-        "features": {
-          "transaction_history_sync": true,
-          "historical_sync": true,
-          "balance_sync": true,
-          "balance_assertions": true,
-          "hledger_export": true,
-          "tax_reports": true,
-          "exchange_rates_current": true,
-          "exchange_rates_history": true,
-          "price_overrides": true
-        }
-      },
-      "purchase_options": [
-        {
-          "id": "premium_1_month_usd",
-          "term": {
-            "quantity": 1,
-            "unit": "month",
-            "label": "1 month"
-          },
-          "price": {
-            "minor_units": 2000,
-            "currency": "USD",
-            "currency_symbol": "$",
-            "display_scale": 2
-          },
-          "presentation": {
-            "display_order": 10
-          }
-        },
-        {
-          "id": "premium_12_months_usd",
-          "term": {
-            "quantity": 12,
-            "unit": "month",
-            "label": "1 year"
-          },
-          "price": {
-            "minor_units": 20000,
+            "minor_units": 4995,
             "currency": "USD",
             "currency_symbol": "$",
             "display_scale": 2

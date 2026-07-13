@@ -23,8 +23,9 @@ export async function fetchPricing(url, fetchImpl = fetch) {
 }
 
 export function bake({ snapshot, html }) {
-  const { cardsHTML, offers } = renderPricing(snapshot);
+  const { cardsHTML, summaryHTML, offers } = renderPricing(snapshot);
   let out = replaceRegion(html, 'PRICING:CARDS', cardsHTML);
+  if (summaryHTML) out = replaceRegion(out, 'PRICING:NOTE', summaryHTML);
   out = replaceJsonLdOffers(out, offers);
   return { html: out };
 }
