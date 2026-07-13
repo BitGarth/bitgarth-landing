@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { formatPrice, priceAmount, renderBullets, pickTerms, renderPriceBlock, renderTier, renderCards, buildOffers, renderPricing } from '../assets/pricing/renderer.js';
+import { formatPrice, priceAmount, renderBullets, renderSummary, pickTerms, renderPriceBlock, renderTier, renderCards, buildOffers, renderPricing } from '../assets/pricing/renderer.js';
 
 const usd = (minor) => ({ minor_units: minor, currency: 'USD', currency_symbol: '$', display_scale: 2 });
 
@@ -19,6 +19,17 @@ test('renderBullets converts **bold** and escapes other html', () => {
   const html = renderBullets(['**5** accounts', 'a <b> & c']);
   assert.match(html, /<li><span><strong>5<\/strong> accounts<\/span><\/li>/);
   assert.match(html, /a &lt;b&gt; &amp; c/);
+});
+
+test('renderSummary converts **bold** into slug-classed chips and escapes html', () => {
+  const html = renderSummary('**Free** tracks & **Paid** pays <b>');
+  assert.match(html, /<span class="chip free">Free<\/span> tracks &amp;/);
+  assert.match(html, /<span class="chip paid">Paid<\/span> pays &lt;b&gt;/);
+});
+
+test('renderSummary returns null for missing or blank input', () => {
+  assert.equal(renderSummary(undefined), null);
+  assert.equal(renderSummary('   '), null);
 });
 
 test('pickTerms splits monthly and yearly', () => {
@@ -99,6 +110,12 @@ test('renderPricing returns cards + offers together', () => {
   const { cardsHTML, offers } = renderPricing(sampleSnapshot);
   assert.match(cardsHTML, /id="tier-free"/);
   assert.equal(offers.length, 2);
+});
+
+test('renderPricing surfaces pricing_summary as summaryHTML, null when absent', () => {
+  assert.equal(renderPricing(sampleSnapshot).summaryHTML, null);
+  const withSummary = { ...sampleSnapshot, pricing_summary: '**Free** does less.' };
+  assert.equal(renderPricing(withSummary).summaryHTML, '<span class="chip free">Free</span> does less.');
 });
 
 test('renderTier throws a clear error for a tier with no CTA config', () => {

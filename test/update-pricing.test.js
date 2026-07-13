@@ -45,6 +45,17 @@ test('bake injects cards and offers into html', () => {
   assert.doesNotMatch(out, />X</);
 });
 
+test('bake injects note when pricing_summary is present', () => {
+  const html = `<p class="note" id="pricing-note"><!-- PRICING:NOTE:START -->OLD<!-- PRICING:NOTE:END --></p>
+<div class="grid"><!-- PRICING:CARDS:START -->X<!-- PRICING:CARDS:END --></div>
+<!-- PRICING:JSONLD:START --><script type="application/ld+json">
+{ "@graph": [ { "@type": "SoftwareApplication", "offers": [] } ] }
+</script><!-- PRICING:JSONLD:END -->`;
+  const out = bake({ snapshot: { ...snapshot, pricing_summary: '**Free** does less.' }, html }).html;
+  assert.match(out, /<span class="chip free">Free<\/span> does less\./);
+  assert.doesNotMatch(out, /OLD/);
+});
+
 test('main writes snapshot then index on success', async () => {
   const writes = {};
   const code = await main({

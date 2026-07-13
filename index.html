@@ -1490,31 +1490,10 @@
           },
           {
             "@type": "Offer",
-            "name": "Basic",
-            "price": "5",
+            "name": "Harvest",
+            "price": "49.95",
             "priceCurrency": "USD",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "price": "5",
-              "priceCurrency": "USD",
-              "unitCode": "MON",
-              "billingDuration": "P1M"
-            },
             "description": "Your transaction history and your tax season."
-          },
-          {
-            "@type": "Offer",
-            "name": "Premium",
-            "price": "20",
-            "priceCurrency": "USD",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "price": "20",
-              "priceCurrency": "USD",
-              "unitCode": "MON",
-              "billingDuration": "P1M"
-            },
-            "description": "Built for heavy self-custody."
           }
         ]
       }
@@ -2133,8 +2112,10 @@
           <span class="num">§ 05</span>
           <h2 id="pricing-title">Pricing, <em>honestly drawn.</em></h2>
         </div>
-        <p class="note">
-          <span class="chip free">Free</span> tracks what you hold — balances, manual assets, and one net-worth figure. <span class="chip paid">Paid</span> does the accounting: transaction-history backfill for Bitcoin and Ethereum, and tax-season reports.
+        <p class="note" id="pricing-note">
+          <!-- PRICING:NOTE:START -->
+<span class="chip free">Free</span> tracks what you hold — balances, manual assets, and one net-worth figure. <span class="chip paid">Paid</span> does the accounting: transaction-history for Bitcoin and Ethereum, and tax-season reports.
+          <!-- PRICING:NOTE:END -->
         </p>
 
         <div class="grid" id="pricing-grid">
@@ -2159,41 +2140,23 @@
           </article>
 
           <article class="tier featured" aria-labelledby="tier-basic">
-            <div class="ribbon">Early adopter discount</div>
+            <div class="ribbon">Recommended</div>
             <svg class="corner tl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
             <svg class="corner tr" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
             <svg class="corner bl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
             <svg class="corner br" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
 
-            <div class="name" id="tier-basic">Basic</div>
-            <div class="price">$5<small>/month</small></div>
-            <div class="yearly">or $50 / year</div>
+            <div class="name" id="tier-basic">Harvest</div>
+            <div class="price">$49.95<small>/year</small></div>
+            <div class="yearly">&nbsp;</div>
             <p class="summary">Your transaction history and your tax season.</p>
             <ul>
               <li><span><strong>Everything in Free</strong>, plus:</span></li>
               <li><span>Transaction-history backfill for Bitcoin and Ethereum</span></li>
-              <li><span>Wallet reports to support tax filing — opening and closing balances</span></li>
+              <li><span>Reports to support tax filing</span></li>
               <li><span>Past positions valued at the time, not today's price</span></li>
             </ul>
             <a class="btn cta" href="#install">Get started <span class="arrow" aria-hidden="true">→</span></a>
-          </article>
-
-          <article class="tier" aria-labelledby="tier-premium">
-            <svg class="corner tl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
-            <svg class="corner tr" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
-            <svg class="corner bl" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
-            <svg class="corner br" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M0 7V0h7" stroke="currentColor" stroke-width="0.8"/><path d="M1 1l4 4" stroke="currentColor" stroke-width="0.8"/></svg>
-
-            <div class="name" id="tier-premium">Premium</div>
-            <div class="price">$20<small>/month</small></div>
-            <div class="yearly">or $200 / year</div>
-            <p class="summary">Built for heavy self-custody.</p>
-            <ul>
-              <li><span><strong>Everything in Basic</strong>, plus:</span></li>
-              <li><span>Deeper transaction history for high-volume accounts</span></li>
-              <li><span>Higher account and sync capacity</span></li>
-            </ul>
-            <a class="btn ghost cta" href="#install">Get started <span class="arrow" aria-hidden="true">→</span></a>
           </article>
           <!-- PRICING:CARDS:END -->
         </div>
