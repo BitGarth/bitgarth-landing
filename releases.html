@@ -302,13 +302,50 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.2.0">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.2.0
+                <a class="release-anchor" href="#0.2.0" aria-label="Copy link to version 0.2.0">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">18 July 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Upgrading now starts your transaction history straight away, and the account page tells you what it is doing — “Syncing your ~N transactions…” — until the history is in.</p>
+              <p class="highlight">Every account page opens with an identity strip: what kind of account it is and which xpub or address it tracks, without a click.</p>
+              <p class="highlight">The Payments page always shows the plan you are on, even while the plan list is loading or unavailable.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>See an account’s type and its xpub or address at the top of its transactions page. Expand the strip for the full reference, a copy button, and the address list — the actions that used to hide in the kebab menu.</li>
+                <li>Tell two accounts on the same xpub apart on the Wallets page: each row now carries its address type and a shortened reference.</li>
+                <li>Read a plain-language summary of what each plan includes at the top of the Payments page, with the free tier priced as “$0 free”.</li>
+                <li>Reach us from the sidebar: an email address and a PGP public key for anything you would rather send encrypted.</li>
+                <li>Get an answer from the sync button every time you press it, including “Already up to date (checked 17:51)” when there was nothing to fetch.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>An account with no synced history now shows an opening balance of “Not available” instead of a made-up number.</li>
+                <li>Sync status settles correctly right after an upgrade.</li>
+                <li>The Wallets and transactions pages show the same sync mark for the same account, so the two views no longer disagree.</li>
+              </ul>
+            </section>
+          </article>
+
           <article class="release" id="0.1.9">
             <header class="release-head">
               <h2 class="release-version">
                 0.1.9
                 <a class="release-anchor" href="#0.1.9" aria-label="Copy link to version 0.1.9">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">5 July 2026</p>
             </header>
 
