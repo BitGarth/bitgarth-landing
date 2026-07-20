@@ -302,13 +302,41 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.2.1">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.2.1
+                <a class="release-anchor" href="#0.2.1" aria-label="Copy link to version 0.2.1">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">20 July 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Various transaction history fixes: accounts that were missing older transactions are found and completed automatically.</p>
+              <p class="highlight">Synced Ethereum transactions could show the wrong amount when a transaction moved ETH internally more than once. This is fixed, and history you already synced repairs itself automatically.</p>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>An account syncing its transaction history for the first time could miss its older transactions if its balances had already been tracked for a while. The full history now downloads, and every installation re-checks its accounts and finishes any history that was left incomplete.</li>
+                <li>Ethereum transactions that move ETH internally more than once — common with contract interactions — could record only one of those movements, so amounts and balances came out wrong. All movements are now kept, and existing history is rebuilt from data BitGarth already has.</li>
+                <li>An account whose transaction history is only partly downloaded now shows "Not available" as its opening balance instead of a number computed from the incomplete history.</li>
+                <li>The opening balance no longer flips to "Not available" when you view a period with no transactions on an account that does have history.</li>
+                <li>An account whose balance had not come through yet now fetches it on the next sync, instead of waiting for new activity on the network.</li>
+                <li>Pressing Sync now reports what the sync actually did, even when tidy-up work afterwards fails.</li>
+              </ul>
+            </section>
+          </article>
+
           <article class="release" id="0.2.0">
             <header class="release-head">
               <h2 class="release-version">
                 0.2.0
                 <a class="release-anchor" href="#0.2.0" aria-label="Copy link to version 0.2.0">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">18 July 2026</p>
             </header>
 
