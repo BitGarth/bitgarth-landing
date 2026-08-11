@@ -1431,6 +1431,33 @@
       border-color: var(--moss-bright);
     }
     .inspect-link svg { flex-shrink: 0; }
+
+    /* ── PGP key modal — reuses the .script-* panel above ── */
+    .pgp-meta {
+      flex: none;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--paper-edge);
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+    }
+    .pgp-meta .fp {
+      display: block;
+      margin-top: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--ink);
+      word-break: break-all;
+    }
+    .pgp-actions {
+      flex: none;
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      padding: 1.1rem 1.5rem;
+      border-top: 1px solid var(--paper-edge);
+    }
+    .pgp-actions .btn { font-size: 0.88rem; padding: 0.55rem 1.05rem; }
+    .pgp-body pre { white-space: pre-wrap; word-break: break-all; }
   </style>
 
   <!-- PRICING:JSONLD:START -->
@@ -2216,6 +2243,7 @@
         <ul>
           <li><a href="https://x.com/BitGarth" target="_blank" rel="noopener noreferrer">@BitGarth on X</a></li>
           <li><a href="mailto:hello&#64;bitgarth&#46;app">hello&#64;bitgarth&#46;app</a></li>
+          <li><a href="hello-bitgarth-pubkey.asc" data-pgp>PGP key · 40F4 6DAB</a></li>
         </ul>
       </div>
       <div class="meta">
@@ -2237,6 +2265,7 @@
       function getCommandText(target) {
         var el = document.getElementById(target);
         if (!el) return "";
+        if (el.dataset && el.dataset.raw) return el.textContent;
         if (el.dataset && el.dataset.oneline) return el.dataset.oneline;
         // Fallback: strip " \" continuations and collapse whitespace.
         return el.innerText
@@ -2270,21 +2299,23 @@
         return ok;
       }
 
-      document.querySelectorAll(".copy-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          var text = getCommandText(btn.dataset.copyTarget);
-          if (!text) return;
-          if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(
-              function () { flash(btn); },
-              function () {
-                if (fallbackCopy(text)) flash(btn);
-              }
-            );
-          } else {
-            if (fallbackCopy(text)) flash(btn);
-          }
-        });
+      // Delegated so copy buttons later in the document (e.g. the PGP modal)
+      // are wired too, whatever their position relative to this script.
+      document.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-copy-target]");
+        if (!btn) return;
+        var text = getCommandText(btn.dataset.copyTarget);
+        if (!text) return;
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(
+            function () { flash(btn); },
+            function () {
+              if (fallbackCopy(text)) flash(btn);
+            }
+          );
+        } else {
+          if (fallbackCopy(text)) flash(btn);
+        }
       });
 
       // tablists: install/upgrade, app-showcase gallery — each group independent
@@ -2446,6 +2477,89 @@
       if (parseRoute(location.hash)) {
         setTimeout(handleHash, 80);
       }
+    })();
+  </script>
+
+  <!-- PGP public key modal -->
+  <div class="script-overlay" id="pgp-overlay" role="dialog" aria-modal="true" aria-labelledby="pgp-title">
+    <div class="script-panel">
+      <div class="script-bar">
+        <span class="dot"></span>
+        <span class="filename" id="pgp-title">hello-bitgarth-pubkey.asc</span>
+        <button class="close-btn" type="button" aria-label="Close" data-close-pgp>
+          <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+            <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="pgp-meta">
+        Encrypt mail to <strong>hello&#64;bitgarth&#46;app</strong> with this key, or use it to verify a signature from us.
+        <span class="fp">Fingerprint&nbsp; 40F4 6DAB EDD9 A5F4 4047&nbsp; F0C2 C74A EC0F 8263 2843</span>
+      </div>
+      <div class="script-body pgp-body">
+<pre id="pgp-key" data-raw="1">-----BEGIN PGP PUBLIC KEY BLOCK-----
+Comment: Fingerprint: 40F4 6DAB EDD9 A5F4 4047  F0C2 C74A EC0F 8263 2843
+
+xjMEalO57xYJKwYBBAHaRw8BAQdAkPBr16J8lOWenC1U3VcuYBWwjE4hsrB8
+jzdiI3nQES/NJ2hlbGxvQGJpdGdhcnRoLmFwcCA8aGVsbG9AYml0Z2FydGgu
+YXBwPsLAEQQTFgoAgwWCalO57wMLCQcJEMdK7A+CYyhDRRQAAAAAABwAIHNh
+bHRAbm90YXRpb25zLm9wZW5wZ3Bqcy5vcme0KJkYgis7Zwj5zs4tYY7oEaCS
+wSEvuDU08MgqLiM3ygMVCggEFgACAQIZAQKbAwIeARYhBED0bavt2aX0QEfw
+wsdK7A+CYyhDAAAmRAD/WpyyQgmp58bKmHXvV2Dgq/loyefHNppvNevCgdfw
+bm8A/0QLwUYSE04hGcdDFKP+1fHOQDb4tgBz5gnd5m2DvYYHzjgEalO57xIK
+KwYBBAGXVQEFAQEHQKor61Rzaf1aHylPCNIU5Yxv9PRCvHaNHxlpbPfwYdJJ
+AwEIB8K+BBgWCgBwBYJqU7nvCRDHSuwPgmMoQ0UUAAAAAAAcACBzYWx0QG5v
+dGF0aW9ucy5vcGVucGdwanMub3JnrJyWSOvVHou6rWF9ra71edHgct2uCM3/
+FJGhKVkyWkQCmwwWIQRA9G2r7dml9EBH8MLHSuwPgmMoQwAApl0BAIiDj/iN
+sH1VlDtRPtDMBc84zXI3GpHJSHXiEum6a+svAQDtNKTpx9nixqnrMrewE8yO
+XvWylvRHUEJo8ByT+V80Ag==
+=Yg+V
+-----END PGP PUBLIC KEY BLOCK-----</pre>
+      </div>
+      <div class="pgp-actions">
+        <button class="btn" type="button" data-copy-target="pgp-key" data-state="idle" aria-live="polite">
+          <span class="label">Copy key</span>
+        </button>
+        <a class="btn ghost" href="hello-bitgarth-pubkey.asc" download>Download .asc</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById("pgp-overlay");
+      var opener = null;
+
+      function open(e) {
+        e.preventDefault();
+        opener = e.currentTarget;
+        overlay.setAttribute("open", "");
+        document.body.style.overflow = "hidden";
+        // The overlay transitions out of visibility:hidden; focus() is a no-op
+        // while it is still hidden, so wait until the transition has started.
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            overlay.querySelector(".close-btn").focus();
+          });
+        });
+      }
+
+      function close() {
+        overlay.removeAttribute("open");
+        document.body.style.overflow = "";
+        if (opener) opener.focus();
+      }
+
+      document.querySelectorAll("[data-pgp]").forEach(function (el) {
+        el.addEventListener("click", open);
+      });
+      overlay.querySelector("[data-close-pgp]").addEventListener("click", close);
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) close();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && overlay.hasAttribute("open")) close();
+      });
     })();
   </script>
 
