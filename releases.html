@@ -302,13 +302,57 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.3.0">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.3.0
+                <a class="release-anchor" href="#0.3.0" aria-label="Copy link to version 0.3.0">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">17 August 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">BitGarth's source code is now published. Every release is built from a public commit you can read, audit, and build yourself.</p>
+              <p class="highlight">A new <code>bitgarth</code> command-line client reads your wallet balances from a terminal. You pair it once in your browser. In this release it shows balances; later releases will give it more to do.</p>
+              <p class="highlight">A Bitcoin account that reached its per-account transaction limit no longer shows "Syncing" forever.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>The <code>bitgarth</code> command-line client prints a balance sheet of your wallets. Run <code>bitgarth pair</code>, open the approval link it prints, approve it in BitGarth, then run <code>bitgarth balancesheet</code> (short: <code>bs</code>).</li>
+                <li>Ready-to-run downloads of the CLI for Linux, macOS on Apple Silicon, and Windows are attached to each release, with checksums. You can also build it from source.</li>
+                <li>The CLI keeps a profile per BitGarth you connect to, so one machine can reach several installs. Manage them with <code>bitgarth profile list</code>, <code>bitgarth profile rename</code>, and <code>bitgarth profile remove</code>.</li>
+                <li><strong>Settings → Paired Clients</strong> lists everything you have paired, with when it was created, when it expires, and when it was last used. Revoking one cuts off its access immediately, without affecting your password or your other paired clients.</li>
+                <li>The CLI requires HTTPS by default, and will not send its credentials over plain HTTP unless you allow that explicitly.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>A Bitcoin account that hit its per-account transaction limit stayed marked "Syncing" indefinitely and kept re-running sync in the background. It now settles once the permitted history has downloaded, and the history still waiting is picked up later if that limit is raised.</li>
+                <li>Refreshing your wallets or checking for a new version could break the page until you reloaded it.</li>
+              </ul>
+            </section>
+
+            <section class="change-group notes">
+              <h3>Notes</h3>
+              <ul class="change-list">
+                <li>BitGarth is published under the Functional Source License 1.1 (FSL-1.1-ALv2). Each release additionally becomes available under the Apache License 2.0 on its second anniversary.</li>
+                <li>BitGarth's internal web addresses moved from <code>/api/v1/</code> to <code>/_app/</code>, and its health check is now <code>/health</code>. If you self-host behind a reverse proxy that filters or rewrites paths, allow <code>/_app/</code> and <code>/health</code>. Hosted, Umbrel, and plain Docker installs need no change.</li>
+              </ul>
+            </section>
+          </article>
+
           <article class="release" id="0.2.2">
             <header class="release-head">
               <h2 class="release-version">
                 0.2.2
                 <a class="release-anchor" href="#0.2.2" aria-label="Copy link to version 0.2.2">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">27 July 2026</p>
             </header>
 
