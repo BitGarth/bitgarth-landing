@@ -302,13 +302,36 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.3.1">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.3.1
+                <a class="release-anchor" href="#0.3.1" aria-label="Copy link to version 0.3.1">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">3 September 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Bitcoin transaction history now finishes downloading when BitGarth reads from your own mempool server, such as the one running on Umbrel.</p>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>With <strong>Settings → Bitcoin Explorer → Mempool Base URL</strong> pointed at your own mempool server, an account could download the same last page of transactions again and again and never finish its history. BitGarth now recognises that ending and completes the history once every transaction is accounted for.</li>
+                <li>Closed a weakness in a networking library BitGarth uses, where a client could drive up memory use on your install by sending a stream of empty requests.</li>
+              </ul>
+            </section>
+          </article>
+
           <article class="release" id="0.3.0">
             <header class="release-head">
               <h2 class="release-version">
                 0.3.0
                 <a class="release-anchor" href="#0.3.0" aria-label="Copy link to version 0.3.0">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">17 August 2026</p>
             </header>
 
