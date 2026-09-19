@@ -53,7 +53,7 @@
         </nav>
 
         <header class="trust-hero">
-          <p class="eyebrow">Last updated · 18 July 2026</p>
+          <p class="eyebrow">Last updated · 19 September 2026</p>
           <h1>Privacy, <em>by default.</em></h1>
           <p class="lede">BitGarth is designed to keep private financial data in your app instance unless you choose a feature that needs a network request. This notice explains the main data boundaries.</p>
         </header>
@@ -75,7 +75,7 @@
           <section>
             <span class="num">ii.</span>
             <h2>Self-hosted and downloaded apps</h2>
-            <p>If you run BitGarth yourself, app DB records and encrypted user DB records stay with that app instance. The app does not send legal acknowledgement records back to BitGarth central services by default.</p>
+            <p>If you run BitGarth yourself, app DB records and encrypted user DB records stay with that app instance. The app does not send legal acknowledgement records back to BitGarth's servers by default.</p>
           </section>
 
           <section>
@@ -87,9 +87,13 @@
 
           <section>
             <span class="num">iv.</span>
-            <h2>Payments</h2>
-            <p>For paid plans, BitGarth uses pseudonymous payment and subscription identifiers that are separate from your local app user ID. These identifiers let BitGarth verify payments and entitlements without requiring a central BitGarth login. Entitlement requests do not include your local username, wallet data, balances, transactions, labels, saved API keys, or other portfolio data.</p>
-            <p>When the app contacts BitGarth services, we and our infrastructure providers process normal network metadata, such as IP address, request time, requested service, response status, and User-Agent. We use this information to operate and secure the service, prevent abuse, and diagnose problems. We retain it only for as long as reasonably necessary for those purposes.</p>
+            <h2>Payments and requests to BitGarth's servers</h2>
+            <p>For paid plans, BitGarth uses pseudonymous payment and subscription identifiers that are separate from your local app user ID. These identifiers let BitGarth verify payments and entitlements without requiring a separate account on BitGarth's servers. Entitlement requests do not include your local username, wallet data, balances, transactions, labels, saved API keys, or other portfolio data.</p>
+            <p>When your app contacts BitGarth's servers for software updates, product and plan information, or payment and subscription services, those requests may include technical information about the app. Depending on the app version and distribution, this includes its version, distribution channel or build type, and the operating system and processor architecture it was built for. The platform describes the app binary making the request, not the device you use to browse a remotely hosted app.</p>
+            <p>Product and plan refreshes also run at login, including free-tier logins. Disabling automatic software update checks does not disable login refreshes, payment requests, or checks you explicitly request.</p>
+            <p>We may use build and platform information to diagnose compatibility problems, understand which builds and platforms contact our services, and guide platform support. BitGarth does not derive these fields from wallet data or your local account username, and does not generate an installation or device identifier for this reporting. A distribution-channel label is supplied by the person packaging or configuring the app.</p>
+            <p>When the app contacts BitGarth's servers, we and our infrastructure providers also process normal network metadata, such as IP address, request time, requested service, response status, and User-Agent. We use this information to operate and secure the service, prevent abuse, and diagnose problems. On payment and subscription requests, build and platform information may be associated with the pseudonymous payment or subscription identifiers carried by that request. These requests should not be understood as anonymous.</p>
+            <p>We retain build, platform, and normal network metadata only for as long as reasonably necessary for the purposes described above.</p>
             <p>Cryptocurrency payment privacy depends on the asset and network. Monero is the strongest payment privacy option among supported assets.</p>
           </section>
 
@@ -108,8 +112,8 @@
 
           <section>
             <span class="num">vii.</span>
-            <h2>Analytics and cookies</h2>
-            <p>The app does not use in-app analytics today. If privacy-preserving app analytics are added later, they will be off by default unless you enable them.</p>
+            <h2>Request metadata and cookies</h2>
+            <p>The build and platform information described above accompanies existing requests to BitGarth's servers and does not create additional reporting requests. These fields describe the app build; they do not report screen views or recent CLI activity.</p>
             <p>The landing site is a static website and does not need an account cookie to read these pages.</p>
           </section>
 
@@ -135,7 +139,7 @@
             <p>Security reports: <a class="contact-email" href="mailto:security&#64;bitgarth&#46;app">security@bitgarth.app</a></p>
           </section>
 
-          <p class="updated">Last updated · 18 July 2026</p>
+          <p class="updated">Last updated · 19 September 2026</p>
         </article>
 
         <div class="vine" aria-hidden="true">

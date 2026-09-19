@@ -53,7 +53,7 @@
         </nav>
 
         <header class="trust-hero">
-          <p class="eyebrow">Last updated · 18 July 2026</p>
+          <p class="eyebrow">Last updated · 19 September 2026</p>
           <h1>Security, <em>and its limits.</em></h1>
           <p class="lede">BitGarth is built for people who do not want their financial life pooled into someone else's database. Here is what we protect — and where the protection ends.</p>
         </header>
@@ -111,7 +111,7 @@
             <span class="num">v.</span>
             <h2>What BitGarth knows about you</h2>
             <p>BitGarth does not need your name, address, or email address to use the app.</p>
-            <p>For paid plans, BitGarth uses pseudonymous payment and subscription identifiers that are separate from your local app user ID. That lets the app retrieve payment and entitlement status without requiring a central BitGarth login. Requests to BitGarth services also include normal network metadata, as described in the <a href="privacy.html">Privacy Notice</a>.</p>
+            <p>For paid plans, BitGarth uses pseudonymous payment and subscription identifiers that are separate from your local app user ID. That lets the app retrieve payment and entitlement status without requiring a separate account on BitGarth's servers. Requests also expose build information and normal network metadata, so they should not be understood as anonymous. See the <a href="privacy.html">Privacy Notice</a>.</p>
             <p>Cryptocurrency payments have different privacy properties depending on the asset and network used. If you want the strongest payment privacy among supported options, you can pay with Monero.</p>
             <p>If BitGarth adds invoice support, invoice details will be entered inside the app. You will choose whether to save them, and saved invoice details will live in your encrypted user database rather than in a central BitGarth account.</p>
           </section>
@@ -152,10 +152,13 @@
 
           <section>
             <span class="num">ix.</span>
-            <h2>Software update checks</h2>
-            <p>If software update checks are enabled, your BitGarth app instance contacts BitGarthCentral to ask for the latest release for its install channel.</p>
-            <p>The request sends two BitGarth-specific headers: <code>X-BitGarth-App-Version</code>, such as <code>0.1.4</code> or <code>0.1.4-a1b2c3d</code>, and <code>X-BitGarth-App-Channel</code>, such as <code>docker</code>.</p>
-            <p>The global User-Agent used for outgoing HTTP integrations is generic and does not include your app version, channel, operating system, or Docker status. BitGarthCentral also sees normal HTTP metadata such as IP address, timing, and User-Agent. The update check does not send wallet data, user identifiers, instance IDs, addresses, xpubs, balances, labels, or API keys.</p>
+            <h2>Requests to BitGarth's servers</h2>
+            <p>Your app contacts BitGarth's servers for software updates, product and plan information, and payment and subscription services. Product and plan refreshes also run at login, including free-tier logins. Disabling automatic software update checks does not disable login refreshes, payment requests, or checks you explicitly request.</p>
+            <p>These requests carry the app version and distribution channel or build type in <code>X-BitGarth-App-Version</code> and <code>X-BitGarth-App-Channel</code>. Builds that provide platform information also send <code>X-BitGarth-App-Platform</code>, such as <code>linux/x86_64</code>.</p>
+            <p>Platform information describes the operating system and processor architecture the app binary was built for, not the device you use to browse a remotely hosted app. A Linux container on a Mac reports Linux; a binary running under architecture emulation reports its compiled architecture. A distribution-channel label is supplied by the person packaging or configuring the app.</p>
+            <p>We may use this information to diagnose compatibility problems, understand which builds and platforms contact our services, and guide platform support. These fields accompany existing requests; they do not create additional reporting requests or report screen views or recent CLI activity. These BitGarth-specific headers are sent to BitGarth's servers, not to blockchain or market-data providers.</p>
+            <p>BitGarth does not derive these fields from wallet data or your local account username, and does not generate an installation or device identifier for this reporting. BitGarth's servers also receive normal network metadata such as IP address, request time, requested service, response status, and User-Agent. On payment and subscription requests, build information may be associated with the pseudonymous payment or subscription identifiers carried by that request. Those requests also carry the credentials needed for the payment service; the limits on build metadata do not mean that the entire request contains only build information.</p>
+            <p>See the <a href="privacy.html">Privacy Notice</a> for how this request metadata is used and retained.</p>
           </section>
 
           <section>
@@ -180,7 +183,7 @@
             <p>Encrypted user storage, public-key-only wallet access, plain-text exports, and honest limits all serve that promise.</p>
           </section>
 
-          <p class="updated">Last updated · 18 July 2026</p>
+          <p class="updated">Last updated · 19 September 2026</p>
         </article>
 
         <div class="vine" aria-hidden="true">
