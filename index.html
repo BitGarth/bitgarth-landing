@@ -738,7 +738,7 @@
     .chan:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
 
     /* ── Hosted: managed-instance reassurances ── */
-    .hosted-cta { margin: 0 0 1.9rem; }
+    .hosted-cta, .download-cta { margin: 0 0 1.9rem; }
     .assure {
       list-style: none;
       margin: 0 0 1.7rem;
@@ -1495,10 +1495,10 @@
         "description": "A free, local-first crypto portfolio tracker for Bitcoin and Ethereum. Free includes balance tracking, transaction history for the first three eligible accounts, manual assets, and plain-text accounting exports. Harvest adds more transaction-enabled accounts and tax-support reports.",
         "applicationCategory": "FinanceApplication",
         "applicationSubCategory": "Accounting",
-        "operatingSystem": "Linux, macOS, Windows (via Docker); umbrelOS",
+        "operatingSystem": "Linux, macOS, Windows; umbrelOS",
         "url": "https://bitgarth.app/",
         "image": "https://bitgarth.app/assets/og-card.jpg",
-        "downloadUrl": "https://hub.docker.com/r/bitgarth/bitgarth",
+        "downloadUrl": "https://github.com/BitGarth/bitgarth/releases",
         "publisher": {
           "@id": "https://bitgarth.app/#org"
         },
@@ -1937,6 +1937,24 @@
               <span class="chan-name">Umbrel</span>
               <span class="chan-sub">community store</span>
             </button>
+            <button class="chan" type="button" role="tab" id="tab-ch-download" aria-controls="panel-ch-download" aria-selected="false" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4v9.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M8.2 10.2L12 14l3.8-3.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4.6 15.8v2.3a1.8 1.8 0 0 0 1.8 1.8h11.2a1.8 1.8 0 0 0 1.8-1.8v-2.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="chan-name">Download</span>
+              <span class="chan-sub">a plain binary</span>
+            </button>
+            <button class="chan" type="button" role="tab" id="tab-ch-source" aria-controls="panel-ch-source" aria-selected="false" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 6.4L4.4 12 9 17.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15 6.4L19.6 12 15 17.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13.3 5.1l-2.6 13.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="chan-name">Source</span>
+              <span class="chan-sub">build it yourself</span>
+            </button>
           </div>
         </div>
 
@@ -1980,7 +1998,7 @@
 
         <p class="tradeoff">
           <strong>Hosted is the convenient choice, not the most private one.</strong>
-          Your encrypted database still lives on our servers. For the strongest privacy — where the database sits on hardware only you control — self-host with <a href="#install-docker">Docker</a> or <a href="#install-umbrel">Umbrel</a> instead.
+          Your encrypted database still lives on our servers. For the strongest privacy — where the database sits on hardware only you control — self-host with <a href="#install-docker">Docker</a>, <a href="#install-umbrel">Umbrel</a>, or a <a href="#install-download">downloaded binary</a> instead.
         </p>
 
         <p class="after">
@@ -2132,6 +2150,129 @@
           Store source: <a href="https://github.com/FernTrail/ferntrail-umbrel-app-store" target="_blank" rel="noopener noreferrer">github.com/FernTrail/ferntrail-umbrel-app-store</a>.
         </p>
         </div><!-- /panel-ch-umbrel -->
+
+        <!-- ── Download channel ── -->
+        <div class="tabpanel chan-panel" id="panel-ch-download" role="tabpanel" aria-labelledby="tab-ch-download" tabindex="0" hidden>
+        <p class="panel-intro">
+          Every release carries a <code>bitgarth-web</code> archive for Linux, macOS and Windows — the same server the Docker image runs, unpacked straight onto your machine. No container runtime, no build toolchain.
+        </p>
+
+        <a class="btn download-cta" href="https://github.com/BitGarth/bitgarth/releases" target="_blank" rel="noopener noreferrer">
+          Browse the releases
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+
+        <div class="method-kicker">Unpack and run</div>
+
+        <div class="code-card" role="group" aria-label="Unpack and run the downloaded archive">
+<pre id="download-run-cmd"><span class="tok-dim"># macOS and Linux</span>
+<span class="tok-cmd">mkdir</span> <span class="tok-str">bitgarth</span>
+<span class="tok-cmd">tar</span> <span class="tok-flag">-xzf</span> <span class="tok-img">bitgarth-web-*.tar.gz</span> <span class="tok-flag">-C</span> <span class="tok-str">bitgarth</span>
+<span class="tok-cmd">cd</span> <span class="tok-str">bitgarth</span>
+<span class="tok-cmd">./bitgarth-web</span>
+
+<span class="tok-dim"># Windows, in PowerShell</span>
+<span class="tok-cmd">Expand-Archive</span> <span class="tok-img">bitgarth-web-*.zip</span> <span class="tok-flag">-DestinationPath</span> <span class="tok-str">bitgarth</span>
+<span class="tok-cmd">cd</span> <span class="tok-str">bitgarth</span>
+<span class="tok-cmd">.\bitgarth-web.exe</span></pre>
+          <p class="copy-note">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="13" height="13">
+              <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            The archive has no top folder of its own — unpack it into an empty one and keep <em>public/</em> and <em>assets/</em> beside the binary.
+          </p>
+        </div>
+
+        <p class="tradeoff">
+          <strong>On macOS, start it from the terminal — not Finder.</strong>
+          It is a command-line program, not an app bundle, so Finder refuses it outright and offers no way through. Run it in a terminal, click Open at the one-time prompt, and afterwards it starts from anywhere. The macOS builds are signed and notarized by FernTrail B.V.; Finder turns away every bare command-line binary regardless.
+        </p>
+
+        <div class="method-kicker">Check what you downloaded</div>
+
+        <div class="code-card" role="group" aria-label="Checksum command">
+          <button class="copy-btn" type="button" data-state="idle" data-copy-target="verify-cmd" aria-live="polite">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="label">Copy</span>
+          </button>
+<pre id="verify-cmd" data-oneline="shasum -a 256 bitgarth-web-*.tar.gz"><span class="tok-cmd">shasum</span> <span class="tok-flag">-a</span> <span class="tok-str">256</span> <span class="tok-img">bitgarth-web-*.tar.gz</span></pre>
+          <p class="copy-note">
+            Compare the digest with the matching line in <em>SHA256SUMS</em> on the release page. On Windows, <em>Get-FileHash</em> does the same.
+          </p>
+        </div>
+
+        <p class="after">
+          Then open <a href="http://127.0.0.1:8080" target="_blank" rel="noopener noreferrer">http://127.0.0.1:8080</a> in your browser. Pick a password, add a wallet, and watch your transactions land in your own little clearing. <code>IP</code> and <code>PORT</code> move the server somewhere else.
+        </p>
+        <p class="fine-print">
+          Linux builds need glibc 2.39 or newer, OpenSSL 3 and system CA certificates; macOS builds are Apple Silicon; Windows builds are x86-64 and need the Microsoft Visual C++ runtime. The same releases carry bitgarth-cli, the command-line client. Downloads: <a href="https://github.com/BitGarth/bitgarth/releases" target="_blank" rel="noopener noreferrer">github.com/BitGarth/bitgarth/releases</a>.
+        </p>
+        </div><!-- /panel-ch-download -->
+
+        <!-- ── Source channel ── -->
+        <div class="tabpanel chan-panel" id="panel-ch-source" role="tabpanel" aria-labelledby="tab-ch-source" tabindex="0" hidden>
+        <p class="panel-intro">
+          The source is on <a href="https://github.com/BitGarth/bitgarth" target="_blank" rel="noopener noreferrer">GitHub</a> under the FSL. Read it, then build the very server we publish — as a plain binary, or as the same Docker image.
+        </p>
+
+        <div class="method-kicker">Build the binary <span class="rec">Recommended</span></div>
+
+        <div class="code-card" role="group" aria-label="Build the BitGarth web server from source">
+<pre id="source-build-cmd"><span class="tok-cmd">git</span> <span class="tok-cmd">clone</span> <span class="tok-str">https://github.com/BitGarth/bitgarth.git</span>
+<span class="tok-cmd">cd</span> <span class="tok-str">bitgarth</span>
+
+<span class="tok-dim"># the WebAssembly target, and the Dioxus CLI at the pinned version</span>
+<span class="tok-cmd">rustup</span> <span class="tok-cmd">target</span> <span class="tok-cmd">add</span> <span class="tok-str">wasm32-unknown-unknown</span>
+<span class="tok-cmd">dx_version</span>=<span class="tok-str">$(sed -n 's/^dioxus.*version *= *&quot;\([^&quot;]*\)&quot;.*/\1/p' Cargo.toml | head -1)</span>
+<span class="tok-cmd">cargo</span> <span class="tok-cmd">install</span> <span class="tok-img">dioxus-cli</span> <span class="tok-flag">--locked</span> <span class="tok-flag">--version</span> <span class="tok-str">&quot;$dx_version&quot;</span>
+
+<span class="tok-cmd">./scripts/dx-web-build</span>
+<span class="tok-cmd">./target/dx/bitgarth-app/release/web/server</span></pre>
+          <p class="copy-note">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="13" height="13">
+              <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            Start the server from the repository root — it reads its asset catalog from a path relative to where you run it. On Debian and Ubuntu, install <em>pkg-config</em> and <em>libssl-dev</em> first.
+          </p>
+        </div>
+
+        <div class="method-kicker">Build the Docker image</div>
+
+        <div class="code-card" role="group" aria-label="Build the BitGarth Docker image from source">
+          <button class="copy-btn" type="button" data-state="idle" data-copy-target="source-docker-cmd" aria-live="polite">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="label">Copy</span>
+          </button>
+<pre id="source-docker-cmd" data-oneline="docker build -t bitgarth:local . &amp;&amp; docker run -d -p 8080:8080 -v bitgarth-data:/data --name bitgarth bitgarth:local"><span class="tok-cmd">docker</span> <span class="tok-cmd">build</span> <span class="tok-flag">-t</span> <span class="tok-img">bitgarth:local</span> <span class="tok-str">.</span>
+<span class="tok-cmd">docker</span> <span class="tok-cmd">run</span> <span class="tok-flag">-d</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">-p</span> <span class="tok-str">8080:8080</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">-v</span> <span class="tok-str">bitgarth-data:/data</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-flag">--name</span> <span class="tok-str">bitgarth</span> <span class="tok-cont" aria-hidden="true"> \</span>
+  <span class="tok-img">bitgarth:local</span></pre>
+          <p class="copy-note">
+            Run these in the cloned repository. Docker is the only tool you need installed, and the image comes out the way ours does.
+          </p>
+        </div>
+
+        <p class="after">
+          Then open <a href="http://127.0.0.1:8080" target="_blank" rel="noopener noreferrer">http://127.0.0.1:8080</a> in your browser. Same app, same encryption — built by you, from code you have read.
+        </p>
+        <p class="fine-print">
+          Source: <a href="https://github.com/BitGarth/bitgarth" target="_blank" rel="noopener noreferrer">github.com/BitGarth/bitgarth</a>, under the Functional Source License. The repository README carries the full build and test instructions.
+        </p>
+        </div><!-- /panel-ch-source -->
       </div>
     </section>
 
@@ -2436,7 +2577,9 @@
 
       // Routes are <action>[-<channel>]: action is install | upgrade | inspect,
       // channel names a distribution channel (e.g. #install-hosted, #install-docker,
-      // #install-umbrel, #inspect-docker). Bare #install lands on the Hosted channel
+      // #install-umbrel, #install-download, #install-source, #inspect-docker). The
+      // channel id must match a tab-ch-<channel> button; no other wiring is needed to
+      // add one. Bare #install lands on the Hosted channel
       // (the promoted default); bare #upgrade / #inspect are Docker-only concepts and
       // fall back to Docker. The channel selects the outer platform tab; action selects
       // the inner Install/Upgrade tab, which only exists for Docker.
