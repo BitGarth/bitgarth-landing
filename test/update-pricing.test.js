@@ -1,7 +1,10 @@
 // test/update-pricing.test.js
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { fetchPricing, bake, main, PRICING_URL } from '../scripts/update-pricing.mjs';
+
+const v4Snapshot = JSON.parse(await readFile(new URL('../assets/pricing/snapshot.json', import.meta.url)));
 
 const usd = (m) => ({ minor_units: m, currency: 'USD', currency_symbol: '$', display_scale: 2 });
 const snapshot = {
@@ -12,8 +15,6 @@ const snapshot = {
     purchase_options: [],
   }],
 };
-
-const okFetch = () => async (url) => ({ ok: true, status: 200, json: async () => snapshot, _url: url });
 
 test('PRICING_URL targets pricing, not product-options', () => {
   assert.equal(PRICING_URL, 'https://bitgarth.com/api/v1/pricing');
@@ -59,8 +60,9 @@ test('bake injects note when pricing_summary is present', () => {
 test('main writes snapshot then index on success', async () => {
   const writes = {};
   const code = await main({
-    fetchImpl: okFetch(),
-    readFile: async () => `<div class="grid"><!-- PRICING:CARDS:START -->X<!-- PRICING:CARDS:END --></div>
+    fetchImpl: async () => ({ ok: true, status: 200, json: async () => v4Snapshot }),
+    readFile: async () => `<p><!-- PRICING:NOTE:START -->OLD<!-- PRICING:NOTE:END --></p>
+<div class="grid"><!-- PRICING:CARDS:START -->X<!-- PRICING:CARDS:END --></div>
 <!-- PRICING:JSONLD:START --><script type="application/ld+json">
 { "@graph": [ { "@type": "SoftwareApplication", "offers": [] } ] }
 </script><!-- PRICING:JSONLD:END -->`,
@@ -68,8 +70,14 @@ test('main writes snapshot then index on success', async () => {
     log: () => {},
   });
   assert.equal(code, 0);
-  assert.ok(Object.keys(writes).some((p) => p.endsWith('snapshot.json')));
-  assert.ok(Object.keys(writes).some((p) => p.endsWith('index.html')));
+  const savedSnapshot = writes[Object.keys(writes).find((p) => p.endsWith('snapshot.json'))];
+  const savedHtml = writes[Object.keys(writes).find((p) => p.endsWith('index.html'))];
+  assert.deepEqual(JSON.parse(savedSnapshot), v4Snapshot);
+  assert.match(savedHtml, /first three eligible accounts/);
+  assert.match(savedHtml, /1,000-transaction sync threshold/);
+  assert.match(savedHtml, /Harvest.*more transaction-enabled accounts/);
+  assert.match(savedHtml, /\$49\.95<small>\/year<\/small>/);
+  assert.match(savedHtml, /"price": "49\.95"/);
 });
 
 test('main returns 1 and writes nothing on fetch failure', async () => {

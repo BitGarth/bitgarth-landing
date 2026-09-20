@@ -1,6 +1,6 @@
 {
   "catalog_schema_version": 4,
-  "pricing_summary": "**Free** tracks what you hold — balances, manual assets, and one net-worth figure. **Paid** does the accounting: transaction-history for Bitcoin and Ethereum, and tax-season reports.",
+  "pricing_summary": "**Free** includes balance tracking, transaction history, and manual assets. **Harvest** adds more transaction-enabled accounts, historical market prices, and tax reports.",
   "tiers": [
     {
       "tier": "free",
@@ -9,30 +9,30 @@
         "display_order": 10,
         "summary": "Track what you hold — local, private, and yours.",
         "bullets": [
-          "Balance sync for supported accounts",
-          "Live market values in your currency",
-          "Manual assets and balance assertions",
-          "hledger and ledger-cli export included"
+          "Balance tracking for 50 supported accounts, including transaction history for your first three eligible accounts",
+          "1,000-transaction sync threshold per account",
+          "1,000 active manual accounts; inactive account data is retained",
+          "Balance assertions, current market prices, price overrides, and hledger/ledger-cli export"
         ],
         "is_featured": false,
         "ribbon_label": null
       },
-      "capability_set_id": "free.v3",
-      "capability_schema_version": 3,
-      "minimum_app_version": null,
+      "capability_set_id": "free.v4",
+      "capability_schema_version": 4,
+      "minimum_app_version": "0.4.0",
       "capabilities": {
         "limits": {
           "accounts": {
-            "total": 50
+            "balance_sync": 50,
+            "transaction_history_sync": 3,
+            "manual": 1000
           },
-          "synced_accounts": 50,
           "history": {
-            "max_transactions_per_account": 0
+            "max_transactions_per_account": 1000
           }
         },
         "features": {
-          "transaction_history_sync": false,
-          "historical_sync": false,
+          "transaction_history_sync": true,
           "balance_sync": true,
           "balance_assertions": true,
           "hledger_export": true,
@@ -51,30 +51,31 @@
         "display_order": 20,
         "summary": "Your transaction history and your tax season.",
         "bullets": [
-          "**Everything in Free**, plus:",
-          "Transaction-history backfill for Bitcoin and Ethereum",
-          "Reports to support tax filing",
-          "Past positions valued at the time, not today's price"
+          "Balance tracking and transaction history for your first 200 eligible supported accounts",
+          "3,000-transaction sync threshold per account",
+          "1,000 active manual accounts; inactive account data is retained",
+          "Balance assertions, current market prices, price overrides, and hledger/ledger-cli export",
+          "Historical market prices and tax reports"
         ],
         "is_featured": true,
         "ribbon_label": "Recommended"
       },
-      "capability_set_id": "basic.v3",
-      "capability_schema_version": 3,
-      "minimum_app_version": null,
+      "capability_set_id": "basic.v4",
+      "capability_schema_version": 4,
+      "minimum_app_version": "0.4.0",
       "capabilities": {
         "limits": {
           "accounts": {
-            "total": 200
+            "balance_sync": 200,
+            "transaction_history_sync": 200,
+            "manual": 1000
           },
-          "synced_accounts": 200,
           "history": {
             "max_transactions_per_account": 3000
           }
         },
         "features": {
           "transaction_history_sync": true,
-          "historical_sync": true,
           "balance_sync": true,
           "balance_assertions": true,
           "hledger_export": true,

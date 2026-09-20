@@ -1,6 +1,21 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { formatPrice, priceAmount, renderBullets, renderSummary, pickTerms, renderPriceBlock, renderTier, renderCards, buildOffers, renderPricing } from '../assets/pricing/renderer.js';
+
+const currentSnapshot = JSON.parse(await readFile(new URL('../assets/pricing/snapshot.json', import.meta.url)));
+
+test('v4 pricing describes Free history and the sync threshold', () => {
+  const { cardsHTML, summaryHTML, offers } = renderPricing(currentSnapshot);
+  assert.match(cardsHTML, /first three eligible accounts/);
+  assert.match(cardsHTML, /1,000-transaction sync threshold/);
+  assert.match(cardsHTML, /1,000 active manual accounts/);
+  assert.match(cardsHTML, /3,000-transaction sync threshold/);
+  assert.match(summaryHTML, /Free.*transaction history/);
+  assert.equal(offers[1].price, '49.95');
+  assert.equal(currentSnapshot.tiers[1].purchase_options[0].term.quantity, 12);
+  assert.doesNotMatch(JSON.stringify(currentSnapshot), /stored_total/);
+});
 
 const usd = (minor) => ({ minor_units: minor, currency: 'USD', currency_symbol: '$', display_scale: 2 });
 

@@ -42,3 +42,9 @@ test('Free tier renders no purchase CTA price (shows $0)', () => {
   assert.match(region, /\$0/);
   assert.doesNotMatch(region, /\/ year/);
 });
+
+test('hero and metadata describe Free transaction history accurately', () => {
+  assert.match(html, /first three eligible accounts/);
+  assert.doesNotMatch(html, /Paid adds transaction history/i);
+  assert.doesNotMatch(html, /Only new transaction syncs, history backfill, and paid reports pause/i);
+});

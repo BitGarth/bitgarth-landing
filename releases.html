@@ -302,13 +302,63 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.4.0">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.4.0
+                <a class="release-anchor" href="#0.4.0" aria-label="Copy link to version 0.4.0">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">20 September 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">The free tier now syncs balances for up to 50 supported accounts and includes transaction history for your first three eligible accounts.</p>
+              <p class="highlight"><a href="https://github.com/BitGarth/bitgarth/releases">Ready-to-run downloads</a> of the BitGarth web server for Linux, macOS, and Windows are attached to each release, so you can run BitGarth without Docker and without building it yourself.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>Transaction history is part of the free tier. Until now the free tier tracked balances only, and syncing any history required an upgrade.</li>
+                <li>Accounts that support automatic syncing show their mode — <strong>Transaction syncing</strong>, <strong>Balance only</strong>, or <strong>Inactive</strong> — with a short note explaining why, so a current balance is never presented as if its history were complete.</li>
+                <li>Each transaction-syncing account has a sync threshold, 1,000 transactions on the free tier. Once an account reaches it, the batch already in progress finishes, so the stored count can end up somewhat above the threshold. Transaction syncing then pauses and balances keep updating on their own.</li>
+                <li>Accounts with existing sync priority keep their place. New accounts join in the order you add them. Deleting an account frees its place for the next one; reaching a threshold or a temporary provider outage does not.</li>
+                <li><a href="https://github.com/BitGarth/bitgarth/releases">Each release</a> now carries web server downloads for Linux (x86-64), macOS (Apple Silicon), and Windows (x86-64), alongside the command-line client. Each archive holds the <code>bitgarth-web</code> server, the web assets, and the asset catalog it needs at startup. The README has the platform requirements.</li>
+                <li>Installs that previously showed no update notice — desktop builds, and anything packaged outside Docker and Umbrel — now see one when a newer version is published, with links to the installation instructions and to the release. Docker and Umbrel keep the upgrade guidance written for them, and hosted accounts still see nothing, because updates are not yours to run there.</li>
+                <li>Harvest tracks balances and transactions for up to 200 supported accounts and raises the transaction sync threshold to 3,000 per account. The <strong>Upgrade</strong> page shows the current offer, as does <a href="https://bitgarth.app/#pricing">https://bitgarth.app/#pricing</a></li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>A Bitcoin account whose history had been verified only up to an older block could still be labelled &quot;Complete&quot; after newer blocks arrived. The account now shows the block its history was verified through, and where no boundary can be proven, BitGarth says the coverage boundary is unknown rather than claiming complete history.</li>
+                <li>Reports and balances for a Bitcoin account are now marked provisional when they depend on blocks beyond the point its history was verified to, instead of being presented as settled.</li>
+                <li>Ethereum balance checks no longer count as completed transaction history. When transaction syncing becomes available, BitGarth can fetch transactions missed while only balances were updating.</li>
+                <li>Balance assertions in accounting journals readable by hledger and ledger-cli now use the time the balance was observed, rather than when the sync run finished.</li>
+                <li>An account with more than one address, such as a Bitcoin account created from an xpub, could export a balance assertion that added up balances observed at different moments. Those assertions are now left out rather than exported as something you could check.</li>
+              </ul>
+            </section>
+
+            <section class="change-group notes">
+              <h3>Notes</h3>
+              <ul class="change-list">
+                <li>Requests to BitGarth's servers now also state the operating system and processor architecture the app was built for, alongside the app version and install channel they already carried. That describes the binary making the request, not the device you browse from. The privacy notice, updated 19 September 2026, covers what these requests contain and how it is used.</li>
+                <li>Existing accounts and their data remain in place. On the free tier, up to 50 supported accounts sync balances, and the first three eligible among them sync transactions. Additional accounts remain viewable and exportable even when inactive.</li>
+                <li>Restoring a wallet data backup now preserves account priority for balance and transaction syncing. Backups from earlier versions still import.</li>
+              </ul>
+            </section>
+
+          </article>
+
           <article class="release" id="0.3.1">
             <header class="release-head">
               <h2 class="release-version">
                 0.3.1
                 <a class="release-anchor" href="#0.3.1" aria-label="Copy link to version 0.3.1">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">3 September 2026</p>
             </header>
 

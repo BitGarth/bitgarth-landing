@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BitGarth — a quiet garden for your wallets</title>
-  <meta name="description" content="BitGarth is a free, local-first portfolio tracker for Bitcoin and Ethereum — balances, manual assets, and net worth, exported to plain text your tools and AI can read. Paid adds transaction history and tax-season reports." />
+  <meta name="description" content="BitGarth is a free, local-first portfolio tracker for Bitcoin and Ethereum — balances, transaction history for your first three eligible accounts, manual assets, and plain-text exports. Harvest adds more transaction-enabled accounts and tax reports." />
   <meta name="theme-color" content="#F4EFE3" />
 
   <link rel="canonical" href="https://bitgarth.app/" />
@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="BitGarth" />
   <meta property="og:url" content="https://bitgarth.app/" />
   <meta property="og:title" content="BitGarth — a quiet garden for your wallets" />
-  <meta property="og:description" content="A free, local-first portfolio tracker for Bitcoin &amp; Ethereum. Balances, manual assets, net worth — exported to plain text. Paid adds transaction history and tax reports." />
+  <meta property="og:description" content="A free, local-first portfolio tracker for Bitcoin &amp; Ethereum. Free includes balances, transaction history for your first three eligible accounts, manual assets, and plain-text exports. Harvest adds tax reports." />
   <meta property="og:image" content="https://bitgarth.app/assets/og-card.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
@@ -26,7 +26,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@BitGarth" />
   <meta name="twitter:title" content="BitGarth — a quiet garden for your wallets" />
-  <meta name="twitter:description" content="A free, local-first portfolio tracker for Bitcoin &amp; Ethereum. Balances, manual assets, net worth — exported to plain text. Paid adds transaction history and tax reports." />
+  <meta name="twitter:description" content="A free, local-first portfolio tracker for Bitcoin &amp; Ethereum. Free includes balances, transaction history for your first three eligible accounts, manual assets, and plain-text exports. Harvest adds tax reports." />
   <meta name="twitter:image" content="https://bitgarth.app/assets/og-card.jpg" />
   <meta name="twitter:image:alt" content="BitGarth — a quiet garden for your wallets" />
 
@@ -1109,7 +1109,7 @@
       vertical-align: 0.06em;
     }
     .pricing .note .chip.free { color: var(--moss); }
-    .pricing .note .chip.paid { color: var(--copper); }
+    .pricing .note .chip.harvest { color: var(--copper); }
 
     .pricing .commitments {
       display: grid;
@@ -1492,7 +1492,7 @@
         "@type": "SoftwareApplication",
         "@id": "https://bitgarth.app/#app",
         "name": "BitGarth",
-        "description": "A free, local-first crypto portfolio tracker for Bitcoin and Ethereum. Tracks balances and manual assets in an encrypted user database and exports plain-text accounting files for hledger and ledger-cli. Paid plans add transaction-history backfill and tax-support reports.",
+        "description": "A free, local-first crypto portfolio tracker for Bitcoin and Ethereum. Free includes balance tracking, transaction history for the first three eligible accounts, manual assets, and plain-text accounting exports. Harvest adds more transaction-enabled accounts and tax-support reports.",
         "applicationCategory": "FinanceApplication",
         "applicationSubCategory": "Accounting",
         "operatingSystem": "Linux, macOS, Windows (via Docker); umbrelOS",
@@ -1574,10 +1574,9 @@
           </h1>
           <p class="lede">
             A free portfolio tracker for your own Bitcoin and Ethereum wallets: auto-synced
-            balances, manual assets, one honest net-worth figure. Upgrade and BitGarth pulls
-            your entire transaction history from the chain — no rebuilding it by hand — and
-            exports it as plain-text accounting, readable by your tax tools, your accountant,
-            or any AI.
+            balances, transaction history for your first three eligible accounts, manual assets,
+            and one honest net-worth figure. Harvest expands transaction-enabled accounts and
+            adds tax reports. Export plain-text accounting for your tools or accountant.
           </p>
           <div class="ctas">
             <a class="btn" href="#install">
@@ -2145,7 +2144,7 @@
         </div>
         <p class="note" id="pricing-note">
           <!-- PRICING:NOTE:START -->
-<span class="chip free">Free</span> tracks what you hold — balances, manual assets, and one net-worth figure. <span class="chip paid">Paid</span> does the accounting: transaction-history for Bitcoin and Ethereum, and tax-season reports.
+<span class="chip free">Free</span> includes balance tracking, transaction history, and manual assets. <span class="chip harvest">Harvest</span> adds more transaction-enabled accounts, historical market prices, and tax reports.
           <!-- PRICING:NOTE:END -->
         </p>
 
@@ -2162,10 +2161,10 @@
             <div class="yearly">&nbsp;</div>
             <p class="summary">Track what you hold — local, private, and yours.</p>
             <ul>
-              <li><span>Balance sync for supported accounts</span></li>
-              <li><span>Live market values in your currency</span></li>
-              <li><span>Manual assets and balance assertions</span></li>
-              <li><span>hledger and ledger-cli export included</span></li>
+              <li><span>Balance tracking for 50 supported accounts, including transaction history for your first three eligible accounts</span></li>
+              <li><span>1,000-transaction sync threshold per account</span></li>
+              <li><span>1,000 active manual accounts; inactive account data is retained</span></li>
+              <li><span>Balance assertions, current market prices, price overrides, and hledger/ledger-cli export</span></li>
             </ul>
             <a class="btn ghost cta" href="#install">Install &amp; start <span class="arrow" aria-hidden="true">→</span></a>
           </article>
@@ -2182,10 +2181,11 @@
             <div class="yearly">&nbsp;</div>
             <p class="summary">Your transaction history and your tax season.</p>
             <ul>
-              <li><span><strong>Everything in Free</strong>, plus:</span></li>
-              <li><span>Transaction-history backfill for Bitcoin and Ethereum</span></li>
-              <li><span>Reports to support tax filing</span></li>
-              <li><span>Past positions valued at the time, not today's price</span></li>
+              <li><span>Balance tracking and transaction history for your first 200 eligible supported accounts</span></li>
+              <li><span>3,000-transaction sync threshold per account</span></li>
+              <li><span>1,000 active manual accounts; inactive account data is retained</span></li>
+              <li><span>Balance assertions, current market prices, price overrides, and hledger/ledger-cli export</span></li>
+              <li><span>Historical market prices and tax reports</span></li>
             </ul>
             <a class="btn cta" href="#install">Get started <span class="arrow" aria-hidden="true">→</span></a>
           </article>
@@ -2195,7 +2195,7 @@
         <div class="commitments">
           <p>
             <em>Your data is always yours.</em>
-            If a paid plan expires, your data stays with your app instance — visible, searchable, and exportable to hledger or ledger-cli. Only new transaction syncs, history backfill, and paid reports pause.
+            If a paid plan expires, your data stays with your app instance — visible, searchable, and exportable to hledger or ledger-cli. Sync beyond Free limits and paid reports pause.
           </p>
           <p>
             <em>Pay in your own coin.</em>
