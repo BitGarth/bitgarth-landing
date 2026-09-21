@@ -568,10 +568,11 @@
       -webkit-user-select: none;
     }
 
+    /* Plain text flow, not flex: a flex container turns each bare text run into
+       its own item, which shattered these notes into narrow columns once they
+       wrapped. The icon rides along inline instead. */
     .copy-note {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
+      display: block;
       margin: 0.9rem 0 0;
       font-family: var(--body);
       font-size: 0.82rem;
@@ -588,7 +589,7 @@
       border-radius: 3px;
       margin: 0 0.08rem;
     }
-    .copy-note svg { flex: none; opacity: 0.7; }
+    .copy-note svg { display: inline; vertical-align: -0.12em; margin-right: 0.4rem; opacity: 0.7; }
 
     .copy-btn {
       position: absolute;
@@ -1929,6 +1930,15 @@
               <span class="chan-name">Docker</span>
               <span class="chan-sub">any machine</span>
             </button>
+            <button class="chan" type="button" role="tab" id="tab-ch-homebrew" aria-controls="panel-ch-homebrew" aria-selected="false" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5.4 7.4h9.7v9.1a2.5 2.5 0 0 1-2.5 2.5H7.9a2.5 2.5 0 0 1-2.5-2.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M15.1 9.7h2.3a2 2 0 0 1 2 2v1.4a2 2 0 0 1-2 2h-2.3" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M5.4 10.6h9.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="chan-name">Homebrew</span>
+              <span class="chan-sub">macOS &amp; Linux</span>
+            </button>
             <button class="chan" type="button" role="tab" id="tab-ch-umbrel" aria-controls="panel-ch-umbrel" aria-selected="false" tabindex="-1">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M3.4 11.2a8.6 8.6 0 0 1 17.2 0c-1.2-1-2.4-1-3.5 0-1.1-1-2.4-1-3.5 0-1.1-1-2.4-1-3.5 0-1.1-1-2.3-1-3.5 0z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
@@ -1998,7 +2008,7 @@
 
         <p class="tradeoff">
           <strong>Hosted is the convenient choice, not the most private one.</strong>
-          Your encrypted database still lives on our servers. For the strongest privacy — where the database sits on hardware only you control — self-host with <a href="#install-docker">Docker</a>, <a href="#install-umbrel">Umbrel</a>, or a <a href="#install-download">downloaded binary</a> instead.
+          Your encrypted database still lives on our servers. For the strongest privacy — where the database sits on hardware only you control — self-host with <a href="#install-docker">Docker</a>, <a href="#install-homebrew">Homebrew</a>, <a href="#install-umbrel">Umbrel</a>, or a <a href="#install-download">downloaded binary</a> instead.
         </p>
 
         <p class="after">
@@ -2107,6 +2117,63 @@
           Docker image source: <a href="https://hub.docker.com/r/bitgarth/bitgarth" target="_blank" rel="noopener noreferrer">hub.docker.com/r/bitgarth/bitgarth</a>.
         </p>
         </div><!-- /panel-ch-docker -->
+
+        <!-- ── Homebrew channel ── -->
+        <div class="tabpanel chan-panel" id="panel-ch-homebrew" role="tabpanel" aria-labelledby="tab-ch-homebrew" tabindex="0" hidden>
+        <p class="panel-intro">
+          If you already have <a href="https://brew.sh/" target="_blank" rel="noopener noreferrer">Homebrew</a>, BitGarth is two commands. The formula installs the same checksum-verified release archive the downloads page serves, wraps it in a launcher that works from any directory, and keeps it current with <code>brew upgrade</code>.
+        </p>
+
+        <div class="method-kicker">Install</div>
+
+        <div class="code-card" role="group" aria-label="Homebrew install commands">
+          <button class="copy-btn" type="button" data-state="idle" data-copy-target="brew-install-cmd" aria-live="polite">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="label">Copy</span>
+          </button>
+<pre id="brew-install-cmd" data-oneline="brew tap ferntrail/tap &amp;&amp; brew install ferntrail/tap/bitgarth-web &amp;&amp; bitgarth-web"><span class="tok-cmd">brew</span> <span class="tok-cmd">tap</span> <span class="tok-img">ferntrail/tap</span>
+<span class="tok-cmd">brew</span> <span class="tok-cmd">install</span> <span class="tok-img">ferntrail/tap/bitgarth-web</span>
+<span class="tok-cmd">bitgarth-web</span></pre>
+          <p class="copy-note">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="13" height="13">
+              <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            Your data lives in <em>$(brew --prefix)/var/bitgarth</em>, outside the versioned package — upgrades leave it alone.
+          </p>
+        </div>
+
+        <div class="method-kicker">Keep it running</div>
+
+        <div class="code-card" role="group" aria-label="Homebrew background service command">
+          <button class="copy-btn" type="button" data-state="idle" data-copy-target="brew-service-cmd" aria-live="polite">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="label">Copy</span>
+          </button>
+<pre id="brew-service-cmd" data-oneline="brew services start ferntrail/tap/bitgarth-web"><span class="tok-cmd">brew</span> <span class="tok-cmd">services</span> <span class="tok-cmd">start</span> <span class="tok-img">ferntrail/tap/bitgarth-web</span></pre>
+          <p class="copy-note">
+            Runs it under launchd on macOS, systemd on Linux — restarted if it exits, started again at login. Swap <em>start</em> for <em>stop</em> to undo both.
+          </p>
+        </div>
+
+        <p class="after">
+          Then open <a href="http://127.0.0.1:8080" target="_blank" rel="noopener noreferrer">http://127.0.0.1:8080</a> in your browser. Pick a password, add a wallet, and watch your transactions land in your own little clearing. It listens on your own machine only until you set <code>IP</code>.
+        </p>
+        <p class="fine-print">
+          macOS on Apple Silicon (11 or newer) and Linux on x86-64 with glibc 2.39 or newer; no Intel Mac or ARM Linux build yet. The same tap carries bitgarth-cli, the command-line client. Tap source: <a href="https://github.com/FernTrail/homebrew-tap" target="_blank" rel="noopener noreferrer">github.com/FernTrail/homebrew-tap</a>.
+        </p>
+        </div><!-- /panel-ch-homebrew -->
 
         <!-- ── Umbrel channel ── -->
         <div class="tabpanel chan-panel" id="panel-ch-umbrel" role="tabpanel" aria-labelledby="tab-ch-umbrel" tabindex="0" hidden>
@@ -2577,7 +2644,8 @@
 
       // Routes are <action>[-<channel>]: action is install | upgrade | inspect,
       // channel names a distribution channel (e.g. #install-hosted, #install-docker,
-      // #install-umbrel, #install-download, #install-source, #inspect-docker). The
+      // #install-homebrew, #install-umbrel, #install-download, #install-source,
+      // #inspect-docker). The
       // channel id must match a tab-ch-<channel> button; no other wiring is needed to
       // add one. Bare #install lands on the Hosted channel
       // (the promoted default); bare #upgrade / #inspect are Docker-only concepts and
