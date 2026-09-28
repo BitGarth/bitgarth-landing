@@ -302,13 +302,81 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.4.3">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.4.3
+                <a class="release-anchor" href="#0.4.3" aria-label="Copy link to version 0.4.3">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">28 September 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Failed Ethereum transactions are now shown and counted correctly. The amount that was not sent no longer looks transferred, and the network fee you paid now counts in your balances and hledger exports.</p>
+              <p class="highlight">The Holdings Report now shows values for HD wallets again. Their history coverage no longer stays at <em>Syncing</em>.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li><code>bitgarth-cli --help</code> now explains every command and option.</li>
+                <li><code>bitgarth-cli login</code> now works as another name for <code>bitgarth-cli pair</code>.</li>
+                <li>The account history page has an <em>All time</em> button to return from a year or custom range.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>Entering a wrong current password under <em>Change Password</em> no longer signs you out. The form now shows <em>Incorrect password</em> and keeps your session.</li>
+                <li>The Holdings Report showed <em>Not available</em> for every value of an HD wallet because its history coverage never finished. It now completes once the wallet has synced.</li>
+                <li>An account's history page now opens on all time instead of the current year, so an account whose activity is all in earlier years no longer looks empty.</li>
+                <li>A failed Ethereum transaction now shows its attempted amount struck through and marked <em>Not transferred</em>, in both the table and card views.</li>
+                <li>The network fee paid for a failed Ethereum transaction now reduces the account balance, including historical and report balances.</li>
+                <li>Failed Ethereum transactions now appear in the account's history at the time they were mined, instead of alongside pending transactions. The section heading is now <em>History</em> instead of <em>Confirmed</em>.</li>
+                <li>hledger exports now include the fee paid for a failed Ethereum transaction.</li>
+                <li>An Ethereum transaction that succeeded but contained a failed internal call no longer shows as failed, and its transfers are kept.</li>
+                <li>An account that reached its plan limit now shows <em>History paused (plan limit)</em> instead of <em>Transaction syncing</em>.</li>
+                <li>Balances of accounts at their plan limit now refresh about every 15 minutes instead of every 30.</li>
+                <li><em>Sync now</em> on an account at its plan limit now refreshes the balance immediately and reports <em>Balance refreshed</em>.</li>
+                <li>If you have not chosen a time zone in Settings, BitGarth now saves your device's time zone when you sign in. Previously, reloading a page could show times in UTC.</li>
+                <li>The result of a manual sync now shows the full date and time in your chosen date format and time zone, not just the hour and minute.</li>
+                <li>Ethereum transaction hashes now always start with <code>0x</code> in account history, hledger exports, and Etherscan links.</li>
+                <li>A fresh install now opens on account creation, even if your browser still has a sign-in cookie from an earlier install.</li>
+                <li>The balance assertions header on account history no longer squeezes its totals onto one word per line on phones.</li>
+                <li>Ethereum syncing now spaces its Etherscan requests one second apart for each API key, so large wallets run into fewer rate-limit errors.</li>
+                <li>Entering an invalid manual price, such as a negative one, now shows what is wrong with the price so you can correct it.</li>
+                <li>The balance assertion dialog now keeps keyboard focus inside it while you edit, and <em>Escape</em> closes it.</li>
+                <li>hledger exports no longer fail for a Bitcoin account whose earlier history is incomplete. They leave out the balance checks that history cannot support.</li>
+                <li>hledger exports no longer give two accounts the same name when an account label matches a name generated for another account.</li>
+                <li>hledger exports no longer fail when several Bitcoin transactions share a block, or when their times run backward across a year boundary.</li>
+                <li>If an hledger export cannot be created, the download now reports an error instead of delivering a broken file.</li>
+                <li>Restoring a backup no longer merges manual asset accounts that have different labels. A restore whose balance assertion conflicts with an existing one on the same date is now rejected, without changes, instead of silently dropping it.</li>
+                <li>Report dates in time zones where daylight saving time starts at midnight are now handled correctly.</li>
+                <li>The Holdings Report no longer fails when a change percentage is too large to show; that percentage now shows as unavailable.</li>
+                <li>Form guidance text now has enough contrast to read comfortably.</li>
+                <li>When BitGarth stops, it now also winds down background syncing and closes its databases cleanly. Open requests and background work share a limit of eight seconds.</li>
+              </ul>
+            </section>
+
+            <section class="change-group notes">
+              <h3>Notes</h3>
+              <ul class="change-list">
+                <li>After the upgrade, BitGarth corrects the stored history of past failed Ethereum transactions automatically. No action is needed.</li>
+                <li>The <em>Back up your wallets</em> backup does not include saved manual prices. Note them before restoring, because they must be entered again.</li>
+              </ul>
+            </section>
+
+          </article>
+
           <article class="release" id="0.4.2">
             <header class="release-head">
               <h2 class="release-version">
                 0.4.2
                 <a class="release-anchor" href="#0.4.2" aria-label="Copy link to version 0.4.2">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">24 September 2026</p>
             </header>
 
