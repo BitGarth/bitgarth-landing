@@ -302,13 +302,67 @@
                Groups: highlights → new → fixed (omit any that are empty).
                ════════════════════════════════════════════════════════════════ -->
 
+          <article class="release" id="0.5.0">
+            <header class="release-head">
+              <h2 class="release-version">
+                0.5.0
+                <a class="release-anchor" href="#0.5.0" aria-label="Copy link to version 0.5.0">#</a>
+              </h2>
+              <span class="latest-tag">Latest</span>
+              <p class="release-date">15 November 2026</p>
+            </header>
+
+            <section class="change-group highlights">
+              <h3>Highlights</h3>
+              <p class="highlight">Manage wallets and accounts, start a sync, and run a <em>Holdings Report</em> from the command line. Add <code>--json</code> to use the results in a script.</p>
+              <p class="highlight">Look up what an asset was worth on a particular day. The new <em>Prices</em> page shows prices for assets in your wallets, in your reporting currency. Filter by date or source to find a price you entered or a daily CoinGecko quote.</p>
+              <p class="highlight">See what each transaction was worth on the day it happened. The range summary shows your opening balance, receipts, spending, fees, and closing balance. Fiat totals for receipts, spending, and fees appear when every transaction counted in the summary has a price.</p>
+            </section>
+
+            <section class="change-group new">
+              <h3>New</h3>
+              <ul class="change-list">
+                <li>Choose full or read-only access when pairing the CLI. You can lower an existing full-access client's permission under <em>Settings → Paired Clients</em>.</li>
+                <li>Transfer wallets, accounts, addresses, and manual balances between installs with a password-encrypted ZIP from the CLI. Transfers require full access and leave settings, saved API keys, and subscriptions out of the archive.</li>
+                <li>Daily CoinGecko prices keep updating while you're signed out if anyone on your instance has price syncing enabled. Your own setting controls whether you see CoinGecko prices. On Free, you can browse the last nine months of CoinGecko prices and the full history of prices you entered yourself.</li>
+                <li>Search for a timezone by city or region in <em>Settings</em>, or use your browser's timezone.</li>
+                <li>See how many transaction entries your accounting export contains before you download it.</li>
+                <li>Browse previously loaded plan descriptions when BitGarth's servers are unavailable. Checkout resumes once current prices are available.</li>
+                <li>Verify a downloaded CLI or web archive against the release workflow, tag, and source commit using the commands on the GitHub release page.</li>
+              </ul>
+            </section>
+
+            <section class="change-group fixed">
+              <h3>Fixed</h3>
+              <ul class="change-list">
+                <li>Bitcoin reports now leave the closing balance unknown when history doesn't cover the end of the selected day. Where available, the report shows the last confirmed amount and sync time separately so you can see what was known.</li>
+                <li>The <em>Holdings Report</em> explains whether a missing value needs more transaction history or a price for that day, and keeps opening and closing totals visible on small screens even when a value is unknown.</li>
+                <li>Signing in or registering now opens <em>Wallets</em> reliably. A failed sign-in shows a support code when diagnostic details are needed.</li>
+                <li>Wallet rows and report prices fit on narrow screens. Small balances and rounded report prices are easier to read in your selected currency.</li>
+                <li>On phones, the bottom navigation now takes you directly to <em>Wallets</em>, <em>Reports</em>, <em>Prices</em>, and <em>Settings</em>.</li>
+                <li>Copy buttons now work more reliably in Safari and Firefox and confirm a copy only after the browser succeeds.</li>
+                <li>The encrypted wallet database now uses a version of SQLite that includes security fixes.</li>
+              </ul>
+            </section>
+
+            <section class="change-group notes">
+              <h3>Notes</h3>
+              <ul class="change-list">
+                <li>Upgrade your server before pairing a new CLI profile or using the new commands. Existing balance-only profiles can still run <code>bitgarth balance</code>. The <code>bs</code> and <code>balancesheet</code> aliases still work.</li>
+                <li>Update scripts that use <code>bitgarth pair</code> or <code>bitgarth login</code> to use <code>bitgarth auth login</code>. New pairings request full access by default. Add <code>--read-only</code> to request read-only access.</li>
+                <li>Profile commands have moved. Use <code>bitgarth auth status</code> to list profiles, <code>bitgarth auth rename OLD NEW</code> to rename one, and <code>bitgarth auth logout --profile NAME --local-only</code> to remove it locally. Omit <code>--local-only</code> to revoke the key on the server as well.</li>
+                <li>The account mode previously called <em>Transaction syncing</em> is now called <em>Full history</em>.</li>
+              </ul>
+            </section>
+
+          </article>
+
           <article class="release" id="0.4.4">
             <header class="release-head">
               <h2 class="release-version">
                 0.4.4
                 <a class="release-anchor" href="#0.4.4" aria-label="Copy link to version 0.4.4">#</a>
               </h2>
-              <span class="latest-tag">Latest</span>
               <p class="release-date">2 November 2026</p>
             </header>
 
